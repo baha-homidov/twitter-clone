@@ -1,0 +1,98 @@
+.vertical-navbar {
+  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  max-width: 18vw;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding: 15px;
+}
+
+.title-logo {
+  border: 1px solid red;
+  margin-bottom: 10px;
+}
+
+.main-buttons {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid blue;
+  align-items: flex-start;
+}
+
+.main-buttons > button,
+.tweet,
+.profile,
+.title-logo {
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 9999px;
+}
+
+.navbar-icon {
+  width: 28px;
+  height: 28px;
+  border: 1px solid black;
+  background-color: black;
+}
+
+.main-buttons > button,
+.title-logo,
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.vertical-navbar > .tweet {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tweet > img {
+  display: none;
+}
+
+
+
+.profile {
+  margin-top: auto;
+}
+
+@media (max-width: 1180px) {
+  * {
+    background-color: rgb(235, 235, 235);
+  }
+
+  .vertical-navbar {
+    padding: 12px;
+    width: 80px;
+    align-items: center;
+  }
+
+  .button-text {
+    display: none;
+  }
+
+  .main-buttons > button ,
+  .title-logo,
+  .profile {
+    padding: 12px;
+  }
+
+  .tweet {
+    width: auto;
+  }
+
+  .tweet > img {
+    display: block;
+  }
+}
+
+
+/* css for mobile version of component */
