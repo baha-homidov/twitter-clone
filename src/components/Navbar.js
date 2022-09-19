@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/Navbar.css";
+import messageIcon from "../assets/img/icons/message.svg";
+import commentIcon from "../assets/img/icons/comment.svg";
+import homeIcon from "../assets/img/icons/home.svg";
+import likeIcon from "../assets/img/icons/like.svg";
+import retweetIcon from "../assets/img/icons/retweet.svg";
+import tweetIcon from "../assets/img/icons/tweet.svg";
+import userIcon from "../assets/img/icons/user.svg";
+import searchIcon from "../assets/img/icons/search.svg";
 function Navbar() {
   // state for tracking window and width and render the component accordingly
   const [windowWidth, setWindowWidth] = useState(0);
@@ -29,18 +37,26 @@ function Navbar() {
   if (responsive.showMobileNavBar) {
     return (
       <div className="navbar-container">
+        <div className="top-bar">
+          <button className="profile">
+            <img src="" alt="" className="navbar-icon" />
+            <span className="button-text">Profile</span>
+          </button>
+          <h2 className="latest-tweets">Latest Tweets</h2>
+        </div>
+
         <nav className="horizontal-navbar">
           <button className="home">
-            <img src="" alt="" className="navbar-icon" />
+            <img src={homeIcon} alt="" className="navbar-icon" />
           </button>
           <button className="search">
-            <img src="" alt="" className="navbar-icon" />
+            <img src={searchIcon} alt="" className="navbar-icon" />
           </button>
           <button className="messages">
-            <img src="" alt="" className="navbar-icon" />
+            <img src={messageIcon} alt="" className="navbar-icon" />
           </button>
           <button className="tweet">
-            <img src="" alt="" className="navbar-icon" />
+            <img src={tweetIcon} alt="" className="navbar-icon" />
           </button>
         </nav>
       </div>
@@ -55,20 +71,20 @@ function Navbar() {
           </button>
           <div className="main-buttons">
             <button className="home">
-              <img src="" alt="" className="navbar-icon" />
+              <img src={homeIcon} alt="" className="navbar-icon" />
               <span className="button-text">Home</span>
             </button>
             <button className="messages">
-              <img src="" alt="" className="navbar-icon" />
+              <img src={messageIcon} alt="" className="navbar-icon" />
               <span className="button-text">Messages</span>
             </button>
             <button className="profile">
-              <img src="" alt="" className="navbar-icon" />
+              <img src={userIcon} alt="" className="navbar-icon" />
               <span className="button-text">Profile</span>
             </button>
           </div>
           <button className="tweet">
-            <img src="" alt="" className="navbar-icon" />
+            <img src={tweetIcon} alt="" className="navbar-icon" />
             <span className="button-text">Tweet</span>
           </button>
 
