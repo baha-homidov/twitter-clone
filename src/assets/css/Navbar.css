@@ -1,4 +1,6 @@
-
+.navbar-container {
+  
+}
 
 .vertical-navbar {
   border: 1px solid red;
@@ -8,6 +10,8 @@
   min-height: 100vh;
   align-items: flex-start;
   padding: 15px;
+  position: sticky;
+  top: 0;
 }
 
 .title-logo {
@@ -126,6 +130,7 @@
     border: 1px solid yellow;
     display: flex;
     align-items: center;
+    margin-bottom: 53px;
   }
 
   .top-bar > .profile {

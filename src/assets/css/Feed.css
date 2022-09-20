@@ -8,9 +8,15 @@
   background-color: rgba(0, 0, 255, 0.251);
 }
 
-@media (max-width: 620px) {
+@media (max-width: 640px) {
   .feed-container {
     width: auto;
     flex-grow: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .feed-container {
+    margin-top: 53px;
   }
 }

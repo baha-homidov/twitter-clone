@@ -1,0 +1,50 @@
+.tweet-container {
+  padding: 16px;
+  border: 1px solid yellow;
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  grid-template-rows: 16px auto auto;
+  gap: 10px;
+}
+
+.tweet-userphoto {
+  width: 100%;
+  border-radius: 999px;
+  grid-column: 1/2;
+  grid-row: 2/3;
+}
+
+
+.profile-info {
+  grid-column: 2/3;
+  grid-row: 1/2;
+}
+
+.tweet-text {
+  border: 1px solid red;
+  grid-column: 2/3;
+  grid-row: 2/3;
+  min-height: 40px;
+}
+
+.action-buttons {
+  border: 1px solid red;
+  grid-column: 2/3;
+  grid-row: 3/4;
+  display: flex;
+  height: 22px;
+  justify-content: space-around;
+}
+
+.action-buttons > button > img {
+  width: 16px;
+  height: 16px;
+}
+
+.action-buttons > button {
+
+}
+
+
+
+
