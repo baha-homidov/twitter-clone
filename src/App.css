@@ -7,9 +7,49 @@
 
 .app-container {
   display: flex;
-
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid red;
-  max-width: 1150px;
+
+}
+
+.main-content  {
+  display: flex;
+
+}
+
+
+aside.right-bar {
+  border: 1px solid yellow;
+  flex-grow: 1;
+  max-width: 18vw;
+}
+
+@media (max-width: 1000px) {
+    aside.right-bar {
+      display: none;
+      flex-grow: 1;
+      max-width: none;
+    }
+
+    .app-container {
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      justify-content: center;
+    }
+}
+
+@media (max-width: 620px) {
+  .main-content {
+    flex-grow: 1;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .app-container {
+    justify-content: flex-start;
+  }
 }

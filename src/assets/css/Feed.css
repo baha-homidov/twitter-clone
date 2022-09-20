@@ -1,0 +1,16 @@
+.feed-container {
+  border: 1px solid blue;
+  /* flex-grow: 2;
+  min-width: 320px; */
+  width: 600px;
+
+  /* width: max(60vw, 480px); */
+  background-color: rgba(0, 0, 255, 0.251);
+}
+
+@media (max-width: 620px) {
+  .feed-container {
+    width: auto;
+    flex-grow: 2;
+  }
+}
