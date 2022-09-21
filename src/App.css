@@ -15,21 +15,24 @@
 
 .main-content  {
   display: flex;
-
 }
 
 
 aside.right-bar {
   border: 1px solid yellow;
-  flex-grow: 1;
-  max-width: 18vw;
+  width: 280px;
+
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
+  top: 0;
+  height: 100vh;
+  padding: 15px;
 }
 
 @media (max-width: 1000px) {
     aside.right-bar {
       display: none;
-      flex-grow: 1;
-      max-width: none;
+      
     }
 
     .app-container {

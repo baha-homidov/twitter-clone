@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/Navbar.css";
 import messageIcon from "../assets/img/icons/message.svg";
-import commentIcon from "../assets/img/icons/comment.svg";
 import homeIcon from "../assets/img/icons/home.svg";
-import likeIcon from "../assets/img/icons/like.svg";
-import retweetIcon from "../assets/img/icons/retweet.svg";
 import tweetIcon from "../assets/img/icons/tweet.svg";
 import userIcon from "../assets/img/icons/user.svg";
 import searchIcon from "../assets/img/icons/search.svg";
@@ -35,6 +32,7 @@ function Navbar() {
   };
 
   if (responsive.showMobileNavBar) {
+    // the width is narrow render mobile navbar
     return (
       <div className="navbar-container">
         <div className="top-bar">
@@ -62,6 +60,7 @@ function Navbar() {
       </div>
     );
   } else {
+    // otherwise render the desktop navabar
     return (
       <div className="navbar-container">
         <nav className="vertical-navbar">
@@ -73,6 +72,11 @@ function Navbar() {
             <button className="home">
               <img src={homeIcon} alt="" className="navbar-icon" />
               <span className="button-text">Home</span>
+            </button>
+
+            <button className="search">
+              <img src={searchIcon} alt="" className="navbar-icon" />
+
             </button>
             <button className="messages">
               <img src={messageIcon} alt="" className="navbar-icon" />

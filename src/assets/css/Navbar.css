@@ -1,5 +1,4 @@
 .navbar-container {
-  
 }
 
 .vertical-navbar {
@@ -11,6 +10,7 @@
   align-items: flex-start;
   padding: 15px;
   position: sticky;
+  position: -webkit-sticky; /* Safari */
   top: 0;
 }
 
@@ -56,6 +56,10 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+.main-buttons > .search {
+  display: none;
 }
 
 .tweet > img {
@@ -144,6 +148,11 @@
   .top-bar > .latest-tweets {
     margin-left: 20px;
   }
+}
 
-  
+@media (max-width: 1000px) {
+  .main-buttons > .search {
+    display: block;
+    font-size: 0;
+  }
 }

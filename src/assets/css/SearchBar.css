@@ -1,0 +1,28 @@
+.searchbar-container {
+  display: flex;
+}
+
+.searchbar-container > .search-form {
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+
+.searchbar-container > form.search-form:hover {
+  border: 1px solid red;
+}
+
+.searchbar-container > .search-form > input.field {
+  border-top-right-radius: 9999px;
+  border-bottom-right-radius: 9999px;
+  width: 100%;
+  border: none;
+}
+
+.searchbar-container > .search-form > button.submit {
+  width: 44px;
+  border-bottom-left-radius: 9999px;
+  border-top-left-radius: 9999px;
+  background-color: white;
+  border: none;
+}
