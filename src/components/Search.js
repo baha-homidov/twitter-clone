@@ -19,12 +19,12 @@ function Search(props) {
 
   useEffect(() => {
     setSearchValue(props.initSearchValue);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="search-container">
-      <button className="back">
+      <button className="back" onClick={props.hideSearchOnFeed}>
         <img src={arrow} alt="" className="search-icon" />
       </button>
       <form className="search-form" onSubmit={handleSubmit}>

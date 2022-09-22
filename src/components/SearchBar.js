@@ -13,8 +13,10 @@ function SearchBar(props) {
       event.preventDefault();
       return;
     }
+
     event.preventDefault();
     props.showSearchOnFeed(searchValue);
+    setSearchValue("");
   }
   return (
     <div className="searchbar-container">

@@ -23,18 +23,21 @@ function Feed(props) {
   if (props.feedShowsSearch) {
     return (
       <div className="feed-container">
-        <Search initSearchValue={props.searchValue} />
+        <Search
+          initSearchValue={props.searchValue}
+          hideSearchOnFeed={props.hideSearchOnFeed}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="feed-container">
+        {tweetArray.map((element) => {
+          return <Tweet {...element} />;
+        })}
       </div>
     );
   }
-
-  return (
-    <div className="feed-container">
-      {tweetArray.map((element) => {
-        return <Tweet {...element} />;
-      })}
-    </div>
-  );
 }
 
 export default Feed;

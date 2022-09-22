@@ -1,4 +1,5 @@
 .navbar-container {
+  
 }
 
 .vertical-navbar {
@@ -125,29 +126,7 @@
     bottom: 75px;
   }
 
-  .navbar-container > .top-bar {
-    position: fixed;
-    width: 100%;
-    padding-left: 16px;
-    padding-right: 16px;
-    height: 53px;
-    border: 1px solid yellow;
-    display: flex;
-    align-items: center;
-    margin-bottom: 53px;
-  }
-
-  .top-bar > .profile {
-    display: block;
-    width: 32px;
-    height: 32px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .top-bar > .latest-tweets {
-    margin-left: 20px;
-  }
+  
 }
 
 @media (max-width: 1000px) {

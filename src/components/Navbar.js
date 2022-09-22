@@ -5,7 +5,7 @@ import homeIcon from "../assets/img/icons/home.svg";
 import tweetIcon from "../assets/img/icons/tweet.svg";
 import userIcon from "../assets/img/icons/user.svg";
 import searchIcon from "../assets/img/icons/search.svg";
-function Navbar() {
+function Navbar(props) {
   // state for tracking window and width and render the component accordingly
   const [windowWidth, setWindowWidth] = useState(0);
 
@@ -15,6 +15,7 @@ function Navbar() {
   }
 
   useEffect(() => {
+    // listen to the windowWdith changes
     // equivalent of componentDidMount
     // call the function for initial render
     updateDimensions();
@@ -32,22 +33,20 @@ function Navbar() {
   };
 
   if (responsive.showMobileNavBar) {
-    // the width is narrow render mobile navbar
+    //if the width is narrow render mobile navbar
     return (
       <div className="navbar-container">
-        <div className="top-bar">
-          <button className="profile">
-            <img src="" alt="" className="navbar-icon" />
-            <span className="button-text">Profile</span>
-          </button>
-          <h2 className="latest-tweets">Latest Tweets</h2>
-        </div>
-
         <nav className="horizontal-navbar">
           <button className="home">
             <img src={homeIcon} alt="" className="navbar-icon" />
           </button>
-          <button className="search">
+          <button
+            onClick={() => {
+
+              props.showSearchOnFeed("");
+            }}
+            className="search"
+          >
             <img src={searchIcon} alt="" className="navbar-icon" />
           </button>
           <button className="messages">
@@ -60,7 +59,7 @@ function Navbar() {
       </div>
     );
   } else {
-    // otherwise render the desktop navabar
+    // else render the desktop navabar
     return (
       <div className="navbar-container">
         <nav className="vertical-navbar">
@@ -74,9 +73,13 @@ function Navbar() {
               <span className="button-text">Home</span>
             </button>
 
-            <button className="search">
+            <button
+              onClick={() => {
+                props.showSearchOnFeed("");
+              }}
+              className="search"
+            >
               <img src={searchIcon} alt="" className="navbar-icon" />
-
             </button>
             <button className="messages">
               <img src={messageIcon} alt="" className="navbar-icon" />
