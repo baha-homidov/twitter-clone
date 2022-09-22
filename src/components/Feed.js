@@ -5,7 +5,7 @@ import Tweet from "./Tweet";
 
 function Feed(props) {
   const [tweetArray, setTweetArray] = useState([]);
-  const [showSearch, setShowSearch] = useState(true);
+  
 
   useEffect(() => {
     const tweetArray = [];

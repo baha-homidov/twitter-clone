@@ -1,8 +1,9 @@
 import Navbar from "./components/Navbar";
 import Feed from "./components/Feed";
-import "./App.css";
 import SearchBar from "./components/SearchBar";
+import WhoToFollow from "./components/WhoToFollow";
 import { useState } from "react";
+import "./App.css";
 
 function App() {
   const [feedShowsSearch, setFeedShowsSearch] = useState(false);
@@ -42,6 +43,7 @@ function App() {
       </div>
       <aside className="right-bar">
         <SearchBar showSearchOnFeed={showSearchOnFeed} />
+        <WhoToFollow />
       </aside>
     </div>
   );
