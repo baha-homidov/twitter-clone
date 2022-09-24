@@ -1,9 +1,9 @@
-import Navbar from "./components/Navbar";
-import Feed from "./components/Feed";
-import SearchBar from "./components/SearchBar";
-import WhoToFollow from "./components/WhoToFollow";
+import Navbar from "./Navbar";
+import Feed from "./Feed";
+import SearchBar from "./SearchBar";
+import WhoToFollow from "./WhoToFollow";
 import { useState } from "react";
-import "./App.css";
+import "../assets/css/App.css";
 
 function App() {
   const [feedShowsSearch, setFeedShowsSearch] = useState(false);
