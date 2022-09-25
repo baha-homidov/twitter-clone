@@ -38,9 +38,11 @@ function Navbar(props) {
     return (
       <div className="navbar-container">
         <nav className="horizontal-navbar">
+          <Link className="link" to="home">
           <button className="home">
             <img src={homeIcon} alt="" className="navbar-icon" />
           </button>
+          </Link>
           <Link className="link" to="/search">
             <button className="search">
               <img src={searchIcon} alt="" className="navbar-icon" />
@@ -65,10 +67,13 @@ function Navbar(props) {
             <span className="button-text">Barker</span>
           </button>
           <div className="main-buttons">
+            <Link className="link" to="home">
+
             <button className="home">
               <img src={homeIcon} alt="" className="navbar-icon" />
               <span className="button-text">Home</span>
             </button>
+            </Link>
             <Link className="link" to="/search">
               <button className="search">
                 <img src={searchIcon} alt="" className="navbar-icon" />
