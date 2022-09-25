@@ -1,9 +1,10 @@
-import {  useState } from "react";
+import { useState } from "react";
+import { redirect, useNavigate } from "react-router-dom";
 import "../assets/css/SearchBar.css";
 import searchIcon from "../assets/img/icons/search.svg";
 function SearchBar(props) {
-  console.log(props);
   const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
   function handleChange(event) {
     setSearchValue(event.target.value);
   }
@@ -15,7 +16,9 @@ function SearchBar(props) {
     }
 
     event.preventDefault();
-    props.showSearchOnFeed(searchValue);
+    console.log(redirect);
+    navigate(`/search/${searchValue}`);
+    // props.showSearchOnFeed(searchValue);
     setSearchValue("");
   }
   return (

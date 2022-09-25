@@ -4,7 +4,8 @@ import SearchBar from "./SearchBar";
 import WhoToFollow from "./WhoToFollow";
 import { useState } from "react";
 import "../assets/css/App.css";
-
+// <Outlet /> component to tell the react router where to render child components
+import { Outlet } from "react-router-dom";
 function App() {
   const [feedShowsSearch, setFeedShowsSearch] = useState(false);
   const [searchValue, setSearchValue] = useState("asdf");
@@ -35,11 +36,15 @@ function App() {
           </div>
         )}
         <Navbar showSearchOnFeed={showSearchOnFeed} />
-        <Feed
-          feedShowsSearch={feedShowsSearch}
-          searchValue={searchValue}
-          hideSearchOnFeed={hideSearchOnFeed}
-        />
+
+        <div className="center-content-container">
+          <Outlet />
+          <Feed
+            feedShowsSearch={feedShowsSearch}
+            searchValue={searchValue}
+            hideSearchOnFeed={hideSearchOnFeed}
+          />
+        </div>
       </div>
       <aside className="right-bar">
         <SearchBar showSearchOnFeed={showSearchOnFeed} />

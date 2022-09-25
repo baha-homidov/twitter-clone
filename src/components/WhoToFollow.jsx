@@ -17,9 +17,9 @@ function WhoToFollow(props) {
         <h3>Who to follow</h3>
       </div>
       <div className="user-container">
-        {userArray.map((element) => {
+        {userArray.map((element, index) => {
           return (
-            <button className="user-entry">
+            <button key={index} className="user-entry">
               <img src={userIcon} alt="" className="user-photo" />
               <div className="name">{element.name}</div>
               <div className=" username">{element.username}</div>

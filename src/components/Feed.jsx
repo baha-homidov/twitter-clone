@@ -5,7 +5,6 @@ import Tweet from "./Tweet";
 
 function Feed(props) {
   const [tweetArray, setTweetArray] = useState([]);
-  
 
   useEffect(() => {
     const tweetArray = [];
@@ -32,8 +31,8 @@ function Feed(props) {
   } else {
     return (
       <div className="feed-container">
-        {tweetArray.map((element) => {
-          return <Tweet {...element} />;
+        {tweetArray.map((element, index) => {
+          return <Tweet key={index.toString()} {...element} />;
         })}
       </div>
     );

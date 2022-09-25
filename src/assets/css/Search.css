@@ -1,4 +1,5 @@
 .search-container {
+  position: absolute;
   display: flex;
   align-items: center;
 }
@@ -13,15 +14,12 @@ form.search-form:hover {
   border: 1px solid red;
 }
 
-
-
 input.field {
   border-top-right-radius: 9999px;
   border-bottom-right-radius: 9999px;
   width: 100%;
   border: none;
 }
-
 
 button.submit {
   width: 44px;
@@ -36,7 +34,7 @@ button.submit {
   height: auto;
 }
 
-.search-container > .back {
+.search-container > .link > .back {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +47,6 @@ button.submit {
   margin-right: 15px;
 }
 
-.search-container > .back:hover {
-  background-color: #E6E7E7;
+.search-container > .link > .back:hover {
+  background-color: #e6e7e7;
 }

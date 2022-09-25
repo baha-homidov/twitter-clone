@@ -5,7 +5,7 @@ import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/Tweet.css";
 function Tweet(props) {
   return (
-    <div className="tweet-container">
+    <div  className="tweet-container">
       <div className="profile-photo">
         <img src={userPhoto} alt="" className="tweet-userphoto" />
       </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "../assets/css/Navbar.css";
 import messageIcon from "../assets/img/icons/message.svg";
 import homeIcon from "../assets/img/icons/home.svg";
@@ -40,15 +41,11 @@ function Navbar(props) {
           <button className="home">
             <img src={homeIcon} alt="" className="navbar-icon" />
           </button>
-          <button
-            onClick={() => {
-
-              props.showSearchOnFeed("");
-            }}
-            className="search"
-          >
-            <img src={searchIcon} alt="" className="navbar-icon" />
-          </button>
+          <Link className="link" to="/search">
+            <button className="search">
+              <img src={searchIcon} alt="" className="navbar-icon" />
+            </button>
+          </Link>
           <button className="messages">
             <img src={messageIcon} alt="" className="navbar-icon" />
           </button>
@@ -72,15 +69,11 @@ function Navbar(props) {
               <img src={homeIcon} alt="" className="navbar-icon" />
               <span className="button-text">Home</span>
             </button>
-
-            <button
-              onClick={() => {
-                props.showSearchOnFeed("");
-              }}
-              className="search"
-            >
-              <img src={searchIcon} alt="" className="navbar-icon" />
-            </button>
+            <Link className="link" to="/search">
+              <button className="search">
+                <img src={searchIcon} alt="" className="navbar-icon" />
+              </button>
+            </Link>
             <button className="messages">
               <img src={messageIcon} alt="" className="navbar-icon" />
               <span className="button-text">Messages</span>
