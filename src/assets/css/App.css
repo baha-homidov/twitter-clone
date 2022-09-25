@@ -33,9 +33,7 @@ aside.right-bar {
   padding: 15px;
 }
 
-.main-content > .top-bar {
-  display: none;
-}
+
 .center-content-container {
   position: relative;
   width: 600px;
@@ -66,27 +64,9 @@ aside.right-bar {
   .main-content {
     flex-direction: column;
   }
-  .main-content > .top-bar {
-    position: absolute;
-    width: 100%;
-    padding-left: 16px;
-    padding-right: 16px;
-    height: 53px;
-    border: 1px solid yellow;
-    display: flex;
-    align-items: center;
-    position: sticky;
-    position: -webkit-sticky; /* Safari */
-    top: 0;
-  }
+  
 
-  .top-bar > .profile {
-    display: block;
-    width: 32px;
-    height: 32px;
-    margin: 0;
-    padding: 0;
-  }
+ 
 
   .top-bar > .latest-tweets {
     margin-left: 20px;

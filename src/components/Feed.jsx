@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../assets/css/Feed.css";
-import Search from "./Search";
 import Tweet from "./Tweet";
 
 function Feed(props) {
@@ -19,24 +18,21 @@ function Feed(props) {
     setTweetArray(tweetArray);
   }, []);
 
-  if (props.feedShowsSearch) {
+  
     return (
       <div className="feed-container">
-        <Search
-          initSearchValue={props.searchValue}
-          hideSearchOnFeed={props.hideSearchOnFeed}
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div className="feed-container">
+        <div className="top-bar">
+            <div className="profile-icon">
+              <img src="" alt="" className="icon" />
+            </div>
+            <h2 className="latest-tweets">Latest Tweets</h2>
+          </div>
         {tweetArray.map((element, index) => {
           return <Tweet key={index.toString()} {...element} />;
         })}
       </div>
     );
   }
-}
+
 
 export default Feed;

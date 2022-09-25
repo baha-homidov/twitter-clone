@@ -3,11 +3,50 @@
   border: 1px solid blue;
   /* flex-grow: 2;
   min-width: 320px; */
-  
   /* width: max(60vw, 480px); */
   background-color: rgba(0, 0, 255, 0.251);
 }
 
+.top-bar {
+  margin-top: -16px;
+  margin-bottom: 16px;
+  position: absolute;
+  width:calc(32px + 100%) ;
+  transform: translateX(-16px);
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 53px;
+  border: 1px solid yellow;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
+  top: 0;
+}
+
+.top-bar > .profile-icon {
+  display: none;
+}
 
 
+@media (max-width: 480px) {
+  
+  
+
+  .top-bar > .profile-icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+  border-radius: 9999px;
+  }
+
+  .top-bar > .latest-tweets {
+    margin-left: 20px;
+  }
+
+
+}
 

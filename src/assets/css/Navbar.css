@@ -113,6 +113,7 @@
     flex: 1;
     padding-left: 16px;
     padding-right: 16px;
+    z-index: 2;
   }
 
   .horizontal-navbar > * {
@@ -126,7 +127,7 @@
   .link > * {
     flex-grow: 1;
   }
-  /*                                                            */
+  /*                                                */
   .horizontal-navbar > .tweet {
     position: absolute;
     right: 20px;
