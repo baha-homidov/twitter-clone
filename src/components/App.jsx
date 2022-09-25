@@ -2,26 +2,23 @@ import Navbar from "./Navbar";
 import Feed from "./Feed";
 import SearchBar from "./SearchBar";
 import WhoToFollow from "./WhoToFollow";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/App.css";
 // <Outlet /> component to tell the react router where to render child components
 import { Outlet } from "react-router-dom";
 function App() {
-  const [feedShowsSearch, setFeedShowsSearch] = useState(false);
-  const [searchValue, setSearchValue] = useState("asdf");
   const [showTopBar, setShowTobBar] = useState(true);
-  function showSearchOnFeed(searchValue) {
-    console.log("click");
-    setFeedShowsSearch(true);
-    setSearchValue(searchValue);
-    setShowTobBar(false);
-  }
 
-  function hideSearchOnFeed() {
-    setFeedShowsSearch(false);
-    setSearchValue("");
-    setShowTobBar(true);
-  }
+  const redirect = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
+  useEffect(() => {
+    //redirect to /home directory if on a root location
+    if (location.pathname === "/") {
+      redirect("home");
+    }
+  });
 
   return (
     <div className="app-container">
@@ -35,19 +32,14 @@ function App() {
             <h2 className="latest-tweets">Latest Tweets</h2>
           </div>
         )}
-        <Navbar showSearchOnFeed={showSearchOnFeed} />
+        <Navbar />
 
         <div className="center-content-container">
-          <Outlet />
-          <Feed
-            feedShowsSearch={feedShowsSearch}
-            searchValue={searchValue}
-            hideSearchOnFeed={hideSearchOnFeed}
-          />
+          <Outlet className="outlet-component" />
         </div>
       </div>
       <aside className="right-bar">
-        <SearchBar showSearchOnFeed={showSearchOnFeed} />
+        <SearchBar />
         <WhoToFollow />
       </aside>
     </div>

@@ -1,7 +1,16 @@
 .search-container {
+  height: 100%;
+}
+
+
+
+.search-container > .bar {
   position: absolute;
+  padding: 16px;
   display: flex;
   align-items: center;
+  width: 100%;
+  border: 1px solid red;
 }
 
 form.search-form {
@@ -34,7 +43,7 @@ button.submit {
   height: auto;
 }
 
-.search-container > .link > .back {
+.search-container > .bar .link > .back {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,6 +56,6 @@ button.submit {
   margin-right: 15px;
 }
 
-.search-container > .link > .back:hover {
+.search-container > .bar > .link > .back:hover {
   background-color: #e6e7e7;
 }

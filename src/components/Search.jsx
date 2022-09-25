@@ -30,23 +30,25 @@ function Search(props) {
 
   return (
     <div className="search-container">
-      <Link className="link" to={"/"}>
-        <button className="back">
-          <img src={arrow} alt="" className="search-icon" />
-        </button>
-      </Link>
-      <form className="search-form" onSubmit={handleSubmit}>
-        <button className="submit" type="submit">
-          <img src={searchIcon} alt="" className="search-icon" />
-        </button>
-        <input
-          className="field"
-          type="text"
-          value={searchValue}
-          onChange={handleChange}
-          placeholder="Search Barker"
-        />
-      </form>
+      <div className="bar">
+        <Link className="link" to={"/"}>
+          <button className="back">
+            <img src={arrow} alt="" className="search-icon" />
+          </button>
+        </Link>
+        <form className="search-form" onSubmit={handleSubmit}>
+          <button className="submit" type="submit">
+            <img src={searchIcon} alt="" className="search-icon" />
+          </button>
+          <input
+            className="field"
+            type="text"
+            value={searchValue}
+            onChange={handleChange}
+            placeholder="Search Barker"
+          />
+        </form>
+      </div>
     </div>
   );
 }

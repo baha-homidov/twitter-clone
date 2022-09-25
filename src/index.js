@@ -4,12 +4,22 @@ import "./index.css";
 import App from "./components/App";
 import Search from "./components/Search";
 // React Router libarary
-import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Feed from "./components/Feed";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        path: "home",
+        element: <Feed />,
+      },
       {
         path: "search",
         element: <Search />,
@@ -22,6 +32,7 @@ const router = createBrowserRouter([
   },
 ]);
 
+console.log("henlp");
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

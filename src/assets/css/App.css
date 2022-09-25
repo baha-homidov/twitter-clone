@@ -12,10 +12,14 @@
   border: 1px solid red;
 }
 
-
-
 .main-content {
   display: flex;
+}
+
+.outlet-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
 }
 
 aside.right-bar {
@@ -32,7 +36,10 @@ aside.right-bar {
 .main-content > .top-bar {
   display: none;
 }
-
+.center-content-container {
+  position: relative;
+  width: 600px;
+}
 @media (max-width: 1000px) {
   aside.right-bar {
     display: none;
@@ -83,5 +90,10 @@ aside.right-bar {
 
   .top-bar > .latest-tweets {
     margin-left: 20px;
+  }
+
+  .center-content-container {
+    width: auto;
+    flex-grow: 2;
   }
 }
