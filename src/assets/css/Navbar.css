@@ -70,9 +70,7 @@
 }
 
 @media (max-width: 1180px) {
-  * {
-    background-color: rgb(235, 235, 235);
-  }
+ 
 
   .vertical-navbar {
     padding: 12px;

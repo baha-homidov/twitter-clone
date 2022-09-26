@@ -1,18 +1,12 @@
 .feed-container {
-  padding: 16px;
   border: 1px solid blue;
   /* flex-grow: 2;
   min-width: 320px; */
   /* width: max(60vw, 480px); */
-  background-color: rgba(0, 0, 255, 0.251);
 }
 
 .top-bar {
-  margin-top: -16px;
-  margin-bottom: 16px;
   position: absolute;
-  width:calc(32px + 100%) ;
-  transform: translateX(-16px);
   padding-left: 16px;
   padding-right: 16px;
   height: 53px;
