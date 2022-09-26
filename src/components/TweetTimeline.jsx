@@ -1,44 +1,44 @@
 import { useEffect, useState } from "react";
-import "../assets/css/Feed.css";
-import Search from "./Search";
+import "../assets/css/TweetTimeline.css";
 import Tweet from "./Tweet";
+import userPhoto from "../assets/img/icons/user.svg";
+import comment from "../assets/img/icons/comment.svg";
+import like from "../assets/img/icons/like.svg";
+import retweet from "../assets/img/icons/retweet.svg";
 
-function Feed(props) {
-  const [tweetArray, setTweetArray] = useState([]);
-  
-
-  useEffect(() => {
-    const tweetArray = [];
-
-    for (let i = 0; i < 50; i++) {
-      tweetArray.push({
-        name: "Alex Smith",
-        username: "@alexsmith",
-        text: "Lorem ipsum lorem ipsum lorem ipsum sit domet!",
-      });
-    }
-    setTweetArray(tweetArray);
-  }, []);
-
-  if (props.feedShowsSearch) {
-    return (
-      <div className="feed-container">
-        <Search
-          initSearchValue={props.searchValue}
-          hideSearchOnFeed={props.hideSearchOnFeed}
-        />
+function TweetTimeline(props) {
+  return (
+    <div className="tweet-timeline-container">
+      <div className="title-tweet">
+        <div className="personal-info">
+          <div className="profile-photo">
+            <img src={userPhoto} alt="" className="tweet-userphoto" />
+          </div>
+          <div className="profile-info">
+            <div className="profile-name">{props.name}</div>
+            <div className="username">{props.username}</div>
+          </div>
+        </div>
+        <div className="tweet-text">
+          Lorem ipsum si omo lorem damet posum, tuta tama lora poco macarono
+        </div>
+        <div className="buttons">
+          <button className="reply">
+            <img src={comment} alt="" />
+            12
+          </button>
+          <button className="retweet">
+            <img src={retweet} alt="" />
+            12
+          </button>
+          <button className="like">
+            <img src={like} alt="" />
+            12
+          </button>
+        </div>
       </div>
-    );
-  } else {
-    return (
-      <div className="feed-container">
-        {tweetArray.map((element) => {
-          return <Tweet {...element} />;
-        })}
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
-export default Feed;
-
+export default TweetTimeline;
