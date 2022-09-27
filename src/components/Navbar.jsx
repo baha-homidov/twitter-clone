@@ -39,9 +39,9 @@ function Navbar(props) {
       <div className="navbar-container">
         <nav className="horizontal-navbar">
           <Link className="link" to="home">
-          <button className="home">
-            <img src={homeIcon} alt="" className="navbar-icon" />
-          </button>
+            <button className="home">
+              <img src={homeIcon} alt="" className="navbar-icon" />
+            </button>
           </Link>
           <Link className="link" to="/search">
             <button className="search">
@@ -68,35 +68,44 @@ function Navbar(props) {
           </button>
           <div className="main-buttons">
             <Link className="link" to="home">
-
-            <button className="home">
-              <img src={homeIcon} alt="" className="navbar-icon" />
-              <span className="button-text">Home</span>
-            </button>
+              <button className="home">
+                <img src={homeIcon} alt="" className="navbar-icon" />
+                <span className="button-text">Home</span>
+              </button>
             </Link>
-            <Link className="link" to="/search">
+
+            <Link className="link search-link"  to="/search">
               <button className="search">
                 <img src={searchIcon} alt="" className="navbar-icon" />
               </button>
             </Link>
-            <button className="messages">
-              <img src={messageIcon} alt="" className="navbar-icon" />
-              <span className="button-text">Messages</span>
+            <Link className="link">
+              <button className="messages">
+                <img src={messageIcon} alt="" className="navbar-icon" />
+                <span className="button-text">Messages</span>
+              </button>
+            </Link>
+
+            <Link className="link">
+              <button className="profile">
+                <img src={userIcon} alt="" className="navbar-icon" />
+                <span className="button-text">Profile</span>
+              </button>
+            </Link>
+          </div>
+          <Link className="link tweet-link" >
+            <button className="tweet">
+              <img src={tweetIcon} alt="" className="navbar-icon" />
+              <span className="button-text">Tweet</span>
             </button>
+          </Link>
+
+          <Link className="link profile-link" >
             <button className="profile">
-              <img src={userIcon} alt="" className="navbar-icon" />
+              <img src="" alt="" className="navbar-icon" />
               <span className="button-text">Profile</span>
             </button>
-          </div>
-          <button className="tweet">
-            <img src={tweetIcon} alt="" className="navbar-icon" />
-            <span className="button-text">Tweet</span>
-          </button>
-
-          <button className="profile">
-            <img src="" alt="" className="navbar-icon" />
-            <span className="button-text">Profile</span>
-          </button>
+          </Link>
         </nav>
       </div>
     );

@@ -15,13 +15,23 @@ function Tweet(props) {
       <div className="tweet-text">{props.text}</div>
       <div className="action-buttons">
         <button className="comment">
-          <img src={commentIcon} alt="" className="tweet-icon" />
+
+          <div className="reply-icon">
+            <img src={commentIcon} alt="" />
+          </div>
+          <span className="reply-num">12</span>
         </button>
         <button className="retweet">
-          <img src={retweetIcon} alt="" className="tweet-icon" />
+          <div className="retweet-icon">
+            <img src={retweetIcon} alt="" />
+          </div>
+          <span className="retweet-num">12</span>
         </button>
         <button className="like">
-          <img src={likeIcon} alt="" className="tweet-icon" />
+          <div className="like-icon">
+            <img src={likeIcon} alt="" />
+          </div>
+          <span className="like-num">12</span>
         </button>
       </div>
     </div>

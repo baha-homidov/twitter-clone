@@ -1,5 +1,4 @@
 .feed-container {
-  border: 1px solid blue;
   /* flex-grow: 2;
   min-width: 320px; */
   /* width: max(60vw, 480px); */
@@ -10,7 +9,6 @@
   padding-left: 16px;
   padding-right: 16px;
   height: 53px;
-  border: 1px solid yellow;
   display: flex;
   align-items: center;
   position: sticky;
@@ -22,11 +20,7 @@
   display: none;
 }
 
-
 @media (max-width: 480px) {
-  
-  
-
   .top-bar > .profile-icon {
     display: block;
     width: 32px;
@@ -34,13 +28,10 @@
     margin: 0;
     padding: 0;
     border: 1px solid black;
-  border-radius: 9999px;
+    border-radius: 9999px;
   }
 
   .top-bar > .latest-tweets {
     margin-left: 20px;
   }
-
-
 }
-

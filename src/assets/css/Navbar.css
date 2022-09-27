@@ -1,5 +1,4 @@
 .vertical-navbar {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   max-width: 18vw;
@@ -12,22 +11,29 @@
 }
 
 .title-logo {
-  border: 1px solid red;
   margin-bottom: 10px;
+}
+
+.search-link {
+  display: none;
 }
 
 .main-buttons {
   display: flex;
   flex-direction: column;
-  border: 1px solid blue;
+  gap: 10px;
   align-items: flex-start;
 }
 
-.main-buttons > button,
+/* .main-buttons > button,
 .main-buttons > .link > button,
 .tweet,
 .profile,
-.title-logo {
+.title-logo { */
+.main-buttons button,
+.title-logo,
+.tweet-link .tweet,
+.profile-link .profile {
   padding: 12px;
   font-size: 20px;
   border-radius: 9999px;
@@ -38,10 +44,9 @@
   height: 28px;
 }
 
-.main-buttons > button,
-.main-buttons > .link > button,
+.main-buttons button,
 .title-logo,
-.profile {
+.profile-link .profile {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,8 +54,16 @@
   padding-right: 20px;
 }
 
-.vertical-navbar > .tweet {
+.vertical-navbar .tweet-link {
   margin-top: 10px;
+  width: 100%;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tweet-link .tweet {
   width: 100%;
   display: flex;
   align-items: center;
@@ -65,13 +78,11 @@
   display: none;
 }
 
-.profile {
+.profile-link {
   margin-top: auto;
 }
 
 @media (max-width: 1180px) {
- 
-
   .vertical-navbar {
     padding: 12px;
     width: 80px;
@@ -137,5 +148,9 @@
   .main-buttons > .link > .search {
     display: block;
     font-size: 0;
+  }
+
+  .search-link {
+    display: block;
   }
 }

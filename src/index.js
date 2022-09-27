@@ -11,6 +11,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Feed from "./components/Feed";
+import TweetTimeline from "./components/TweetTimeline";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "search",
         element: <Search />,
+      },
+      {
+        path: "tweet/:tweetId",
+        element: <TweetTimeline />,
       },
       {
         path: "search/:searchId",

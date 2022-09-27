@@ -1,6 +1,7 @@
 .tweet-container {
+  border-bottom: 1px solid #eff3f4;
   padding: 16px;
-  border: 1px solid yellow;
+
   display: grid;
   grid-template-columns: 52px 1fr;
   grid-template-rows: 16px auto auto;
@@ -8,45 +9,83 @@
 }
 
 .tweet-container:hover {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   transition: 0.3s ease;
 }
 
-.tweet-userphoto {
+.tweet-container > .tweet-userphoto {
   width: 100%;
   border-radius: 999px;
   grid-column: 1/2;
   grid-row: 1/2;
 }
 
-
 .profile-info {
   grid-column: 2/3;
   grid-row: 1/2;
 }
 
-.tweet-text {
-  border: 1px solid red;
+.tweet-container > .tweet-text {
   grid-column: 2/3;
   grid-row: 2/3;
   min-height: 40px;
 }
 
 .action-buttons {
-  border: 1px solid red;
   grid-column: 2/3;
   grid-row: 3/4;
   display: flex;
-  height: 22px;
+  height: 30px;
   justify-content: space-around;
 }
 
-.action-buttons > button > img {
+.action-buttons > button > div > img {
   width: 16px;
   height: 16px;
 }
 
+.action-buttons > button > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px;
+  border-radius: 999px;
+  transition: 0.3s ease;
+}
 
+.action-buttons > button > span {
+  transition: 0.3s ease;
+}
 
+.tweet-container > .action-buttons button {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
 
+.action-buttons > button:hover > .reply-icon {
+  background-color: #e1eef7;
+}
 
+.action-buttons > button:hover > .reply-num {
+  color: #2b9bf0;
+}
+
+.action-buttons > button:hover > .retweet-icon {
+  background-color: #def1eb;
+}
+
+.action-buttons > button:hover > .retweet-num {
+  color: #3eba7b;
+}
+
+.action-buttons > button:hover > .like-icon {
+  background-color: #f8e0eb;
+}
+
+.action-buttons > button:hover > .like-num {
+  color: #f41780;
+}

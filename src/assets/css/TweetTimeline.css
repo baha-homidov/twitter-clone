@@ -1,0 +1,105 @@
+.tweet-timeline-container > .timeline-header {
+  position: absolute;
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
+  top: 0;
+  display: flex;
+  padding: 16px;
+  height: 53px;
+  font-size: 0.8em;
+  align-items: center;
+  gap: 23px;
+}
+
+.tweet-timeline-container > .timeline-header .link > .back > img {
+  height: 20px;
+}
+
+.tweet-timeline-container > .timeline-header .link > .back {
+  background-color: white;
+  padding: 7px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s ease;
+}
+
+.tweet-timeline-container > .timeline-header .link > .back:hover {
+  background-color: #e6e7e7;
+  transition: 0.3s ease;
+}
+
+.tweet-timeline-container > .title-tweet {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-bottom: 1px solid #EFF3F4;
+}
+
+.tweet-timeline-container > .title-tweet > .personal-info {
+
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.title-tweet > .personal-info > .tweet-userphoto {
+  width: 48px;
+  height: auto;
+  border-radius: 999px;
+  border: 1px solid black;
+}
+
+.title-tweet > .personal-info > .profile-info > .profile-name {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.title-tweet > .personal-info > .profile-info > .username {
+  color: #536471;
+}
+
+.title-tweet > .tweet-text {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.title-tweet .buttons {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border-top: 1px solid #EFF3F4; /*#EFF3F4*/
+  border-bottom: 1px solid #EFF3F4;
+}
+
+.title-tweet > .buttons > button {
+  background-color: white;
+  padding: 8px;
+  border-radius: 999px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s ease;
+}
+
+.title-tweet > .buttons > .reply:hover {
+  background-color: #E8F5FE;
+}
+
+.title-tweet > .buttons > .like:hover {
+  background-color: #FDE7F2;
+}
+
+.title-tweet > .buttons > .retweet:hover {
+  background-color: #E5F8F2;
+}
+
+.title-tweet > .buttons img {
+  width: 22.5px;
+  height: auto;
+}
