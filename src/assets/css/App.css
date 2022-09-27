@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 .app-container {
   display: flex;
   justify-content: center;
@@ -35,8 +39,10 @@ aside.right-bar {
   border-left: 1px solid #eff3f4;
   border-right: 1px solid #eff3f4;
   position: relative;
-  width: 600px;
+  width: min(80vw, 600px);
 }
+
+
 @media (max-width: 1000px) {
   aside.right-bar {
     display: none;
@@ -71,6 +77,5 @@ aside.right-bar {
   .center-content-container {
     width: auto;
     border: none;
-
   }
 }

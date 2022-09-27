@@ -10,10 +10,6 @@
   top: 0;
 }
 
-.title-logo {
-  margin-bottom: 10px;
-}
-
 .search-link {
   display: none;
 }
@@ -25,11 +21,62 @@
   align-items: flex-start;
 }
 
-/* .main-buttons > button,
-.main-buttons > .link > button,
-.tweet,
-.profile,
-.title-logo { */
+.navbar-icon {
+  width: 28px;
+  height: 28px;
+}
+
+.main-buttons button,
+.profile-link .profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+  background-color: transparent;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.vertical-navbar .profile-link {
+  width: 100%;
+}
+
+.profile-link .profile {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.profile-link .profile > .navbar-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 999px;
+}
+
+.profile-link .profile {
+  gap: 5px;
+}
+
+.profile-link .profile > .profile-info {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.profile-link > .profile > .profile-info .name {
+  font-size: 0.7em;
+  max-width: 140px;
+  display: flex;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.profile-link > .profile > .profile-info .username {
+  font-size: 0.7em;
+}
+
 .main-buttons button,
 .title-logo,
 .tweet-link .tweet,
@@ -39,35 +86,48 @@
   border-radius: 9999px;
 }
 
-.navbar-icon {
-  width: 28px;
-  height: 28px;
+.main-buttons button:hover,
+.profile-link .profile:hover {
+  background-color: #e6e7e7;
 }
 
-.main-buttons button,
-.title-logo,
-.profile-link .profile {
+.title-logo {
+  margin-bottom: 10px;
+  background-color: transparent;
+  border: none;
+  width: 55px;
+  height: 55px;
+  transition: 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  padding-right: 20px;
+}
+
+.title-logo:hover {
+  background-color: #e8f5fe;
 }
 
 .vertical-navbar .tweet-link {
   margin-top: 10px;
   width: 100%;
-  border: 1px solid red;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
 
 .tweet-link .tweet {
+  color: white;
+  border: none;
+  background-color: #2b9bf0;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  transition: 0.3s ease;
+}
+
+.tweet-link .tweet:hover {
+  background-color: #268cd8;
 }
 
 .main-buttons > .link > .search {
@@ -89,22 +149,37 @@
     align-items: center;
   }
 
-  .button-text {
+  .button-text,
+  .profile-link .profile > .profile-info {
     display: none;
   }
 
+  .profile-link .profile {
+    justify-content: center;
+  }
   .main-buttons > button,
   .main-buttons > .link > button,
   .title-logo,
-  .profile {
+  .link.profile-link > button {
     padding: 12px;
   }
 
-  .tweet {
+  .tweet-link .tweet {
     width: auto;
   }
 
   .tweet > img {
+    display: block;
+  }
+}
+
+@media (max-width: 1000px) {
+  .main-buttons > .link > .search {
+    display: block;
+    font-size: 0;
+  }
+
+  .search-link {
     display: block;
   }
 }
@@ -129,28 +204,41 @@
     flex-grow: 1;
   }
 
-  /* temporary fix for the nested elements inside the <Link/> */
-  .link {
+  .horizontal-navbar > .link {
     display: flex;
+    position: relative;
+    flex-direction: column;
   }
-  .link > * {
+  .horizontal-navbar > .link > button {
+    background-color: white;
+    border: none;
     flex-grow: 1;
+    transition: 0.3s ease;
   }
+
+  .link > button > .active-bar {
+    background-color: red;
+    border-top-left-radius: 999px;
+    border-top-right-radius: 999px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    margin-top: auto;
+    transform: translateX(-2px);
+    transition: 0.3s ease;
+    transition: 0.3s ease;
+  }
+
+  .horizontal-navbar > .link > button:active {
+    background-color: red;
+
+  }
+
   /*                                                */
   .horizontal-navbar > .tweet {
     position: absolute;
     right: 20px;
     bottom: 75px;
-  }
-}
-
-@media (max-width: 1000px) {
-  .main-buttons > .link > .search {
-    display: block;
-    font-size: 0;
-  }
-
-  .search-link {
-    display: block;
   }
 }
