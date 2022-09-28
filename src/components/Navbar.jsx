@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../assets/css/Navbar.css";
 import messageIcon from "../assets/img/icons/message.svg";
 import homeIcon from "../assets/img/icons/home.svg";
@@ -11,6 +11,39 @@ import logoIcon from "../assets/img/icons/icon-small.png";
 function Navbar(props) {
   // state for tracking window and width and render the component accordingly
   const [windowWidth, setWindowWidth] = useState(0);
+  const location = useLocation();
+
+  const homeButtonActive = useRef("active");
+  const searchButtonActive = useRef("");
+  const messagesButtonActive = useRef("");
+  const profileButtonActive = useRef("");
+  function setActive(event) {
+    homeButtonActive.current = "";
+    searchButtonActive.current = "";
+    messagesButtonActive.current = "";
+    profileButtonActive.current = "";
+
+    let targetElement = event.target.className;
+    console.log(targetElement);
+    targetElement = targetElement.substring(0, targetElement.indexOf(" ")); // Split string on the first white space occurrence
+    switch (targetElement) {
+      case "home":
+        homeButtonActive.current = "active";
+        break;
+      case "search":
+        searchButtonActive.current = "active";
+        break;
+      case "messages":
+        messagesButtonActive.current = "active";
+        break;
+      case "profile":
+        profileButtonActive.current = "active";
+        break;
+      default:
+        console.log("failure!");
+        break;
+    }
+  }
 
   function updateDimensions() {
     const width = window.innerWidth;
@@ -37,30 +70,51 @@ function Navbar(props) {
 
   if (responsive.showMobileNavBar) {
     //if the width is narrow render mobile navbar
+
+    // in the case of the user navigetes to the /search path through the right bat
+    // set search button to active
+    if (location.pathname === "/search") {
+      homeButtonActive.current = "";
+      searchButtonActive.current = "active";
+      messagesButtonActive.current = "";
+      profileButtonActive.current = "";
+    }
+
     return (
       <div className="navbar-container">
         <nav className="horizontal-navbar">
           <Link className="link" to="home">
-            <button className="home">
+            <button
+              onClick={setActive}
+              className={`home ${homeButtonActive.current}`}
+            >
               <img src={homeIcon} alt="" className="navbar-icon" />
               <div className="active-bar"></div>
             </button>
           </Link>
           <Link className="link" to="/search">
-            <button className="search">
+            <button
+              onClick={setActive}
+              className={`search ${searchButtonActive.current}`}
+            >
               <img src={searchIcon} alt="" className="navbar-icon" />
               <div className="active-bar"></div>
             </button>
           </Link>
           <Link className="link">
-            <button className="messages">
+            <button
+              onClick={setActive}
+              className={`messages ${messagesButtonActive.current}`}
+            >
               <img src={messageIcon} alt="" className="navbar-icon" />
               <div className="active-bar"></div>
             </button>
           </Link>
-          <button className="tweet">
-            <img src={tweetIcon} alt="" className="navbar-icon" />
-          </button>
+          <Link className="tweet-link">
+            <button className="tweet">
+              <img src={tweetIcon} alt="" className="navbar-icon" />
+            </button>
+          </Link>
         </nav>
       </div>
     );
@@ -74,26 +128,38 @@ function Navbar(props) {
           </button>
           <div className="main-buttons">
             <Link className="link" to="home">
-              <button className="home">
-                <img src={homeIcon} alt="" className="navbar-icon" />
+              <button
+                onClick={setActive}
+                className={`home ${homeButtonActive.current}`}
+              >
+                <img src={homeIcon} alt="" />
                 <span className="button-text">Home</span>
               </button>
             </Link>
 
             <Link className="link search-link" to="/search">
-              <button className="search">
+              <button
+                onClick={setActive}
+                className={`search ${searchButtonActive.current}`}
+              >
                 <img src={searchIcon} alt="" className="navbar-icon" />
               </button>
             </Link>
             <Link className="link">
-              <button className="messages">
+              <button
+                onClick={setActive}
+                className={`messages ${messagesButtonActive.current}`}
+              >
                 <img src={messageIcon} alt="" className="navbar-icon" />
                 <span className="button-text">Messages</span>
               </button>
             </Link>
 
             <Link className="link">
-              <button className="profile">
+              <button
+                onClick={setActive}
+                className={`profile ${profileButtonActive.current}`}
+              >
                 <img src={userIcon} alt="" className="navbar-icon" />
                 <span className="button-text">Profile</span>
               </button>
