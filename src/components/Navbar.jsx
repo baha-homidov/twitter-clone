@@ -119,6 +119,13 @@ function Navbar(props) {
       </div>
     );
   } else {
+
+    if (location.pathname === "/home") {
+      homeButtonActive.current = "active";
+      searchButtonActive.current = "";
+      messagesButtonActive.current = "";
+      profileButtonActive.current = "";
+    }
     // else render the desktop navabar
     return (
       <div className="navbar-container">
