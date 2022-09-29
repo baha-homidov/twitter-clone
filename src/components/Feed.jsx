@@ -21,6 +21,7 @@ function Feed(props) {
   
     return (
       <div className="feed-container">
+
         <div className="top-bar">
             <div className="profile-icon">
               <img src="" alt="" className="icon" />

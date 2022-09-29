@@ -6,23 +6,34 @@
   height: 50px;
   display: flex;
   width: 100%;
-}
-
-.searchbar-container > form.search-form:hover {
-  border: 1px solid red;
+  border-radius: 999px;
+  position: relative;
+  align-items: center;
 }
 
 .searchbar-container > .search-form > input.field {
-  border-top-right-radius: 9999px;
-  border-bottom-right-radius: 9999px;
+  padding-left: 45px;
   width: 100%;
-  border: none;
+  height: 100%;
+  border-radius: 999px;
+  outline: none;
+  border: 1px solid white;
+  background-color: #EFF3F4;
+}
+
+.searchbar-container > .search-form > input.field:focus {
+  background-color: white;
+  border: 1px solid #2B9BF0;
 }
 
 .searchbar-container > .search-form > button.submit {
-  width: 44px;
+  position: absolute;
+  width: 43px;
+  margin-left: 2px;
+  height: 93%;
   border-bottom-left-radius: 9999px;
   border-top-left-radius: 9999px;
-  background-color: white;
+  background-color: transparent;
   border: none;
+ 
 }
