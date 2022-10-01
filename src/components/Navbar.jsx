@@ -13,6 +13,7 @@ function Navbar(props) {
   const [windowWidth, setWindowWidth] = useState(0);
   const location = useLocation();
 
+  const [currentActiveButton, setCurrentActiveButton] = useState("home");
   const homeButtonActive = useRef("active");
   const searchButtonActive = useRef("");
   const messagesButtonActive = useRef("");
@@ -24,7 +25,6 @@ function Navbar(props) {
     profileButtonActive.current = "";
 
     let targetElement = event.target.className;
-    console.log(targetElement);
     targetElement = targetElement.substring(0, targetElement.indexOf(" ")); // Split string on the first white space occurrence
     switch (targetElement) {
       case "home":
@@ -64,6 +64,49 @@ function Navbar(props) {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
+  useEffect(() => {
+    // listen to location changes and set the active button
+    updateActiveButton();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
+
+  function updateActiveButton() {
+    let currentLocation = location.pathname;
+    currentLocation = currentLocation.substring(
+      currentLocation.indexOf("/") + 1
+    ); // get the location name without the "/"
+
+    if (
+      currentLocation === "home" ||
+      currentLocation === "messages" ||
+      currentLocation === "search" ||
+      currentLocation === "profile"
+    ) {
+      homeButtonActive.current = "";
+      searchButtonActive.current = "";
+      messagesButtonActive.current = "";
+      profileButtonActive.current = "";
+      switch (currentLocation) {
+        case "home":
+          homeButtonActive.current = "active";
+          break;
+        case "search":
+          searchButtonActive.current = "active";
+          break;
+        case "messages":
+          messagesButtonActive.current = "active";
+          break;
+        case "profile":
+          profileButtonActive.current = "active";
+          break;
+
+        default:
+          break;
+      }
+      setCurrentActiveButton(currentLocation);
+    }
+  }
+
   const responsive = {
     showMobileNavBar: windowWidth < 480,
   };
@@ -101,7 +144,7 @@ function Navbar(props) {
               <div className="active-bar"></div>
             </button>
           </Link>
-          <Link className="link">
+          <Link to="/messages" className="link">
             <button
               onClick={setActive}
               className={`messages ${messagesButtonActive.current}`}
@@ -119,7 +162,6 @@ function Navbar(props) {
       </div>
     );
   } else {
-
     if (location.pathname === "/home") {
       homeButtonActive.current = "active";
       searchButtonActive.current = "";
@@ -152,7 +194,7 @@ function Navbar(props) {
                 <img src={searchIcon} alt="" className="navbar-icon" />
               </button>
             </Link>
-            <Link className="link">
+            <Link to="/messages" className="link">
               <button
                 onClick={setActive}
                 className={`messages ${messagesButtonActive.current}`}

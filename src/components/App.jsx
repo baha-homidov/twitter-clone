@@ -11,7 +11,6 @@ function App() {
 
   const redirect = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
   useEffect(() => {
     //redirect to /home directory if on a root location
     if (location.pathname === "/") {
