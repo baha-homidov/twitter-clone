@@ -3,7 +3,6 @@
   flex-direction: column;
   max-width: 18vw;
   min-height: 100vh;
-  align-items: center;
   justify-content: center;
   padding: 15px;
   position: sticky;
@@ -16,26 +15,22 @@ span.button-text {
   pointer-events: none;
 }
 
-.search-link {
-  display: none;
-}
-
 .main-buttons {
   display: flex;
   flex-direction: column;
-  align-items: center;
-
 
   gap: 10px;
   align-items: flex-start;
 }
 
 .main-buttons > * {
-
   width: 100%;
   display: flex;
-  justify-content: center;
 }
+
+.search-link {
+  display: none;
+} 
 
 .navbar-icon {
   width: 28px;
@@ -197,7 +192,6 @@ span.button-text {
   }
 
   .search-link {
-
     display: flex;
     width: 100%;
     justify-content: center;
