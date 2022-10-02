@@ -14,6 +14,11 @@ a {
   text-decoration: none;
 }
 
+button,
+.link {
+  cursor: pointer !important;
+}
+
 .app-container {
   display: flex;
   justify-content: center;
@@ -33,7 +38,6 @@ a {
 
 aside.right-bar {
   width: 280px;
-
   position: sticky;
   position: -webkit-sticky; /* Safari */
   top: 0;

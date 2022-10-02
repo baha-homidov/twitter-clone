@@ -26,7 +26,7 @@ function Feed(props) {
             <div className="profile-icon">
               <img src="" alt="" className="icon" />
             </div>
-            <h2 className="latest-tweets">Latest Tweets</h2>
+            <h1 className="latest-tweets">Latest Tweets</h1>
           </div>
         {tweetArray.map((element, index) => {
           return <Tweet key={index.toString()} {...element} />;

@@ -1,4 +1,4 @@
-.top-bar {
+.messages-container > .top-bar {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.929);
   backdrop-filter: blur(2px);
@@ -14,23 +14,38 @@
   font-weight: bold;
 }
 
-.top-bar > .profile-icon {
+.messages-container .top-bar .profile-icon {
   display: none;
 }
 
+.messages-container .top-bar > .link.start-chat-link {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.messages-container .top-bar button.start-chat {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.messages-container .top-bar > .start-chat-link img {
+  width: 24px;
+}
+
 @media (max-width: 480px) {
-  .top-bar > .profile-icon {
+  .messages-container .top-bar .profile-icon {
     display: block;
     width: 32px;
     height: 32px;
     margin: 0;
     padding: 0;
     border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(0, 0, 0);
     border-radius: 9999px;
   }
 
-  .top-bar > .latest-tweets {
+  .messages-container .top-bar h1 {
     margin-left: 20px;
   }
 }

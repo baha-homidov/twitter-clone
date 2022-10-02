@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./components/App";
 import Search from "./components/Search";
 import Messages from "./components/Messages";
+import StartChat from "./components/StartChat";
 // React Router libarary
 import {
   createBrowserRouter,
@@ -37,6 +38,12 @@ const router = createBrowserRouter([
       {
         path: "messages",
         element: <Messages />,
+        children: [
+          {
+            path: "startchat",
+            element: <StartChat />,
+          },
+        ],
       },
     ],
   },

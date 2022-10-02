@@ -72,39 +72,29 @@ function Navbar(props) {
 
   function updateActiveButton() {
     let currentLocation = location.pathname;
-    currentLocation = currentLocation.substring(
-      currentLocation.indexOf("/") + 1
-    ); // get the location name without the "/"
 
-    if (
-      currentLocation === "home" ||
-      currentLocation === "messages" ||
-      currentLocation === "search" ||
-      currentLocation === "profile"
-    ) {
-      homeButtonActive.current = "";
-      searchButtonActive.current = "";
-      messagesButtonActive.current = "";
-      profileButtonActive.current = "";
-      switch (currentLocation) {
-        case "home":
-          homeButtonActive.current = "active";
-          break;
-        case "search":
-          searchButtonActive.current = "active";
-          break;
-        case "messages":
-          messagesButtonActive.current = "active";
-          break;
-        case "profile":
-          profileButtonActive.current = "active";
-          break;
+    homeButtonActive.current = "";
+    searchButtonActive.current = "";
+    messagesButtonActive.current = "";
+    profileButtonActive.current = "";
+    switch (true) {
+      case currentLocation.includes("home"):
+        homeButtonActive.current = "active";
+        break;
+      case currentLocation.includes("search"):
+        searchButtonActive.current = "active";
+        break;
+      case currentLocation.includes("messages"):
+        messagesButtonActive.current = "active";
+        break;
+      case currentLocation.includes("profile"):
+        profileButtonActive.current = "active";
+        break;
 
-        default:
-          break;
-      }
-      setCurrentActiveButton(currentLocation);
+      default:
+        break;
     }
+    setCurrentActiveButton(currentLocation);
   }
 
   const responsive = {
