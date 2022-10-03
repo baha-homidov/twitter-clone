@@ -143,11 +143,7 @@ function Navbar(props) {
               <div className="active-bar"></div>
             </button>
           </Link>
-          <Link className="tweet-link">
-            <button className="tweet">
-              <img src={tweetIcon} alt="" className="navbar-icon" />
-            </button>
-          </Link>
+          
         </nav>
       </div>
     );

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import tweetIcon from "../assets/img/icons/tweet.svg"
 import "../assets/css/Feed.css";
 import Tweet from "./Tweet";
 
@@ -31,6 +33,11 @@ function Feed(props) {
         {tweetArray.map((element, index) => {
           return <Tweet key={index.toString()} {...element} />;
         })}
+        <Link className="tweet-link">
+            <button className="tweet">
+              <img src={tweetIcon} alt="" className="navbar-icon" />
+            </button>
+          </Link>
       </div>
     );
   }

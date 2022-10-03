@@ -30,7 +30,7 @@ span.button-text {
 
 .search-link {
   display: none;
-} 
+}
 
 .navbar-icon {
   width: 28px;
@@ -90,7 +90,7 @@ span.button-text {
 
 .main-buttons button,
 .title-logo,
-.tweet-link .tweet,
+.tweet,
 .profile-link .profile {
   padding: 12px;
   font-size: 20px;
@@ -246,24 +246,4 @@ span.button-text {
     background-color: #e6e7e7;
   }
 
-  .horizontal-navbar > .tweet-link {
-    position: absolute;
-    right: 25px;
-    bottom: 75px;
-  }
-
-  .horizontal-navbar > .tweet-link > .tweet {
-    width: 56px;
-    height: 56px;
-    border-radius: 999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #2b9bf0;
-    border: none;
-  }
-
-  .horizontal-navbar > .tweet-link > .tweet:active {
-    background-color: #207bc1;
-  }
 }

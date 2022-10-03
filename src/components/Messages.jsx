@@ -2,6 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import User from "./User";
 import userIcon from "../assets/img/icons/user.svg";
 import newChatIcon from "../assets/img/icons/newchat.svg";
+import newChatIconWhite from "../assets/img/icons/newchatwhite.svg";
 import "../assets/css/Messages.css";
 export default function Messages() {
   const conversationsArray = [];
@@ -19,6 +20,11 @@ export default function Messages() {
           </button>
         </Link>
       </div>
+      <Link className="link start-chat-link" to="startchat">
+        <button className="start-chat">
+          <img src={newChatIconWhite} alt="" />
+        </button>
+      </Link>
       {conversationsArray.length === 0 && ( // if there are no conversations render welcome screen
         <div className="welcome-container">
           <h2 className="welcome">Welcome to your inbox!</h2>

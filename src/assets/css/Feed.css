@@ -1,3 +1,38 @@
+.feed-container {
+  position: relative;
+}
+
+.feed-container .tweet-link {
+  display: none;
+  padding: 12px;
+  font-size: 20px;
+  border-radius: 9999px;
+}
+
+
+
+.feed-container > .tweet-link {
+  position: fixed;
+  right: 25px;
+  bottom: 75px;
+}
+
+.feed-container > .tweet-link > .tweet {
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #2b9bf0;
+  border: none;
+
+}
+
+.feed-container > .tweet-link > .tweet:active {
+  background-color: #207bc1;
+}
+
 .top-bar {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.929);
@@ -32,5 +67,9 @@
 
   .top-bar > .latest-tweets {
     margin-left: 20px;
+  }
+  
+  .feed-container > .tweet-link {
+    display: block;
   }
 }
