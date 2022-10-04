@@ -5,7 +5,7 @@ import newChatIcon from "../assets/img/icons/newchat.svg";
 import newChatIconWhite from "../assets/img/icons/newchatwhite.svg";
 import "../assets/css/Messages.css";
 export default function Messages() {
-  const conversationsArray = [];
+  const conversationsArray = ["s"];
 
   return (
     <div className="messages-container">
@@ -37,10 +37,16 @@ export default function Messages() {
         </div>
       )}
       {conversationsArray.length !== 0 && (
-        <div className="conversations-contaienr">
-          <User />
-          <User />
-          <User />
+        <div className="conversations-container">
+          <Link to="/conversation/id" className="link">
+            <User />
+          </Link>
+          <Link to="/conversation/id" className="link">
+            <User />
+          </Link>
+          <Link to="/conversation/id" className="link">
+            <User />
+          </Link>
         </div>
       )}
       <Outlet />

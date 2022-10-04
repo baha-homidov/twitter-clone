@@ -1,0 +1,30 @@
+.user-component {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.user-component > .user-icon {
+  height: 40px;
+  width: 40px;
+  margin-right: 12px;
+  border-radius: 999px;
+}
+
+.user-component > .profile-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+  font-size: 15px;
+}
+
+.user-component > .profile-info > .name {
+  font-weight: 700;
+}
+
+.user-component > .profile-info > .username {
+  color: #536471;
+}

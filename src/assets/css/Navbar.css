@@ -211,6 +211,7 @@ span.button-text {
     padding-left: 16px;
     padding-right: 16px;
     z-index: 2;
+    background-color: white;
   }
 
   .horizontal-navbar > * {

@@ -21,7 +21,6 @@
 }
 
 .messages-container > .welcome-container {
-
   align-self: center;
   flex-direction: column;
   width: min(336px, 100%);
@@ -55,7 +54,6 @@
 }
 
 .welcome-container .link {
-
   align-self: baseline;
   border-radius: 999px;
 }
@@ -103,6 +101,16 @@
 
 .messages-container > .start-chat-link:active {
   background-color: #207bc1;
+}
+
+.conversations-container > .link > .user-component {
+  height: 80px;
+  padding: 16px;
+  color: black;
+}
+
+.conversations-container > .link > .user-component:hover {
+  background-color: #edf1f4;
 }
 
 @media (max-width: 480px) {

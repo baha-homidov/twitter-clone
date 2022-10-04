@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
+import Conversation from "./components/Conversation";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
             element: <StartChat />,
           },
         ],
+      },
+      {
+        path: "conversation/:conversationID",
+        element: <Conversation />,
       },
     ],
   },

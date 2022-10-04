@@ -1,0 +1,53 @@
+.conversation-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 9999;
+}
+
+.conversation-container > .top-bar {
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  padding: 0px 16px 0px 16px;
+}
+
+.conversation-container button.back {
+  border: none;
+  background-color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  height: 36px;
+  width: 36px;
+  margin-right: 17px;
+  transition: background-color 0.2s ease;
+}
+
+.conversation-container button.back:hover {
+  background-color: #e6e7e7;
+}
+
+.conversation-container .user-component .user-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.conversation-container .user-component .profile-info {
+  gap: 0;
+}
+
+.conversation-container .user-component .name {
+  font-size: 1.3em;
+}
+
+
+.conversation-container .input-area {
+  z-index: 999;
+  border: 1px solid red;
+  margin-top: auto;
+  height: 48px;
+
+}

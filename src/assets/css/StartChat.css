@@ -1,4 +1,5 @@
 .start-chat-container {
+  z-index: 1;
   position: fixed;
   width: 100vw;
   height: 100%;
@@ -12,7 +13,6 @@
 
 .start-chat-container > .content {
   background-color: white;
-  border: 1px solid black;
   max-width: 600px;
   height: 650px;
   flex-shrink: 1;
@@ -49,7 +49,7 @@
 }
 
 .start-chat-container .search-form {
-  border: 1px solid red;
+  direction: rtl; /* make elements flow right to left (rtl) for using sibling selectors*/
   height: 42px;
   padding: 0px 16px 0px 16px;
   display: flex;
@@ -57,11 +57,16 @@
 }
 
 .search-form input {
+  direction: ltr; /* setting content back to default after reversing it */
   height: 100%;
   flex-grow: 1;
   border: none;
   font-size: 1.1em;
   outline: none;
+}
+
+.search-form input:focus + .search-icon {
+  color: #2da0f0;
 }
 
 .search-icon {
@@ -73,4 +78,19 @@
 .back-icon {
   width: 24px;
   height: 24px;
+}
+
+@media (max-width: 700px) {
+  .start-chat-container {
+
+    z-index: 3;
+  }
+
+  .start-chat-container > .content {
+    flex-grow: 1;
+    max-width: 100vw;
+    height: 100%;
+    z-index: 5;
+    border-radius: 0;
+  }
 }

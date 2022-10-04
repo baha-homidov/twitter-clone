@@ -21,7 +21,10 @@ function App() {
   useEffect(() => {
     // listen to location change and hide the right-bar if on the "/messages location"
     let currentLocation = location.pathname;
-    if (currentLocation.indexOf("messages") !== -1) {
+    if (
+      currentLocation.includes("messages") ||
+      currentLocation.includes("conversation")
+    ) {
       // if string contains a substring
       setRightBar(false);
     } else {

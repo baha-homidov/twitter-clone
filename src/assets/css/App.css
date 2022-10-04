@@ -46,6 +46,7 @@ button,
 } */
 
 aside.right-bar {
+
   width: 280px;
   position: sticky;
   position: -webkit-sticky; /* Safari */
