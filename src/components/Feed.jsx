@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import tweetIcon from "../assets/img/icons/tweet.svg"
+import tweetIcon from "../assets/img/icons/tweet.svg";
 import "../assets/css/Feed.css";
 import Tweet from "./Tweet";
 
@@ -20,27 +20,24 @@ function Feed(props) {
     setTweetArray(tweetArray);
   }, []);
 
-  
-    return (
-      <div className="feed-container">
-
-        <div className="top-bar">
-            <div className="profile-icon">
-              <img src="" alt="" className="icon" />
-            </div>
-            <h1 className="latest-tweets">Latest Tweets</h1>
-          </div>
-        {tweetArray.map((element, index) => {
-          return <Tweet key={index.toString()} {...element} />;
-        })}
-        <Link className="tweet-link">
-            <button className="tweet">
-              <img src={tweetIcon} alt="" className="navbar-icon" />
-            </button>
-          </Link>
+  return (
+    <div className="feed-container">
+      <div className="top-bar">
+        <div className="profile-icon">
+          <img src="" alt="" className="icon" />
+        </div>
+        <h1 className="latest-tweets">Latest Tweets</h1>
       </div>
-    );
-  }
-
+      {tweetArray.map((element, index) => {
+        return <Tweet key={index.toString()} {...element} />;
+      })}
+      <Link className="tweet-link">
+        <button className="tweet">
+          <img src={tweetIcon} alt="" className="navbar-icon" />
+        </button>
+      </Link>
+    </div>
+  );
+}
 
 export default Feed;

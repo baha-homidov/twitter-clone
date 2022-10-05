@@ -5,6 +5,7 @@ import App from "./components/App";
 import Search from "./components/Search";
 import Messages from "./components/Messages";
 import StartChat from "./components/StartChat";
+import UserProfile from "./components/UserProfile";
 // React Router libarary
 import {
   createBrowserRouter,
@@ -15,6 +16,7 @@ import {
 import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
 import Conversation from "./components/Conversation";
+import User from "./components/User";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -47,8 +49,12 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "conversation/:conversationID",
+        path: "conversation/:conversationId",
         element: <Conversation />,
+      },
+      {
+        path: "profile/:profileId",
+        element: <UserProfile />,
       },
     ],
   },

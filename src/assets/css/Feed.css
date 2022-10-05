@@ -1,5 +1,6 @@
 .feed-container {
   position: relative;
+  padding-bottom: 50px;
 }
 
 .feed-container .tweet-link {

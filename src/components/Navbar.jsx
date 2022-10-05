@@ -190,7 +190,7 @@ function Navbar(props) {
               </button>
             </Link>
 
-            <Link className="link">
+            <Link to="/profile/123" className="link">
               <button
                 onClick={setActive}
                 className={`profile ${profileButtonActive.current}`}

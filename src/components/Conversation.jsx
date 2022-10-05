@@ -162,11 +162,11 @@ export default function Conversation() {
         <User />
       </div>
       <div className="message-container">
-        {messageArray.map((element) => {
+        {messageArray.map((element, index) => {
           if (element.self === true) {
-            return <div className="text-entry self">{element.text}</div>;
+            return <div key={index} className="text-entry self">{element.text}</div>;
           }
-          return <div className="text-entry">{element.text}</div>;
+          return <div key={index} className="text-entry">{element.text}</div>;
         })}
       </div>
       <div className="input-area">
