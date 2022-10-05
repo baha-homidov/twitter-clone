@@ -33,7 +33,7 @@ function Search(props) {
       <div className="bar">
         <Link className="link" to={"/"}>
           <button className="back">
-            <img src={arrow} alt="" className="search-icon" />
+            <img src={arrow} alt="" className="back-icon" />
           </button>
         </Link>
         <form className="search-form" onSubmit={handleSubmit}>
