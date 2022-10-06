@@ -86,7 +86,7 @@ div.text-entry.self {
   padding: 4px 10px 4px 10px;
 }
 
-.input-area button {
+.conversation-container .input-area button {
   border: none;
   outline: none;
   display: flex;
@@ -120,7 +120,7 @@ label.image-picker:hover {
   gap: 4px;
 }
 
-label.image-picker {
+.conversation-container label.image-picker {
   height: 34px;
   width: 34px;
   display: flex;

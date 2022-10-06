@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import tweetIcon from "../assets/img/icons/tweet.svg";
 import "../assets/css/Feed.css";
 import Tweet from "./Tweet";
@@ -22,6 +22,7 @@ function Feed(props) {
 
   return (
     <div className="feed-container">
+      <Outlet />
       <div className="top-bar">
         <div className="profile-icon">
           <img src="" alt="" className="icon" />

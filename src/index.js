@@ -6,6 +6,7 @@ import Search from "./components/Search";
 import Messages from "./components/Messages";
 import StartChat from "./components/StartChat";
 import UserProfile from "./components/UserProfile";
+import ComposeTweet from "./components/ComposeTweet";
 // React Router libarary
 import {
   createBrowserRouter,
@@ -25,6 +26,12 @@ const router = createBrowserRouter([
       {
         path: "home",
         element: <Feed />,
+        children: [
+          {
+            path: "compose/tweet",
+            element: <ComposeTweet />,
+          },
+        ],
       },
       {
         path: "search",
@@ -48,6 +55,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+
       {
         path: "conversation/:conversationId",
         element: <Conversation />,

@@ -34,7 +34,7 @@
   background-color: #207bc1;
 }
 
-.feed-container .top-bar {
+.feed-container > .top-bar {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.929);
   backdrop-filter: blur(2px);

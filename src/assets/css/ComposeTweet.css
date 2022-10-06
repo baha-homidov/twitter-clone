@@ -1,0 +1,123 @@
+.compose-tweet-container {
+  z-index: 2;
+  border: 1px solid black;
+  background-color: white;
+  position: fixed;
+  width: 600px;
+  height: 320px;
+  border-radius: 16px;
+  left: calc(50vw - 300px);
+  top: 50px;
+}
+
+.compose-tweet-container .content {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.compose-tweet-container .top-bar {
+  height: 53px;
+
+  padding: 0px 16px 0px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.compose-tweet-container button.back {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.compose-tweet-container button.back:hover,
+.compose-tweet-container button.back:active {
+  background-color: #e6e7e7;
+}
+
+.compose-tweet-container button.tweet {
+  margin-left: auto;
+  height: 36px;
+  padding: 0px 16px 0px 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  background-color: #1d9bf0;
+  border: none;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.compose-tweet-container button.tweet:hover,
+.compose-tweet-container button.tweet:active {
+  background-color: #1a8cd8;
+}
+
+.compose-tweet-container .flex-container {
+  border: 1px solid blue;
+  padding: 4px 16px 4px 16px;
+  flex-grow: 1;
+  display: flex;
+}
+
+.compose-tweet-container .flex-container .avatar-container {
+  width: 48px;
+  margin-right: 12px;
+}
+
+.compose-tweet-container .flex-container .avatar-container img {
+  width: 100%;
+  border-radius: 999px;
+  background-color: greenyellow;
+}
+
+.compose-tweet-container .input-area {
+  flex-grow: 1;
+}
+
+.compose-tweet-container .input-area .tweet-input {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.compose-tweet-container .tweet-text {
+  flex-grow: 1;
+  font-family: inherit;
+  font-size: 1.5em;
+  border: none;
+  outline: none;
+  padding-top: 20px;
+  border-bottom: 1px solid #EFF3F4;
+  /* border-bottom: 1px solid blue; */
+}
+
+.compose-tweet-container textarea {
+  resize: none;
+}
+
+.compose-tweet-container div.submit-container {
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 4px;
+}
+
+.compose-tweet-container .image-picker {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid red;
+
+}
