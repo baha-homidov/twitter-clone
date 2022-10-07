@@ -1,21 +1,44 @@
 import "../assets/css/ComposeTweet.css";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 export default function ComposeTweet() {
   const [value, setValue] = useState("");
-
+  const [length, setLength] = useState(0);
+  const navigate = useNavigate();
   function handleChange(event) {
     setValue(event.target.value);
+
+    setLength(event.target.value.length);
   }
 
   function handleSubmit(event) {
     alert(value);
     event.preventDefault();
   }
+
+  function navigateHome() {
+    navigate("/home");
+  }
+
+  function stopBubbling(event) {
+    event.stopPropagation();
+  }
+
+  useEffect(() => {
+    // prevent background elements from scrolling when element mounts
+    // and turn the scrolling back on when element unmounts
+    document.documentElement.style.overflow = "hidden";
+    document.body.scroll = "no";
+    return () => {
+      document.documentElement.style.overflow = "scroll";
+      document.body.scroll = "yes";
+    };
+  }, []);
+
   return (
-    <div className="compose-tweet-container">
-      <div className="content">
+    <div onClick={navigateHome} className="compose-tweet-container">
+      <div onClick={stopBubbling} className="content">
         <div className="top-bar">
           <Link to="/home" className="link">
             <button className="back">
@@ -33,14 +56,20 @@ export default function ComposeTweet() {
               </svg>
             </button>
           </Link>
-          <button className="tweet mobile">Tweet</button>
+          <button form="tweet-form" type="submit" className="tweet mobile">
+            Tweet
+          </button>
         </div>
         <div className="flex-container">
           <div className="avatar-container">
             <img src={userPhoto} alt="" />
           </div>
           <div className="input-area">
-            <form className="tweet-input" onSubmit={handleSubmit}>
+            <form
+              id="tweet-form"
+              className="tweet-input"
+              onSubmit={handleSubmit}
+            >
               {/* <input
                 className="tweet-text"
                 type="text"
@@ -52,8 +81,9 @@ export default function ComposeTweet() {
                 placeholder="What's happening?"
                 value={value}
                 onChange={handleChange}
-                
                 className="tweet-text"
+                required
+                maxLength="280"
               ></textarea>
 
               <div className="submit-container">
@@ -73,6 +103,7 @@ export default function ComposeTweet() {
                     ></path>
                   </svg>
                 </label>
+                <div className="twit-length">{length}/280</div>
                 <button className="tweet desktop" type="submit">
                   Tweet
                 </button>

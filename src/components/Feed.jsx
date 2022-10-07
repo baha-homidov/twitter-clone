@@ -32,7 +32,7 @@ function Feed(props) {
       {tweetArray.map((element, index) => {
         return <Tweet key={index.toString()} {...element} />;
       })}
-      <Link className="tweet-link">
+      <Link to="/home/compose/tweet" className="tweet-link">
         <button className="tweet">
           <img src={tweetIcon} alt="" className="navbar-icon" />
         </button>

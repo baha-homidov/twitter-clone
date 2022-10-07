@@ -200,7 +200,7 @@ function Navbar(props) {
               </button>
             </Link>
           </div>
-          <Link className="link tweet-link">
+          <Link to="/home/compose/tweet" className="link tweet-link">
             <button className="tweet">
               <img src={tweetIcon} alt="" className="navbar-icon" />
               <span className="button-text">Tweet</span>
