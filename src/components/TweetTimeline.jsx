@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "../assets/css/TweetTimeline.css";
 import Tweet from "./Tweet";
 import userPhoto from "../assets/img/icons/user.svg";
@@ -21,6 +21,7 @@ function TweetTimeline(props) {
 
   return (
     <div className="tweet-timeline-container">
+      <Outlet />
       <div className="timeline-header">
         <Link className="link" to="/home">
           <button className="back">

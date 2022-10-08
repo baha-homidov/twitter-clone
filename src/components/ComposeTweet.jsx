@@ -2,7 +2,7 @@ import "../assets/css/ComposeTweet.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
-export default function ComposeTweet() {
+export default function ComposeTweet(props) {
   const [value, setValue] = useState("");
   const [length, setLength] = useState(0);
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ export default function ComposeTweet() {
     event.preventDefault();
   }
 
-  function navigateHome() {
-    navigate("/home");
+  function navigateBack() {
+    navigate(-1);
   }
 
   function stopBubbling(event) {
@@ -37,29 +37,52 @@ export default function ComposeTweet() {
   }, []);
 
   return (
-    <div onClick={navigateHome} className="compose-tweet-container">
+    <div onClick={navigateBack} className="compose-tweet-container">
       <div onClick={stopBubbling} className="content">
         <div className="top-bar">
-          <Link to="/home" className="link">
-            <button className="back">
-              <svg
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="currentColor"
-                  d="M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z"
-                ></path>
-              </svg>
-            </button>
-          </Link>
+          <button onClick={navigateBack} className="back">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z"
+              ></path>
+            </svg>
+          </button>
+
           <button form="tweet-form" type="submit" className="tweet mobile">
             Tweet
           </button>
         </div>
+        {props.reply && (
+          <div className="source-tweet">
+            <div className="source-flex-container">
+              <div className="avatar-container">
+                <img src={userPhoto} alt="" />
+                <div className="vertical-line"></div>
+              </div>
+              <div className="text-container">
+                <div className="user-info">
+                  <span className="name">John Smith</span>
+                  <span className="username">@johnsmith</span>
+                </div>
+                <div className="tweet-text">
+                  Lorem ipsum sit domot amen lala bla lolo Lorem ipsum sit domot
+                  amen lala bla lolo
+                </div>
+                <div className="replying-to">
+                  Replying to
+                  <span className="username">@johnsmith</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="flex-container">
           <div className="avatar-container">
             <img src={userPhoto} alt="" />
@@ -70,13 +93,6 @@ export default function ComposeTweet() {
               className="tweet-input"
               onSubmit={handleSubmit}
             >
-              {/* <input
-                className="tweet-text"
-                type="text"
-                value={value}
-                onChange={handleChange}
-                placeholder="What's happening?"
-              /> */}
               <textarea
                 placeholder="What's happening?"
                 value={value}
@@ -103,7 +119,7 @@ export default function ComposeTweet() {
                     ></path>
                   </svg>
                 </label>
-                <div className="twit-length">{length}/280</div>
+                <div className="tweet-length">{length}/280</div>
                 <button className="tweet desktop" type="submit">
                   Tweet
                 </button>

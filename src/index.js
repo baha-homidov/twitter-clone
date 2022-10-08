@@ -31,19 +31,41 @@ const router = createBrowserRouter([
             path: "compose/tweet",
             element: <ComposeTweet />,
           },
+          {
+            path: ":tweetId/reply",
+            element: <ComposeTweet reply={true}/>,
+          },
         ],
       },
       {
         path: "search",
         element: <Search />,
+        children: [
+          {
+            path: ":tweetId/reply",
+            element: <ComposeTweet reply={true}/>,
+          },
+        ],
       },
       {
         path: "tweet/:tweetId",
         element: <TweetTimeline />,
+        children: [
+          {
+            path: ":tweetId/reply",
+            element: <ComposeTweet reply={true}/>,
+          },
+        ],
       },
       {
         path: "search/:searchId",
         element: <Search />,
+        children: [
+          {
+            path: ":tweetId/reply",
+            element: <ComposeTweet reply={true}/>,
+          },
+        ],
       },
       {
         path: "messages",
@@ -63,6 +85,12 @@ const router = createBrowserRouter([
       {
         path: "profile/:profileId",
         element: <UserProfile />,
+        children: [
+          {
+            path: ":tweetId/reply",
+            element: <ComposeTweet reply={true} />,
+          },
+        ],
       },
     ],
   },

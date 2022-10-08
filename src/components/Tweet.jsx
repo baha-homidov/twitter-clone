@@ -3,6 +3,7 @@ import retweetIcon from "../assets/img/icons/retweet.svg";
 import likeIcon from "../assets/img/icons/like.svg";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import { useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import "../assets/css/Tweet.css";
 function Tweet(props) {
   const redirect = useNavigate();
@@ -17,6 +18,7 @@ function Tweet(props) {
       }}
       className="tweet-container"
     >
+     
       <img src={userPhoto} alt="" className="tweet-userphoto" />
 
       <div className="profile-info">
@@ -25,17 +27,19 @@ function Tweet(props) {
       </div>
       <div className="tweet-text">{props.text}</div>
       <div className="action-buttons">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          className="comment"
-        >
-          <div className="reply-icon">
-            <img src={commentIcon} alt="" />
-          </div>
-          <span className="reply-num">12</span>
-        </button>
+        <Link to="tweetId/reply" className="link">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="comment"
+          >
+            <div className="reply-icon">
+              <img src={commentIcon} alt="" />
+            </div>
+            <span className="reply-num">12</span>
+          </button>
+        </Link>
         <button
           onClick={(e) => {
             e.stopPropagation();

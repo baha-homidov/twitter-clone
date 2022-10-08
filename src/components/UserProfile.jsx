@@ -1,7 +1,7 @@
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/UserProfile.css";
 import Tweet from "./Tweet";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 export default function UserProfile() {
   const arr = []; // placeholder for rendering some tweets
   for (let i = 0; i < 12; i++) {
@@ -13,6 +13,7 @@ export default function UserProfile() {
   }
   return (
     <div className="user-profile-container">
+      <Outlet />
       <div className="top-bar">
         <Link to="/home" className="link">
           <button className="back">
