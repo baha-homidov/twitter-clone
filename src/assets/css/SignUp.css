@@ -1,0 +1,94 @@
+.sign-up-container {
+  border: 1px solid red;
+  position: absolute;
+  width: min(600px, 100vw);
+  margin-top: 100px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-up-container .top-bar {
+  height: 53px;
+  border-radius: 16px 16px 0px 0px;
+  padding: 0px 16px 0px 16px;
+  display: flex;
+  align-items: center;
+  align-self: baseline;
+}
+
+.sign-up-container button.back {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.sign-up-container button.back:hover,
+.sign-up-container button.back:active {
+  background-color: #e6e7e7;
+}
+
+.sign-up-container .title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sign-up-container .content {
+  width: min(350px, 80%);
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: column;
+}
+.sign-up-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sign-up-container form input {
+  border-radius: 5px;
+  width: 100%;
+  height: 56px;
+  padding: 7px;
+  padding-top: 20px;
+  font-size: 1.1em;
+  border: 1px solid #CFD9DE;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.sign-up-container form input:focus {
+  border: 1px solid #2b9bf0;
+}
+
+.sign-up-container form div {
+  position: relative;
+}
+
+.sign-up-container form .label {
+  pointer-events: none;
+  color: #657580;
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  transition: 0.2s ease;
+}
+.sign-up-container form input:focus + .label {
+  top: 10px;
+  left: 7px;
+  font-size: 1em;
+  color: #2B9BF0;
+}
+
+.sign-up-container form input:invalid + .label {
+color: red;
+}

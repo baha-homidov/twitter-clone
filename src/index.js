@@ -9,6 +9,7 @@ import UserProfile from "./components/UserProfile";
 import ComposeTweet from "./components/ComposeTweet";
 import NotFound from "./components/NotFound";
 import Welcome from "./components/Welcome";
+import SignUp from "./components/SignUp";
 // React Router libarary
 import {
   createBrowserRouter,
@@ -100,6 +101,12 @@ const router = createBrowserRouter([
   {
     path: "/welcome",
     element: <Welcome />,
+    children: [
+      {
+        path: "sign-up",
+        element: <SignUp />
+      }
+    ]
   },
 ]);
 

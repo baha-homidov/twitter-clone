@@ -1,35 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import logoIcon from "../assets/img/icons/icon.png";
 import background from "../assets/img/icons/background.png";
 import "../assets/css/Welcome.css";
 
 export default function Welcome() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  function handleName(event) {
-    setName(event.target.value);
-  }
-  function handleUsername(event) {
-    setUsername(event.target.value);
-  }
-  function handlePassword(event) {
-    handlePassword(event.target.value);
-  }
-  function handleConfirmPassword(event) {
-    setConfirmPassword(event.target.value);
-  }
-
-  function handleSubmit(event) {
-    alert(name, username, password, confirmPassword);
-    event.preventDefault();
-  }
-
+ 
   return (
     <div className="welcome-component">
+      <Outlet />
       <div className="content">
         <img className="logo" src={logoIcon} alt="" />
         <div className="happening-now">Happening now</div>
@@ -69,9 +48,8 @@ export default function Welcome() {
           <div className="line"></div>
           <span>or</span>
           <div className="line"></div>
-
         </div>
-        <Link className="link">
+        <Link to="sign-up" className="link">
           <button className="sign-up">Sign up manually</button>
         </Link>
         <div className="have-account">Already have an account?</div>
