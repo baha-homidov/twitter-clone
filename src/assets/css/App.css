@@ -4,11 +4,12 @@ html {
   overflow-y: scroll;
 }
 
+
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  
 }
 
 input,
@@ -46,7 +47,6 @@ button,
 } */
 
 aside.right-bar {
-
   width: 280px;
   position: sticky;
   position: -webkit-sticky; /* Safari */

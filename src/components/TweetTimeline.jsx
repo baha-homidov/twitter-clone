@@ -43,10 +43,12 @@ function TweetTimeline(props) {
           Lorem ipsum si omo lorem damet posum, tuta tama lora poco macarono
         </div>
         <div className="buttons">
-          <button className="reply">
-            <img src={comment} alt="" />
-            12
-          </button>
+          <Link to="tweetId/reply" className="link">
+            <button className="reply">
+              <img src={comment} alt="" />
+              12
+            </button>
+          </Link>
           <button className="retweet">
             <img src={retweet} alt="" />
             12
@@ -58,8 +60,8 @@ function TweetTimeline(props) {
         </div>
       </div>
       {tweetArray.map((element, index) => {
-          return <Tweet key={index.toString()} {...element} />;
-        })}
+        return <Tweet key={index.toString()} {...element} />;
+      })}
     </div>
   );
 }

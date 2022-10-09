@@ -30,7 +30,7 @@ function Feed(props) {
         <h1 className="latest-tweets">Latest Tweets</h1>
       </div>
       {tweetArray.map((element, index) => {
-        return <Tweet key={index.toString()} {...element} />;
+        return <Tweet retweeted={true} key={index.toString()} {...element} />;
       })}
       <Link to="/home/compose/tweet" className="tweet-link">
         <button className="tweet">

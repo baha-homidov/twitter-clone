@@ -7,6 +7,8 @@ import Messages from "./components/Messages";
 import StartChat from "./components/StartChat";
 import UserProfile from "./components/UserProfile";
 import ComposeTweet from "./components/ComposeTweet";
+import NotFound from "./components/NotFound";
+import Welcome from "./components/Welcome";
 // React Router libarary
 import {
   createBrowserRouter,
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         path: "home",
@@ -33,7 +36,7 @@ const router = createBrowserRouter([
           },
           {
             path: ":tweetId/reply",
-            element: <ComposeTweet reply={true}/>,
+            element: <ComposeTweet reply={true} />,
           },
         ],
       },
@@ -43,7 +46,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":tweetId/reply",
-            element: <ComposeTweet reply={true}/>,
+            element: <ComposeTweet reply={true} />,
           },
         ],
       },
@@ -53,7 +56,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":tweetId/reply",
-            element: <ComposeTweet reply={true}/>,
+            element: <ComposeTweet reply={true} />,
           },
         ],
       },
@@ -63,7 +66,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: ":tweetId/reply",
-            element: <ComposeTweet reply={true}/>,
+            element: <ComposeTweet reply={true} />,
           },
         ],
       },
@@ -93,6 +96,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/welcome",
+    element: <Welcome />,
   },
 ]);
 

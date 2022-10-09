@@ -1,0 +1,110 @@
+.welcome-component {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.welcome-component .content {
+  display: flex;
+  flex-direction: column;
+
+  padding: 32px 16px 16px 16px;
+
+  height: 100vh;
+  width: min(480px, 100vw);
+}
+
+.welcome-component .or-container {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.welcome-component .or-container .line {
+  background-color: #EFF3F4;
+  height: 2px;
+  flex-grow: 1;
+}
+
+.welcome-component .content .logo {
+  width: 45px;
+}
+
+.welcome-component .happening-now {
+  margin-top: 48px;
+  margin-bottom: 48px;
+  font-size: 64px;
+  font-weight: bold;
+}
+
+.welcome-component .join-today {
+  font-size: 31px;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.welcome-component button.google-sign-in,
+.welcome-component button.sign-up,
+.welcome-component button.sign-in {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  border-radius: 999px;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.welcome-component .link {
+  height: 38px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.welcome-component button.google-sign-in {
+  background-color: white;
+  color: #404447;
+  border: 1px solid #dadce0;
+  gap: 10px;
+}
+
+.welcome-component button.google-sign-in:hover,
+.welcome-component button.sign-in:hover {
+  background-color: #f7faff;
+  border: 1px solid #d2e3fc;
+}
+
+.welcome-component .google-icon {
+  width: 18px;
+  height: auto;
+}
+
+.welcome-component button.sign-up {
+  background-color: #2b9bf0;
+  border: none;
+  color: white;
+  font-weight: bold;
+}
+
+.welcome-component button.sign-up:hover {
+  background-color: #268cd8;
+}
+
+.welcome-component button.sign-in {
+  background-color: white;
+  border: 1px solid #dadce0;
+  font-weight: bold;
+  color: #2b9bf0;
+}
+
+.welcome-component div.have-account {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
