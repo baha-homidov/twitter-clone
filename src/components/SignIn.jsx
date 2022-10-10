@@ -1,29 +1,21 @@
 import { useState } from "react";
-import "../assets/css/SignUp.css";
-import { useNavigate } from "react-router-dom";
-export default function SignUp() {
-  const [name, setName] = useState("");
+import "../assets/css/SignIn.css";
+import { useNavigate, Link } from "react-router-dom";
+export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [formClassName, setFormClassName] = useState("");
   const navigate = useNavigate();
 
-  function handleName(event) {
-    setName(event.target.value);
-  }
   function handleUsername(event) {
     setUsername(event.target.value);
   }
   function handlePassword(event) {
     setPassword(event.target.value);
   }
-  function handleConfirmPassword(event) {
-    setConfirmPassword(event.target.value);
-  }
 
   function handleSubmit(event) {
-    alert(name + username + password + confirmPassword);
+    alert(username + password);
     event.preventDefault();
   }
 
@@ -36,12 +28,12 @@ export default function SignUp() {
   }
 
   return (
-    <div onClick={navigateBack} className="sign-up-component">
+    <div onClick={navigateBack} className="sign-in-component">
       <div
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className="sign-up-container"
+        className="sign-in-container"
       >
         <div className="top-bar">
           <button onClick={navigateBack} className="back">
@@ -61,20 +53,9 @@ export default function SignUp() {
         </div>
 
         <div className="content">
-          <h1 className="title">Create your account</h1>
+          <h1 className="title">Welcome back!</h1>
 
           <form className={formClassName} onSubmit={handleSubmit}>
-            <div className="name-container">
-              <input
-                type="text"
-                className="name"
-                value={name}
-                onChange={handleName}
-                required
-                placeholder=" "
-              />
-              <span className="label">Name</span>
-            </div>
             <div className="username-container">
               <input
                 type="text"
@@ -97,20 +78,13 @@ export default function SignUp() {
               />
               <span className="label">Password</span>
             </div>
-            <div className="confirm-password-container">
-              <input
-                type="password"
-                className="password"
-                value={confirmPassword}
-                onChange={handleConfirmPassword}
-                required
-                placeholder=" "
-              />
-              <span className="label">Confirm password</span>
-            </div>
+
             <button onClick={updateForm} type="submit" className="submit">
               Sign up
             </button>
+            <div className="no-account-container">
+              Don't have an account? <Link to="/welcome/sign-up" className="link">Sign up</Link>
+            </div>
           </form>
         </div>
       </div>

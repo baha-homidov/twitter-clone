@@ -5,7 +5,6 @@ import background from "../assets/img/icons/background.png";
 import "../assets/css/Welcome.css";
 
 export default function Welcome() {
- 
   return (
     <div className="welcome-component">
       <Outlet />
@@ -53,9 +52,10 @@ export default function Welcome() {
           <button className="sign-up">Sign up manually</button>
         </Link>
         <div className="have-account">Already have an account?</div>
-        <Link>
+        <Link className="link" to="sign-in">
           <button className="sign-in">Sign in</button>
         </Link>
+       
       </div>
     </div>
   );
