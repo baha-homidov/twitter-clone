@@ -16,6 +16,7 @@ export default function SignIn() {
 
   function handleSubmit(event) {
     alert(username + password);
+    navigate("/home");
     event.preventDefault();
   }
 

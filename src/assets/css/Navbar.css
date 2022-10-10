@@ -8,6 +8,7 @@
   position: sticky;
   position: -webkit-sticky; /* Safari */
   top: 0;
+  z-index: 5;
 }
 
 .link > button > img,
@@ -97,6 +98,47 @@ span.button-text {
   border-radius: 9999px;
 }
 
+.navbar-container .profile.bottom {
+  position: relative;
+}
+
+.navbar-container .profile.bottom .pop-up-container {
+  position: absolute;
+  top: -80px;
+  height: 72px;
+  opacity: 0;
+  box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.271);
+  width: 200px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  transition: 0.2s ease;
+  pointer-events: none;
+}
+
+.navbar-container .profile.bottom .pop-up-container.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.navbar-container .profile.bottom .pop-up-container .sign-out {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  border: none;
+  background-color: white;
+  transition: background-color 0.2s ease;
+  font-size: 0.8em;
+}
+
+.navbar-container .profile.bottom .pop-up-container .sign-out:hover {
+  background-color: #f7f9f9;
+}
+
 .main-buttons button:hover,
 .profile-link .profile:hover,
 .vertical-navbar button.active {
@@ -183,6 +225,10 @@ span.button-text {
   .tweet > img {
     display: block;
   }
+
+  .navbar-container .profile.bottom .pop-up-container {
+    left: 2px;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -246,5 +292,4 @@ span.button-text {
   .horizontal-navbar > .link > button:active {
     background-color: #e6e7e7;
   }
-
 }

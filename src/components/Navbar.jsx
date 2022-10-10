@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/Navbar.css";
 import messageIcon from "../assets/img/icons/message.svg";
 import homeIcon from "../assets/img/icons/home.svg";
@@ -12,12 +12,32 @@ function Navbar(props) {
   // state for tracking window and width and render the component accordingly
   const [windowWidth, setWindowWidth] = useState(0);
   const location = useLocation();
-
+  const navigate = useNavigate();
   const [currentActiveButton, setCurrentActiveButton] = useState("home");
   const homeButtonActive = useRef("active");
   const searchButtonActive = useRef("");
   const messagesButtonActive = useRef("");
   const profileButtonActive = useRef("");
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const popUpRef = useRef(null);
+
+  function showPopUp() {
+    console.log("show");
+
+    const popUp = popUpRef.current;
+    popUp.className = "pop-up-container show";
+    setOpenPopUp(true);
+
+  }
+
+  function hidePopUp(event) {
+    if (popUpRef.current && !popUpRef.current.contains(event.target)) {
+      console.log("success");
+      popUpRef.current.className = "pop-up-container";
+      setOpenPopUp(false);
+    }
+  }
+
   function setActive(event) {
     homeButtonActive.current = "";
     searchButtonActive.current = "";
@@ -59,9 +79,14 @@ function Navbar(props) {
     // set a listener for future changes
     window.addEventListener("resize", updateDimensions);
 
+    document.addEventListener("mousedown", hidePopUp);
+
     // equivalent of componentDidUnmount
     // release recources
-    return () => window.removeEventListener("resize", updateDimensions);
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+      document.removeEventListener("mousedown", hidePopUp);
+    };
   }, []);
 
   useEffect(() => {
@@ -143,7 +168,6 @@ function Navbar(props) {
               <div className="active-bar"></div>
             </button>
           </Link>
-          
         </nav>
       </div>
     );
@@ -207,15 +231,25 @@ function Navbar(props) {
             </button>
           </Link>
 
-          <Link className="link profile-link">
-            <button className="profile">
+          <div className="link profile-link">
+            <button onClick={showPopUp} className="profile bottom">
+              <div ref={popUpRef} className={`pop-up-container`}>
+                <div
+                  onClick={() => {
+                    navigate("/welcome");
+                  }}
+                  className="sign-out"
+                >
+                  Log out @bahahomidov
+                </div>
+              </div>
               <img src={userIcon} alt="" className="navbar-icon" />
               <div className="profile-info">
                 <div className="name">Baha Homidov</div>
                 <div className="username">@bahahomidov</div>
               </div>
             </button>
-          </Link>
+          </div>
         </nav>
       </div>
     );
