@@ -7,7 +7,7 @@ import tweetIcon from "../assets/img/icons/tweet.svg";
 import userIcon from "../assets/img/icons/user.svg";
 import searchIcon from "../assets/img/icons/search.svg";
 import logoIcon from "../assets/img/icons/icon-small.png";
-
+import { signOutUser, getUserPhotoUrl } from "../FirebaseBackend";
 function Navbar(props) {
   // state for tracking window and width and render the component accordingly
   const [windowWidth, setWindowWidth] = useState(0);
@@ -27,7 +27,6 @@ function Navbar(props) {
     const popUp = popUpRef.current;
     popUp.className = "pop-up-container show";
     setOpenPopUp(true);
-
   }
 
   function hidePopUp(event) {
@@ -236,6 +235,7 @@ function Navbar(props) {
               <div ref={popUpRef} className={`pop-up-container`}>
                 <div
                   onClick={() => {
+                    signOutUser();
                     navigate("/welcome");
                   }}
                   className="sign-out"
@@ -243,7 +243,7 @@ function Navbar(props) {
                   Log out @bahahomidov
                 </div>
               </div>
-              <img src={userIcon} alt="" className="navbar-icon" />
+              <img src="" alt="" className="navbar-icon" />
               <div className="profile-info">
                 <div className="name">Baha Homidov</div>
                 <div className="username">@bahahomidov</div>
