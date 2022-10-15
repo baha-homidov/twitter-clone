@@ -1,0 +1,234 @@
+.create-user-from-google-container {
+  position: absolute;
+  background-color: rgba(128, 128, 128, 0.333);
+  height: 99vh;
+  width: 98vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 0;
+  top: 0;
+}
+
+.create-user-from-google-container .content {
+  border-radius: 16px;
+
+  position: absolute;
+  width: min(600px, 100vw);
+  margin-top: 100px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 32px;
+  gap: 20px;
+}
+
+.create-user-from-google-container h1 {
+  text-align: center;
+}
+
+.create-user-from-google-container .top-bar {
+  height: 53px;
+  border-radius: 16px 16px 0px 0px;
+  padding: 0px 16px 0px 16px;
+  display: flex;
+  align-items: center;
+  align-self: baseline;
+}
+
+.create-user-from-google-container .top-bar button.back {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+}
+
+.create-user-from-google-container .top-bar button.back:hover,
+.create-user-from-google-container .top-bar button.back:active {
+  background-color: #e6e7e7;
+}
+
+.create-user-from-google-container form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.create-user-from-google-container input {
+  border-radius: 5px;
+  width: 300px;
+  height: 56px;
+  padding: 7px;
+  padding-top: 20px;
+  font-size: 1.1em;
+  border: 1px solid #cfd9de;
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.create-user-from-google-container form .username-container {
+  position: relative; 
+}
+
+.create-user-from-google-container form .label {
+  pointer-events: none;
+  color: #657580;
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  transition: 0.2s ease;
+}
+
+.create-user-from-google-container .wrong-pattern {
+  width: 300px;
+  transition: opacity 0.1s ease;
+  transform: translateY(20px);
+  margin-bottom: 20px;
+}
+
+.create-user-from-google-container .username-exists {
+position: absolute;
+  color: red;
+}
+
+.create-user-from-google-container .valid-username {
+  position: absolute;
+  color: rgb(3, 198, 42);
+}
+
+.create-user-from-google-container .username-exists , 
+.create-user-from-google-container .valid-username 
+ {
+  top: 60px;
+}
+
+.create-user-from-google-container .wrong-pattern.hide {
+  opacity: 0;
+}
+
+.create-user-from-google-container form input:focus + .label,
+.create-user-from-google-container form.submitted input + .label {
+  color: #2b9bf0;
+}
+
+.create-user-from-google-container form input:not(:placeholder-shown) + .label,
+.create-user-from-google-container form input:focus + .label {
+  top: 10px;
+  left: 7px;
+  font-size: 1em;
+}
+
+.create-user-from-google-container form.submitted .label {
+  color: #657580;
+}
+
+.create-user-from-google-container form.submitted input:invalid + .label {
+  color: red;
+}
+
+.create-user-from-google-container form.submitted input:invalid {
+  border: 1px solid red;
+}
+
+.create-user-from-google-container form button {
+  font-size: 1.1em;
+  width: 300px;
+  font-weight: bold;
+  color: white;
+  height: 53px;
+  border-radius: 999px;
+  outline: none;
+  border: none;
+  background-color: #2b9bf0;
+  transition: background-color 0.2s ease;
+}
+
+.create-user-from-google-container form button:hover {
+  background-color: #268cd8;
+}
+
+@media (max-width: 700px) {
+  .create-user-from-google-container .content {
+    border-radius: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    top: 0;
+    left: 0;
+
+  }
+}
+
+
+.create-user-from-google-container .loader-container {
+  position: absolute;
+  width: 100%;
+  top: 65px;
+}
+
+
+
+.create-user-from-google-container .loader { 
+  width:100%; 
+  margin:0 auto;
+  border-radius:10px;
+  border:4px solid transparent;
+  position:relative;
+  padding:1px;
+}
+.create-user-from-google-container .loader:before {
+  content:'';
+  border:1px solid rgb(0, 0, 0); 
+  border-radius:10px;
+  position:absolute;
+  top:-4px; 
+  right:-4px; 
+  bottom:-4px; 
+  left:-4px;
+}
+.create-user-from-google-container .loader .loaderBar { 
+  position:absolute;
+  border-radius:10px;
+  top:0;
+  right:100%;
+  bottom:0;
+  left:0;
+  background:rgb(0, 0, 0); 
+  width:0;
+  animation:borealisBar 2s linear infinite;
+}
+
+@keyframes borealisBar {
+  0% {
+    left:0%;
+    right:100%;
+    width:0%;
+  }
+  10% {
+    left:0%;
+    right:75%;
+    width:25%;
+  }
+  90% {
+    right:0%;
+    left:75%;
+    width:25%;
+  }
+  100% {
+    left:100%;
+    right:0%;
+    width:0%;
+  }
+}
+
+

@@ -52,7 +52,7 @@
 
 
 
-.search-container > .bar .link > .back {
+.search-container > .bar  .back {
   display: flex;
   justify-content: center;
   align-items: center;

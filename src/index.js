@@ -23,6 +23,10 @@ import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
 import Conversation from "./components/Conversation";
 import User from "./components/User";
+import CreateUserFromGoogle from "./components/CreateUserFromGoogle";
+
+window.version = "0.3";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -106,13 +110,17 @@ const router = createBrowserRouter([
     children: [
       {
         path: "sign-up",
-        element: <SignUp />
+        element: <SignUp />,
       },
       {
         path: "sign-in",
-        element: <SignIn />
+        element: <SignIn />,
       },
-    ]
+      {
+        path: "new-user-from-google",
+        element: <CreateUserFromGoogle />,
+      },
+    ],
   },
 ]);
 

@@ -1,13 +1,14 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logoIcon from "../assets/img/icons/icon.png";
 import background from "../assets/img/icons/background.png";
 import { sigInWithGoogle } from "../FirebaseBackend";
 import "../assets/css/Welcome.css";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Welcome() {
   const navigate = useNavigate();
-
+  
   return (
     <div className="welcome-component">
       <Outlet />
@@ -19,6 +20,10 @@ export default function Welcome() {
         <button
           onClick={async () => {
             await sigInWithGoogle();
+            // if it's a new user navigate to @username creation
+            navigate("new-user-from-google");
+            return;
+            // else navigate to /home
             navigate("/home");
           }}
           className="google-sign-in"

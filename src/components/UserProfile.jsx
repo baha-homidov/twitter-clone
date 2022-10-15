@@ -1,8 +1,10 @@
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/UserProfile.css";
 import Tweet from "./Tweet";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useOutletContext } from "react-router-dom";
 export default function UserProfile() {
+  const [userPhotoUrl, setUserPhotoUrl] = useOutletContext();
+  console.log(userPhotoUrl);
   const arr = []; // placeholder for rendering some tweets
   for (let i = 0; i < 12; i++) {
     arr.push({
@@ -40,7 +42,7 @@ export default function UserProfile() {
       <div className="user-info">
         <div className="wrapper">
           <div className="userphoto-container">
-            <img src={userPhoto} alt="" className="userphoto" />
+            <img src={userPhotoUrl} alt="" className="userphoto" />
           </div>
           <button className="edit-profile">Edit profile</button>
         </div>

@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-
+// required libraries for firebase Auth
 import {
   getAuth,
   onAuthStateChanged,
@@ -8,6 +8,22 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+
+// required libraries for firestore
+import {
+  doc,
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  getDocs,
+  setDoc,
+  serverTimestamp,
+  orderBy,
+  query,
+  deleteDoc,
+  where,
+} from "firebase/firestore";
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -21,13 +37,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let userId = ""; // user id for communicating with firebase
 
 async function sigInWithGoogle() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   const provider = new GoogleAuthProvider();
   await signInWithPopup(getAuth(), provider);
-  // eslint-disable-next-line no-restricted-globals
+  const auth = getAuth();
+  const user = auth.currentUser;
+  userId = user.uid;
+  console.log(userId);
 }
 
 function getUserPhotoUrl() {
@@ -44,11 +66,48 @@ function signOutUser() {
   signOut(getAuth());
 }
 
-function getUserProfilePhoto() {
-  return getAuth().currentUser.photoURL;
+async function isUsernameTaken(username) {
+  const docRef = query(
+    collection(db, "userCollection"),
+    where("username", "==", username)
+  );
+  const querySnapshot = await getDocs(docRef);
+  if (querySnapshot.size > 0) {
+    return true;
+  }
+  return false;
 }
 
+async function addUserToDataBase(uid, username, name, userPhoto) {
+  // adds user to the database and set's up tweets collection
+  // doesn't check for already existing usernames
+  // existing usernames should checked before calling this function
+  try {
+    const Doc = await addDoc(
+      collection(db, "userCollection", uid, "tweets"),
+      {
+        skip: true,
+      }
+    );
 
+    const userRef = doc(db, "userCollection", uid);
+    await setDoc(userRef, {
+      username: username,
+      displayName: name,
+      userPhotoUrl: userPhoto,
+    }, { merge: true });
 
+    console.log("Document written with ID: ", Doc.id);
+  } catch (error) {
+    console.log("Error adding a user: " + error);
+  }
+}
 
-export { sigInWithGoogle, signOutUser, getUserPhotoUrl, getUserAuth };
+export {
+  sigInWithGoogle,
+  signOutUser,
+  getUserPhotoUrl,
+  getUserAuth,
+  addUserToDataBase,
+  isUsernameTaken,
+};

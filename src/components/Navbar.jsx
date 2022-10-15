@@ -22,8 +22,6 @@ function Navbar(props) {
   const popUpRef = useRef(null);
 
   function showPopUp() {
-    console.log("show");
-
     const popUp = popUpRef.current;
     popUp.className = "pop-up-container show";
     setOpenPopUp(true);
@@ -31,9 +29,10 @@ function Navbar(props) {
 
   function hidePopUp(event) {
     if (popUpRef.current && !popUpRef.current.contains(event.target)) {
-      console.log("success");
       popUpRef.current.className = "pop-up-container";
-      setOpenPopUp(false);
+      if (openPopUp === true) {
+        setOpenPopUp(false);
+      }
     }
   }
 
@@ -68,6 +67,9 @@ function Navbar(props) {
     const width = window.innerWidth;
     setWindowWidth(width);
   }
+
+  // udpate profilePictureFrom backend
+  function updateProfilePicture() {}
 
   useEffect(() => {
     // listen to the windowWdith changes
@@ -243,7 +245,7 @@ function Navbar(props) {
                   Log out @bahahomidov
                 </div>
               </div>
-              <img src="" alt="" className="navbar-icon" />
+              <img src={props.userPhotoUrl} alt="" className="navbar-icon" />
               <div className="profile-info">
                 <div className="name">Baha Homidov</div>
                 <div className="username">@bahahomidov</div>

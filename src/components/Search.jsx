@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import "../assets/css/Search.css";
 import searchIcon from "../assets/img/icons/search.svg";
 import arrow from "../assets/img/icons/arrow.svg";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 function Search(props) {
+  const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const searchParam = useParams();
   function handleChange(event) {
@@ -31,11 +32,15 @@ function Search(props) {
   return (
     <div className="search-container">
       <div className="bar">
-        <Link className="link" to={"/"}>
-          <button className="back">
-            <img src={arrow} alt="" className="back-icon" />
-          </button>
-        </Link>
+        <button
+          className="back"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          <img src={arrow} alt="" className="back-icon" />
+        </button>
+
         <form className="search-form" onSubmit={handleSubmit}>
           <button className="submit" type="submit">
             <img src={searchIcon} alt="" className="search-icon" />
