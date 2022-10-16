@@ -92,8 +92,9 @@
 .create-user-from-google-container .wrong-pattern {
   width: 300px;
   transition: opacity 0.1s ease;
-  transform: translateY(20px);
+  transform: translateY(15px);
   margin-bottom: 20px;
+  color: #647580;
 }
 
 .create-user-from-google-container .username-exists {
@@ -168,6 +169,8 @@ position: absolute;
 
   }
 }
+
+
 
 
 .create-user-from-google-container .loader-container {

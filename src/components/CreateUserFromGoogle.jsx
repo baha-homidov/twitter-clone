@@ -1,10 +1,10 @@
 import "../assets/css/CreateUserFromGoogle.css";
-import { useNavigate, useRoutes } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { addUserToDataBase, isUsernameTaken } from "../FirebaseBackend";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./Loading";
-import { async } from "@firebase/util";
+
 
 export default function CreateUserFromGoogle() {
   const navigate = useNavigate();
@@ -135,12 +135,9 @@ export default function CreateUserFromGoogle() {
               <div className="valid-username">You can use this username</div>
             )}
 
-          <div
-            className={validPattern ? "wrong-pattern hide" : "wrong-pattern"}
-          >
-            A username can only contain alphanumeric characters (letters A-Z,
-            numbers 0-9) with the exception of underscores
-          </div>
+          <div className="wrong-pattern">
+            A username can only contain alphanumeric characters (letters A-Z, numbers 0-9) with the exception of underscores
+            </div>
 
           <button onClick={updateForm} type="submit" className="submit">
             Start using Barker

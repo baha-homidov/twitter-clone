@@ -1,31 +1,124 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../assets/css/SignUp.css";
 import { useNavigate } from "react-router-dom";
+import {
+  singUpWithLoginPassword,
+  isUsernameTaken,
+  addUserToDataBase,
+  uploadUserPhoto,
+  storage,
+} from "../FirebaseBackend";
+import Loading from "./Loading";
+import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
+import {
+  getDownloadURL,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from "firebase/storage";
+
 export default function SignUp() {
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
+  const [validUsernamePattern, setValidUsernamePattern] = useState(true);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [formClassName, setFormClassName] = useState("");
+  const [usernameLoader, setUsernameLoader] = useState(false);
+  const [usernameTaken, setUsernameTaken] = useState(false);
+  const [showLoadingComponent, setShowLoadingComponent] = useState(false);
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [UserPhotoPreview, setUserPhotoPreview] = useState(null); // state to preview to-be uploaded usernam
+
+  useEffect(() => {
+    // listen to userPhoto changes and update userPhotoPreview
+    if (!userPhoto) {
+      setUserPhotoPreview(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(userPhoto);
+    setUserPhotoPreview(objectUrl);
+    // free memory when ever this component is unmounted
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [userPhoto]);
+
   const navigate = useNavigate();
+  const confirmPasswordRef = useRef(null);
+
+  function handleUserphoto(event) {
+    if (event.target.files && event.target.files[0]) {
+      setUserPhoto(event.target.files[0]);
+    }
+  }
 
   function handleName(event) {
     setName(event.target.value);
   }
-  function handleUsername(event) {
-    setUsername(event.target.value);
-  }
+
   function handlePassword(event) {
     setPassword(event.target.value);
   }
   function handleConfirmPassword(event) {
+    confirmPasswordRef.current.setCustomValidity("");
     setConfirmPassword(event.target.value);
   }
 
-  function handleSubmit(event) {
-    alert(name + username + password + confirmPassword);
-    navigate("/home")
+  function handleUsername(event) {
+    validateUserNamePattern(event.target.value);
+    checkUsernameTaken(event.target.value);
+    setUsername(event.target.value);
+  }
+
+  function validateUserNamePattern(username) {
+    const regExp = /^@?(\w){1,15}$/;
+    setValidUsernamePattern(Boolean(username.match(regExp)));
+  }
+
+  async function checkUsernameTaken(username) {
+    setUsernameLoader(true);
+    const isTaken = await isUsernameTaken(username);
+    setUsernameLoader(false);
+    setUsernameTaken(isTaken);
+  }
+
+  async function handleSubmit(event) {
+    console.log(password + " " + confirmPassword);
     event.preventDefault();
+    if (password !== confirmPassword) {
+      // check if passwords confirmatin
+      // if false cancel submit
+      confirmPasswordRef.current.setCustomValidity(
+        "Passwords are not matching"
+      );
+      return;
+    }
+
+    if (validUsernamePattern) {
+      // if username pattern is corrent
+      // proceed with uploading
+      setShowLoadingComponent(true);
+
+      const isTaken = await isUsernameTaken(username);
+      if (isTaken !== true) {
+        const userId = await singUpWithLoginPassword(username, password);
+        let userPhotoUrl = "";
+
+        if (userPhoto) {
+          console.log(userPhoto);
+          userPhotoUrl = await uploadUserPhoto(userPhoto, username);
+        }
+
+        await addUserToDataBase(userId, username, name, userPhotoUrl);
+
+        navigate("/home");
+
+        setShowLoadingComponent(false);
+        return;
+      }
+    }
+    setShowLoadingComponent(false);
+    console.log("success signup");
   }
 
   function updateForm() {
@@ -38,6 +131,7 @@ export default function SignUp() {
 
   return (
     <div onClick={navigateBack} className="sign-up-component">
+      {showLoadingComponent && <Loading />}
       <div
         onClick={(event) => {
           event.stopPropagation();
@@ -65,6 +159,21 @@ export default function SignUp() {
           <h1 className="title">Create your account</h1>
 
           <form className={formClassName} onSubmit={handleSubmit}>
+            <div className="profile-photo-container">
+              <img
+                src={UserPhotoPreview ? UserPhotoPreview : userPhotoPlaceholder}
+                className="userphoto"
+                alt="userphoto"
+              />
+              <label className="userphoto-picker">
+                Pick a user photo
+                <input
+                  onChange={handleUserphoto}
+                  type="file"
+                  accept="image/*"
+                />
+              </label>
+            </div>
             <div className="name-container">
               <input
                 type="text"
@@ -84,12 +193,44 @@ export default function SignUp() {
                 onChange={handleUsername}
                 required
                 placeholder=" "
+                pattern="^@?(\w){1,15}$"
               />
               <span className="label">Username</span>
+              {usernameLoader && validUsernamePattern && (
+                <div className="loader-container">
+                  <div className="loader">
+                    <div className="loaderBar"></div>
+                  </div>
+                </div>
+              )}
+              {validUsernamePattern &&
+                username.length !== 0 &&
+                !usernameLoader &&
+                usernameTaken && (
+                  <div className="username-exists">
+                    This username is already taken
+                  </div>
+                )}
+              {!validUsernamePattern && username.length !== 0 && (
+                <div className="invalid-pattern">Inavlid username format</div>
+              )}
+              {validUsernamePattern &&
+                username.length !== 0 &&
+                !usernameLoader &&
+                !usernameTaken && (
+                  <div className="valid-username">
+                    You can use this username
+                  </div>
+                )}
+            </div>
+            <div className="username-pattern">
+              A username can only contain alphanumeric characters (letters A-Z,
+              numbers 0-9) with the exception of underscores
             </div>
             <div className="password-container">
               <input
                 type="password"
+                minLength="6"
                 className="name"
                 value={password}
                 onChange={handlePassword}
@@ -100,12 +241,14 @@ export default function SignUp() {
             </div>
             <div className="confirm-password-container">
               <input
+                ref={confirmPasswordRef}
                 type="password"
                 className="password"
                 value={confirmPassword}
                 onChange={handleConfirmPassword}
                 required
                 placeholder=" "
+                minLength="6"
               />
               <span className="label">Confirm password</span>
             </div>

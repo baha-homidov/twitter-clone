@@ -16,16 +16,13 @@ import SignIn from "./components/SignIn";
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Navigate,
 } from "react-router-dom";
 import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
 import Conversation from "./components/Conversation";
-import User from "./components/User";
 import CreateUserFromGoogle from "./components/CreateUserFromGoogle";
 
-window.version = "0.3";
+window.version = "0.3.1";
 
 const router = createBrowserRouter([
   {
