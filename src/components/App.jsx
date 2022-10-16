@@ -2,14 +2,14 @@ import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import WhoToFollow from "./WhoToFollow";
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/App.css";
 // <Outlet /> component to tell the react router where to render child components
 import { Outlet } from "react-router-dom";
 // a Hook to track if user is signed in
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
-import { getUserAuth } from "../FirebaseBackend";
+import { getUserAuth, isNewUser } from "../FirebaseBackend";
 import { getAuth } from "firebase/auth";
 import Loading from "./Loading";
 
@@ -18,13 +18,13 @@ function App() {
   const [showLoading, setShowLoading] = useState(false);
   const [userPhotoUrl, setUserPhotoUrl] = useState("asdf");
   const loadingRef = useRef(null);
-  const redirect = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     //redirect to /home directory if on a root location
     if (location.pathname === "/") {
-      redirect("home");
+      navigate("home");
     }
   }, []);
 
@@ -44,13 +44,17 @@ function App() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    onAuthStateChanged(getAuth(), (user) => {
+    onAuthStateChanged(getAuth(), async (user) => {
       console.log("app.jsx auth check");
       if (user) {
+        const isNonRegisteredUser = await isNewUser(user.uid);
+        if (isNonRegisteredUser) {
+          navigate("/welcome/new-user-from-google");
+        }
         setShowLoading(false);
         setUserPhotoUrl(user.photoURL);
       } else {
-        redirect("/welcome");
+        navigate("/welcome");
       }
     });
   }, [location]);

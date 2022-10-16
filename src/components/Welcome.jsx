@@ -2,32 +2,39 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logoIcon from "../assets/img/icons/icon.png";
 import background from "../assets/img/icons/background.png";
-import { sigInWithGoogle } from "../FirebaseBackend";
+import { isNewUser, sigInWithGoogle } from "../FirebaseBackend";
 import "../assets/css/Welcome.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import Loading from "./Loading";
+import { async } from "@firebase/util";
 
 export default function Welcome() {
   const navigate = useNavigate();
-  
+  const [showLoading, setShowLoading] = useState(false);
+
+  async function signInHandler() {
+    await sigInWithGoogle();
+
+    setShowLoading(true);
+    const checkNewUser = await isNewUser(getAuth().currentUser.uid);
+    setShowLoading(false);
+    if (checkNewUser) {
+      navigate("new-user-from-google");
+    } else {
+      navigate("/home");
+    }
+  }
+
   return (
     <div className="welcome-component">
+      {showLoading && <Loading />}
       <Outlet />
       <div className="content">
         <img className="logo" src={logoIcon} alt="" />
         <div className="happening-now">Happening now</div>
         <div className="join-today">Join Barker today</div>
 
-        <button
-          onClick={async () => {
-            await sigInWithGoogle();
-            // if it's a new user navigate to @username creation
-            navigate("new-user-from-google");
-            return;
-            // else navigate to /home
-            navigate("/home");
-          }}
-          className="google-sign-in"
-        >
+        <button onClick={signInHandler} className="google-sign-in">
           <svg
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"

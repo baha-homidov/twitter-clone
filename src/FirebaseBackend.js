@@ -148,6 +148,18 @@ async function uploadUserPhoto(userphoto, username) {
   }
 }
 
+async function isNewUser(userId) {
+  // recieves uid
+  // checks if user exists by querying firestore database
+  const docRef = doc(db, "userCollection", userId);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 export {
   sigInWithGoogle,
   signOutUser,
@@ -157,5 +169,6 @@ export {
   isUsernameTaken,
   singUpWithLoginPassword,
   uploadUserPhoto,
+  isNewUser,
   storage,
 };
