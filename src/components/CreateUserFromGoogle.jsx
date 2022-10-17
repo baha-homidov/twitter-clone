@@ -1,7 +1,7 @@
 import "../assets/css/CreateUserFromGoogle.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { addUserToDataBase, isUsernameTaken } from "../FirebaseBackend";
+import { addUserToDataBase,  isNewUser, isUsernameTaken } from "../FirebaseBackend";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./Loading";
 
@@ -19,16 +19,27 @@ export default function CreateUserFromGoogle() {
   useEffect(() => {
     // get userId when component is mounted
     // onAuthStateChanged retrieves userID asynchronously
-    onAuthStateChanged(getAuth(), (user) => {
-
+    setShowLoading(true);
+    onAuthStateChanged(getAuth(), async (user) => {
+      setShowLoading(true);
       if (user) {
-
         setUser(user);
+        const newUserCheck = await isNewUser(user.uid);
+        if (newUserCheck === false) {
+          navigate("/home");
+        }
+
       } else {
         navigate("/welcome");
       }
+      setShowLoading(false);
     });
-  });
+  },[]);
+
+  useEffect(() => {
+
+    console.log("two");
+  }, [])
 
   function validateUserName(username) {
     const regExp = /^@?(\w){1,15}$/;
