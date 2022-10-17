@@ -116,6 +116,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         lowercaseUsername: username.toLowerCase(),
         displayName: name,
         userPhotoUrl: userPhoto,
+        timestamp: serverTimestamp(),
       },
       { merge: true }
     );
