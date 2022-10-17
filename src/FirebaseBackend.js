@@ -8,6 +8,7 @@ import {
   signInWithPopup,
   signOut,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
@@ -71,6 +72,20 @@ async function singUpWithLoginPassword(login, password, username, name) {
   }
 }
 
+async function signInWithUsernamePassword(login, password) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      getAuth(),
+      login + "@twitter-clone.com",
+      password
+    );
+    return true;
+  } catch (error) {
+    console.log("wrong credentials");
+    return false;
+  }
+}
+
 function getUserPhotoUrl() {
   return getAuth().currentUser.getUserPhotoUrl;
 }
@@ -117,6 +132,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         displayName: name,
         userPhotoUrl: userPhoto,
         timestamp: serverTimestamp(),
+        uid: uid,
       },
       { merge: true }
     );
@@ -161,6 +177,17 @@ async function isNewUser(userId) {
   }
 }
 
+async function getUserInfo(uid) {
+  // asynchronously returns userInfo from firestore firebase
+  try {
+    const docRef = doc(db, "userCollection", uid);
+    const docSnap = await getDoc(docRef);
+    return docSnap.data();
+  } catch (error) {
+    console.log(`Error getting info from firestore ${error}`);
+  }
+}
+
 export {
   sigInWithGoogle,
   signOutUser,
@@ -169,7 +196,9 @@ export {
   addUserToDataBase,
   isUsernameTaken,
   singUpWithLoginPassword,
+  signInWithUsernamePassword,
   uploadUserPhoto,
   isNewUser,
+  getUserInfo,
   storage,
 };

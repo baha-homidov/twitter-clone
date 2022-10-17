@@ -1,23 +1,40 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "../assets/css/SignIn.css";
 import { useNavigate, Link } from "react-router-dom";
+import { signInWithUsernamePassword } from "../FirebaseBackend";
+import Loading from "./Loading";
 export default function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const passwordInput = useRef(null);
   const [formClassName, setFormClassName] = useState("");
+  const [wrongCredentials, setWrongCredentials] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const navigate = useNavigate();
 
   function handleUsername(event) {
     setUsername(event.target.value);
   }
   function handlePassword(event) {
+    passwordInput.current.setCustomValidity(""); // set input to valid state
+    setWrongCredentials(false);
     setPassword(event.target.value);
+    if (event.target.value.includes(" ")) {
+      // check for whitespaces
+      passwordInput.current.setCustomValidity("Whitespaces are not allowed");
+    }
   }
-
-  function handleSubmit(event) {
-    alert(username + password);
-    navigate("/home");
+ 
+  async function handleSubmit(event) {
     event.preventDefault();
+    setShowLoading(true);
+    const signInResult = await signInWithUsernamePassword(username, password);
+    if (signInResult === true) {
+      navigate("/home");
+    } else {
+      setWrongCredentials(true);
+    }
+    setShowLoading(false);
   }
 
   function updateForm() {
@@ -30,6 +47,7 @@ export default function SignIn() {
 
   return (
     <div onClick={navigateBack} className="sign-in-component">
+      {showLoading && <Loading />}
       <div
         onClick={(event) => {
           event.stopPropagation();
@@ -70,6 +88,7 @@ export default function SignIn() {
             </div>
             <div className="password-container">
               <input
+                ref={passwordInput}
                 type="password"
                 className="name"
                 value={password}
@@ -79,12 +98,17 @@ export default function SignIn() {
               />
               <span className="label">Password</span>
             </div>
-
+            {wrongCredentials && (
+              <div className="wrong-credentials">Wrong credentials</div>
+            )}
             <button onClick={updateForm} type="submit" className="submit">
               Sign up
             </button>
             <div className="no-account-container">
-              Don't have an account? <Link to="/welcome/sign-up" className="link">Sign up</Link>
+              Don't have an account?{" "}
+              <Link to="/welcome/sign-up" className="link">
+                Sign up
+              </Link>
             </div>
           </form>
         </div>

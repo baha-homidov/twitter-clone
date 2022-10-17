@@ -23,6 +23,8 @@ export default function SignUp() {
   const [validUsernamePattern, setValidUsernamePattern] = useState(true);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const confirmPasswordRef = useRef(null);
   const [formClassName, setFormClassName] = useState("");
   const [usernameLoader, setUsernameLoader] = useState(false);
   const [usernameTaken, setUsernameTaken] = useState(false);
@@ -44,7 +46,6 @@ export default function SignUp() {
   }, [userPhoto]);
 
   const navigate = useNavigate();
-  const confirmPasswordRef = useRef(null);
 
   function handleUserphoto(event) {
     if (event.target.files && event.target.files[0]) {
@@ -83,13 +84,19 @@ export default function SignUp() {
   }
 
   async function handleSubmit(event) {
-    console.log(password + " " + confirmPassword);
     event.preventDefault();
     if (password !== confirmPassword) {
       // check if passwords confirmatin
       // if false cancel submit
       confirmPasswordRef.current.setCustomValidity(
         "Passwords are not matching"
+      );
+      return;
+    }
+
+    if (password.includes(" ") || confirmPassword.includes(" ")) {
+      confirmPasswordRef.current.setCustomValidity(
+        "Whitespaces are not allowed"
       );
       return;
     }

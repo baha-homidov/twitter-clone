@@ -1,10 +1,13 @@
 import "../assets/css/CreateUserFromGoogle.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { addUserToDataBase,  isNewUser, isUsernameTaken } from "../FirebaseBackend";
+import {
+  addUserToDataBase,
+  isNewUser,
+  isUsernameTaken,
+} from "../FirebaseBackend";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./Loading";
-
 
 export default function CreateUserFromGoogle() {
   const navigate = useNavigate();
@@ -15,7 +18,7 @@ export default function CreateUserFromGoogle() {
   const [user, setUser] = useState("");
   const [usernameTaken, setUsernameTaken] = useState(false);
   const [usernameLoader, setUsernameLoader] = useState(false);
-
+  
   useEffect(() => {
     // get userId when component is mounted
     // onAuthStateChanged retrieves userID asynchronously
@@ -23,23 +26,23 @@ export default function CreateUserFromGoogle() {
     onAuthStateChanged(getAuth(), async (user) => {
       setShowLoading(true);
       if (user) {
+        console.log("user"+user.uid);
         setUser(user);
-        const newUserCheck = await isNewUser(user.uid);
+        const newUserCheck = await isNewUser(user.uid); // check if user already exists
         if (newUserCheck === false) {
+          // redirect to home
           navigate("/home");
         }
-
       } else {
         navigate("/welcome");
       }
       setShowLoading(false);
     });
-  },[]);
+  }, []);
 
   useEffect(() => {
-
     console.log("two");
-  }, [])
+  }, []);
 
   function validateUserName(username) {
     const regExp = /^@?(\w){1,15}$/;
@@ -76,7 +79,6 @@ export default function CreateUserFromGoogle() {
       navigate("/home");
     }
     setShowLoading(false);
-
   }
 
   function updateForm() {
@@ -147,8 +149,9 @@ export default function CreateUserFromGoogle() {
             )}
 
           <div className="wrong-pattern">
-            A username can only contain alphanumeric characters (letters A-Z, numbers 0-9) with the exception of underscores
-            </div>
+            A username can only contain alphanumeric characters (letters A-Z,
+            numbers 0-9) with the exception of underscores
+          </div>
 
           <button onClick={updateForm} type="submit" className="submit">
             Start using Barker

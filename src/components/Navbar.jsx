@@ -7,19 +7,24 @@ import tweetIcon from "../assets/img/icons/tweet.svg";
 import userIcon from "../assets/img/icons/user.svg";
 import searchIcon from "../assets/img/icons/search.svg";
 import logoIcon from "../assets/img/icons/icon-small.png";
-import { signOutUser, getUserPhotoUrl } from "../FirebaseBackend";
+import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
+import { signOutUser } from "../FirebaseBackend";
 function Navbar(props) {
   // state for tracking window and width and render the component accordingly
-  const [windowWidth, setWindowWidth] = useState(0);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [currentActiveButton, setCurrentActiveButton] = useState("home");
+  const [windowWidth, setWindowWidth] = useState(0); // track window width for implementing responsive design
+  const location = useLocation(); // progmatically navigate through react router
+  const navigate = useNavigate(); // get current location
+  const [currentActiveButton, setCurrentActiveButton] = useState("home"); // track active button for highlighting them
+
+  // control userPop's open-closed state
+  const [openPopUp, setOpenPopUp] = useState(false);
+  const popUpRef = useRef(null);
+
+  // refs for css manipulation
   const homeButtonActive = useRef("active");
   const searchButtonActive = useRef("");
   const messagesButtonActive = useRef("");
   const profileButtonActive = useRef("");
-  const [openPopUp, setOpenPopUp] = useState(false);
-  const popUpRef = useRef(null);
 
   function showPopUp() {
     const popUp = popUpRef.current;
@@ -36,6 +41,7 @@ function Navbar(props) {
     }
   }
 
+  // trigger active button's styling
   function setActive(event) {
     homeButtonActive.current = "";
     searchButtonActive.current = "";
@@ -58,7 +64,6 @@ function Navbar(props) {
         profileButtonActive.current = "active";
         break;
       default:
-        console.log("failure!");
         break;
     }
   }
@@ -67,9 +72,6 @@ function Navbar(props) {
     const width = window.innerWidth;
     setWindowWidth(width);
   }
-
-  // udpate profilePictureFrom backend
-  function updateProfilePicture() {}
 
   useEffect(() => {
     // listen to the windowWdith changes
@@ -97,6 +99,8 @@ function Navbar(props) {
   }, [location]);
 
   function updateActiveButton() {
+    // determine pressed button by checking DOM's elements name
+    // one function for all <Navbar /> buttons
     let currentLocation = location.pathname;
 
     homeButtonActive.current = "";
@@ -124,6 +128,7 @@ function Navbar(props) {
   }
 
   const responsive = {
+    // mini object to control reponsive design display
     showMobileNavBar: windowWidth < 480,
   };
 
@@ -245,7 +250,15 @@ function Navbar(props) {
                   Log out @bahahomidov
                 </div>
               </div>
-              <img src={props.userPhotoUrl} alt="" className="navbar-icon" />
+              <img
+                src={
+                  props.userInfo
+                    ? props.userInfo.userPhotoUrl
+                    : userPhotoPlaceholder
+                }
+                alt=""
+                className="navbar-icon"
+              />
               <div className="profile-info">
                 <div className="name">Baha Homidov</div>
                 <div className="username">@bahahomidov</div>

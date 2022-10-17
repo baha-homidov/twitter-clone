@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import WhoToFollow from "./WhoToFollow";
@@ -9,17 +10,16 @@ import { Outlet } from "react-router-dom";
 // a Hook to track if user is signed in
 import { useAuthState } from "react-firebase-hooks/auth";
 import { onAuthStateChanged } from "firebase/auth";
-import { getUserAuth, isNewUser } from "../FirebaseBackend";
+import { getUserAuth, getUserInfo, isNewUser } from "../FirebaseBackend";
 import { getAuth } from "firebase/auth";
 import Loading from "./Loading";
 
 function App() {
-  const [rightBar, setRightBar] = useState(true);
+  const [rightBar, setRightBar] = useState(true); // control the visiblity of the rightbar
   const [showLoading, setShowLoading] = useState(false);
-  const [userPhotoUrl, setUserPhotoUrl] = useState("asdf");
-  const loadingRef = useRef(null);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate(); // progmatically navigate through react router
+  const location = useLocation(); // get current location
 
   useEffect(() => {
     //redirect to /home directory if on a root location
@@ -43,32 +43,36 @@ function App() {
         setRightBar(true);
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     onAuthStateChanged(getAuth(), async (user) => {
-      console.log("app.jsx auth check");
+      // track auth state
       if (user) {
-        const isNonRegisteredUser = await isNewUser(user.uid);
+        const isNonRegisteredUser = await isNewUser(user.uid); 
         if (isNonRegisteredUser) {
           navigate("/welcome/new-user-from-google");
         }
         setShowLoading(false);
-        setUserPhotoUrl(user.photoURL);
+        if (userInfo === null) {
+          const usersnap = await getUserInfo(user.uid);
+          setUserInfo(usersnap);
+          console.log(usersnap);
+        }
       } else {
         navigate("/welcome");
       }
     });
   }, [location]);
 
-  window.setLoading = setShowLoading;
-  window.userPhotoUrl = userPhotoUrl;
+  
+ 
   return (
-    <div className="app-container">
+    <div className="app-container"> 
       <div className="main-content">
-        <Navbar userPhotoUrl={userPhotoUrl} />
+        <Navbar userInfo={userInfo} />
         {showLoading && <Loading />}
         <div className="center-content-container">
           <Outlet
-            context={[userPhotoUrl, setUserPhotoUrl]}
+            context={[userInfo, setUserInfo]}
             className="outlet-component"
           />
         </div>

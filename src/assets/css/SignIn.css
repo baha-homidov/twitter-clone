@@ -12,8 +12,7 @@
 
 .sign-in-container {
   border-radius: 16px;
-
-  position: absolute;
+  position: relative;
   width: min(600px, 100vw);
   margin-top: 100px;
   background-color: white;
@@ -121,7 +120,14 @@
   border: 1px solid red;
 }
 
+.sign-in-container form .wrong-credentials {
+  position: absolute;
+  top: 275px;
+  color: red;
+}
+
 .sign-in-container form button {
+  margin-top: 20px;
   font-size: 1.1em;
   font-weight: bold;
   color: white;
