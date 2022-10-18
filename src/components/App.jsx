@@ -2,15 +2,14 @@
 import Navbar from "./Navbar";
 import SearchBar from "./SearchBar";
 import WhoToFollow from "./WhoToFollow";
-import { useEffect, useRef, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/App.css";
 // <Outlet /> component to tell the react router where to render child components
 import { Outlet } from "react-router-dom";
-// a Hook to track if user is signed in
-import { useAuthState } from "react-firebase-hooks/auth";
+
 import { onAuthStateChanged } from "firebase/auth";
-import { getUserAuth, getUserInfo, isNewUser } from "../FirebaseBackend";
+import { getUserInfo, isNewUser } from "../FirebaseBackend";
 import { getAuth } from "firebase/auth";
 import Loading from "./Loading";
 
@@ -47,7 +46,7 @@ function App() {
     onAuthStateChanged(getAuth(), async (user) => {
       // track auth state
       if (user) {
-        const isNonRegisteredUser = await isNewUser(user.uid); 
+        const isNonRegisteredUser = await isNewUser(user.uid);
         if (isNonRegisteredUser) {
           navigate("/welcome/new-user-from-google");
         }
@@ -63,18 +62,19 @@ function App() {
     });
   }, [location]);
 
-  
- 
   return (
-    <div className="app-container"> 
+    <div className="app-container">
       <div className="main-content">
         <Navbar userInfo={userInfo} />
-        {showLoading && <Loading />}
         <div className="center-content-container">
-          <Outlet
-            context={[userInfo, setUserInfo]}
-            className="outlet-component"
-          />
+          {showLoading && <Loading />}
+
+          {!showLoading && (
+            <Outlet
+              context={[userInfo, setUserInfo]}
+              className="outlet-component"
+            />
+          )}
         </div>
       </div>
 

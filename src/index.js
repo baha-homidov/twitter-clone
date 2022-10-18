@@ -94,7 +94,7 @@ const router = createBrowserRouter([
         element: <UserProfile />,
         children: [
           {
-            path: ":tweetId/reply",
+            path: "tweetId/reply",
             element: <ComposeTweet reply={true} />,
           },
         ],

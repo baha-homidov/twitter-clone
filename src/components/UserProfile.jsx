@@ -2,9 +2,11 @@ import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/UserProfile.css";
 import Tweet from "./Tweet";
 import { Link, Outlet, useOutletContext } from "react-router-dom";
+import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
+import { format } from "date-fns"; // library for formatting Date into human readable format
 export default function UserProfile() {
-  const [userPhotoUrl, setUserPhotoUrl] = useOutletContext();
-  console.log(userPhotoUrl);
+  const [userInfo, setUserInfo] = useOutletContext();
+  console.log(userInfo);
   const arr = []; // placeholder for rendering some tweets
   for (let i = 0; i < 12; i++) {
     arr.push({
@@ -13,9 +15,10 @@ export default function UserProfile() {
       text: "Lorem ipsum lorem ipsum lorem ipsum sit domet!",
     });
   }
+
   return (
     <div className="user-profile-container">
-      <Outlet />
+      <Outlet context={[userInfo, setUserInfo]} />
       <div className="top-bar">
         <Link to="/home" className="link">
           <button className="back">
@@ -34,7 +37,7 @@ export default function UserProfile() {
           </button>
         </Link>
         <div className="info-wrapper">
-          <div className="name">Alex Smith</div>
+          <div className="name">{userInfo ? userInfo.displayName : ""}</div>
           <div className="tweets-num">12 tweets</div>
         </div>
       </div>
@@ -42,12 +45,16 @@ export default function UserProfile() {
       <div className="user-info">
         <div className="wrapper">
           <div className="userphoto-container">
-            <img src={userPhotoUrl} alt="" className="userphoto" />
+            <img
+              src={userInfo && userInfo.userPhotoUrl}
+              alt=""
+              className="userphoto"
+            />
           </div>
           <button className="edit-profile">Edit profile</button>
         </div>
-        <div className="name">Alex Smith</div>
-        <div className="username">@alexsmith</div>
+        <div className="name">{userInfo && userInfo.displayName}</div>
+        <div className="username">{`@${userInfo && userInfo.username}`}</div>
         <div className="joined-container">
           <svg
             className="calendar"
@@ -71,7 +78,10 @@ export default function UserProfile() {
               <circle cx="12" cy="17.486" r="1.285"></circle>
             </g>
           </svg>
-          Joined May 2016
+          {`Joined ${
+            userInfo &&
+            format(new Date(userInfo.timestamp.seconds * 1000), "MMMM y")
+          }`}
         </div>
 
         <div className="follower-container">

@@ -14,7 +14,7 @@ function Navbar(props) {
   const [windowWidth, setWindowWidth] = useState(0); // track window width for implementing responsive design
   const location = useLocation(); // progmatically navigate through react router
   const navigate = useNavigate(); // get current location
-  const [currentActiveButton, setCurrentActiveButton] = useState("home"); // track active button for highlighting them
+  // const [currentActiveButton, setCurrentActiveButton] = useState("home"); // track active button for highlighting them
 
   // control userPop's open-closed state
   const [openPopUp, setOpenPopUp] = useState(false);
@@ -124,7 +124,7 @@ function Navbar(props) {
       default:
         break;
     }
-    setCurrentActiveButton(currentLocation);
+    // setCurrentActiveButton(currentLocation);
   }
 
   const responsive = {
@@ -247,7 +247,7 @@ function Navbar(props) {
                   }}
                   className="sign-out"
                 >
-                  Log out @bahahomidov
+                  Log out @{props.userInfo && props.userInfo.username}
                 </div>
               </div>
               <img
@@ -260,8 +260,10 @@ function Navbar(props) {
                 className="navbar-icon"
               />
               <div className="profile-info">
-                <div className="name">Baha Homidov</div>
-                <div className="username">@bahahomidov</div>
+                <div className="name">
+                  {props.userInfo && props.userInfo.displayName}
+                </div>
+                <div className="username">@{props.userInfo && props.userInfo.username}</div>
               </div>
             </button>
           </div>

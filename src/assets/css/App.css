@@ -4,7 +4,9 @@ html {
   overflow-y: scroll;
 }
 
-*, html, body {
+*,
+html,
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -35,7 +37,7 @@ button,
   margin-right: auto;
 }
 
-.main-content {
+.app-container .main-content {
   display: flex;
 }
 
@@ -59,6 +61,12 @@ aside.right-bar {
   border-right: 1px solid #eff3f4;
   position: relative;
   width: min(80vw, 600px);
+}
+.app-container .main-content .center-content-container .loading-container {
+  position: absolute;
+  width: 100%;
+  min-width: 0;
+  background-color: white;
 }
 
 @media (max-width: 1000px) {
@@ -86,6 +94,12 @@ aside.right-bar {
   }
   .main-content {
     flex-direction: column;
+  }
+
+  .app-container .main-content .center-content-container .loading-container {
+    height: calc(100vh - 52px);
+    min-height: 0;
+
   }
 
   .top-bar > .latest-tweets {
