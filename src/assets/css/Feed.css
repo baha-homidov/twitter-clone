@@ -10,8 +10,6 @@
   border-radius: 9999px;
 }
 
-
-
 .feed-container > .tweet-link {
   position: fixed;
   right: 25px;
@@ -27,14 +25,13 @@
   align-items: center;
   background-color: #2b9bf0;
   border: none;
-
 }
 
-.feed-container > .tweet-link > .tweet:active {
+.feed-container .tweet-link .tweet:active {
   background-color: #207bc1;
 }
 
-.feed-container > .top-bar {
+.feed-container .top-bar {
   position: absolute;
   background-color: rgba(255, 255, 255, 0.929);
   backdrop-filter: blur(2px);
@@ -50,26 +47,33 @@
   font-weight: bold;
 }
 
-.top-bar > .profile-icon {
+.top-bar .profile-icon {
   display: none;
 }
 
 @media (max-width: 480px) {
-  .top-bar > .profile-icon {
+  .top-bar .profile-icon {
     display: block;
     width: 32px;
     height: 32px;
+    object-fit: cover;
     margin: 0;
     padding: 0;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(0, 0, 0);
+
     border-radius: 9999px;
+  }
+
+  .top-bar .profile-icon img {
+    object-fit: cover;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
   }
 
   .top-bar > .latest-tweets {
     margin-left: 20px;
   }
-  
+
   .feed-container > .tweet-link {
     display: block;
   }

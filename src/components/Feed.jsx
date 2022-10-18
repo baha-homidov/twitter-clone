@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useOutletContext } from "react-router-dom";
 import tweetIcon from "../assets/img/icons/tweet.svg";
 import "../assets/css/Feed.css";
 import Tweet from "./Tweet";
 
 function Feed(props) {
   const [tweetArray, setTweetArray] = useState([]);
-
+  const [userInfo, setUserInfo] = useOutletContext();
   useEffect(() => {
     const tweetArray = [];
 
@@ -24,9 +24,16 @@ function Feed(props) {
     <div className="feed-container">
       <Outlet />
       <div className="top-bar">
-        <div className="profile-icon">
-          <img src="" alt="" className="icon" />
-        </div>
+        <Link to="/profile/123">
+          <div className="profile-icon">
+            <img
+              src={userInfo && userInfo.userPhotoUrl}
+              alt=""
+              className="icon"
+            />
+          </div>
+        </Link>
+
         <h1 className="latest-tweets">Latest Tweets</h1>
       </div>
       {tweetArray.map((element, index) => {

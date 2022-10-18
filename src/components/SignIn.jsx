@@ -107,7 +107,7 @@ export default function SignIn() {
             <div className="no-account-container">
               Don't have an account?{" "}
               <Link to="/welcome/sign-up" className="link">
-                Sign up
+                Sign in
               </Link>
             </div>
           </form>
