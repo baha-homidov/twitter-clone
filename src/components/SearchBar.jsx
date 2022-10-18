@@ -35,6 +35,12 @@ function SearchBar(props) {
           placeholder="Search Barker"
         />
       </form>
+      {searchValue.length > 0 && (
+        <div className="pop-up">
+          <span>Search for</span>
+          <span className="search-value">"{searchValue}"</span>
+        </div>
+      )}
     </div>
   );
 }

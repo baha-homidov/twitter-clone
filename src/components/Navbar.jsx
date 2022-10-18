@@ -146,7 +146,10 @@ function Navbar(props) {
 
     return (
       <div className="navbar-container">
-        <nav className="horizontal-navbar">
+        <nav
+          style={{ pointerEvents: props.userInfo ? "all" : "none" }}
+          className="horizontal-navbar"
+        >
           <Link className="link" to="home">
             <button
               onClick={setActive}
@@ -187,7 +190,10 @@ function Navbar(props) {
     // else render the desktop navabar
     return (
       <div className="navbar-container">
-        <nav className="vertical-navbar">
+        <nav
+          style={{ pointerEvents: props.userInfo ? "all" : "none" }}
+          className="vertical-navbar"
+        >
           <button className="title-logo">
             <img src={logoIcon} alt="" className="navbar-icon" />
           </button>
@@ -263,7 +269,9 @@ function Navbar(props) {
                 <div className="name">
                   {props.userInfo && props.userInfo.displayName}
                 </div>
-                <div className="username">@{props.userInfo && props.userInfo.username}</div>
+                <div className="username">
+                  @{props.userInfo && props.userInfo.username}
+                </div>
               </div>
             </button>
           </div>

@@ -66,6 +66,7 @@ function App() {
     <div className="app-container">
       <div className="main-content">
         <Navbar userInfo={userInfo} />
+
         <div className="center-content-container">
           {showLoading && <Loading />}
 
