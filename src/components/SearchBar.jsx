@@ -36,7 +36,7 @@ function SearchBar(props) {
         />
       </form>
       {searchValue.length > 0 && (
-        <div className="pop-up">
+        <div onClick={handleSubmit} className="pop-up">
           <span>Search for</span>
           <span className="search-value">"{searchValue}"</span>
         </div>

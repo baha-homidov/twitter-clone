@@ -24,7 +24,7 @@ function Feed(props) {
     <div className="feed-container">
       <Outlet />
       <div className="top-bar">
-        <Link to="/profile/123">
+        <Link to={userInfo ? `/profile/${userInfo.uid}` : "#"}>
           <div className="profile-icon">
             <img
               src={userInfo && userInfo.userPhotoUrl}

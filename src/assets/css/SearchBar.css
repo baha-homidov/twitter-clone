@@ -7,9 +7,9 @@
 .searchbar-container .pop-up {
   display: flex;
   align-items: center;
+  cursor: pointer;
   padding: 16px;
   font-size: 1em;
-
   overflow: hidden;
   position: absolute;
   width: 100%;
@@ -20,6 +20,11 @@
   z-index: 4;
   top: 50px;
   gap: 7px;
+  transition: background-color 0.2s ease;
+}
+
+.searchbar-container .pop-up:hover {
+  background-color: #e6e7e7;
 }
 
 .searchbar-container .pop-up .search-value {

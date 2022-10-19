@@ -226,7 +226,10 @@ function Navbar(props) {
               </button>
             </Link>
 
-            <Link to="/profile/123" className="link">
+            <Link
+              to={props.userInfo ? `/profile/${props.userInfo.uid}` : "#"}
+              className="link"
+            >
               <button
                 onClick={setActive}
                 className={`profile ${profileButtonActive.current}`}

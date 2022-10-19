@@ -130,6 +130,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         username: username,
         lowercaseUsername: username.toLowerCase(),
         displayName: name,
+        lowercaseDisplayName: name.toLowerCase(),
         userPhotoUrl: userPhoto,
         timestamp: serverTimestamp(),
         uid: uid,
@@ -188,6 +189,70 @@ async function getUserInfo(uid) {
   }
 }
 
+async function searchUsersByUsername(searchValue) {
+  // asynchronously searches database for users with similar 'username'
+  // returns an array containing userInfo
+  searchValue = searchValue.toLowerCase(); // set string to lowercase for search
+  const resultArr = [];
+
+  const usersRef = await collection(db, "userCollection");
+  const docRef = query(
+    usersRef,
+    where("lowercaseUsername", ">=", searchValue),
+    where("lowercaseUsername", "<=", searchValue + "\uf8ff")
+  );
+  const querySnapshot = await getDocs(docRef);
+
+  querySnapshot.forEach((element) => {
+    resultArr.push(element.data());
+  });
+
+  return resultArr;
+}
+
+async function searchUsersByDisplayName(searchValue) {
+  // asynchronously searches database for users with similar 'displayName'
+  // returns an array containing userInfo
+  searchValue = searchValue.toLowerCase(); // set string to lowercase for search
+  const resultArr = [];
+
+  const usersRef = await collection(db, "userCollection");
+  const docRef = query(
+    usersRef,
+    where("lowercaseDisplayName", ">=", searchValue),
+    where("lowercaseDisplayName", "<=", searchValue + "\uf8ff")
+  );
+  const querySnapshot = await getDocs(docRef);
+
+  querySnapshot.forEach((element) => {
+    resultArr.push(element.data());
+  });
+
+  return resultArr;
+}
+
+async function searchUsers(searchValue) {
+  // asynchronously searches database for users with similar 'username' or 'displayName'
+  // returns an array containing userInfo
+  const usernameResult = await searchUsersByUsername(searchValue);
+  const displayNameResult = await searchUsersByDisplayName(searchValue);
+
+  let resultArr = usernameResult.concat(displayNameResult);
+  // delete the duplicates
+  resultArr = resultArr.reduce((unique, o) => {
+    if (!unique.some((obj) => obj.lowercaseUsername === o.lowercaseUsername)) {
+      unique.push(o);
+    }
+    return unique;
+  }, []);
+
+  return resultArr;
+}
+
+window.searchUsers = searchUsers;
+window.searchUsersByUsername = searchUsersByUsername;
+window.searchUsersByDisplayName = searchUsersByDisplayName;
+
 export {
   sigInWithGoogle,
   signOutUser,
@@ -200,5 +265,6 @@ export {
   uploadUserPhoto,
   isNewUser,
   getUserInfo,
+  searchUsers,
   storage,
 };

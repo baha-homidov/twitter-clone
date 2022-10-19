@@ -4,7 +4,6 @@
 }
 
 .search-container > .bar {
-  position: absolute;
   padding: 0px 16px 0px 16px;
 
   display: flex;
@@ -47,12 +46,9 @@
   display: flex;
   padding-left: 12px;
   align-items: center;
-
 }
 
-
-
-.search-container > .bar  .back {
+.search-container button.back {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,6 +62,103 @@
   transition: background-color 0.2s;
 }
 
-.search-container > .bar > .link > .back:hover {
+.search-container button.back:hover {
   background-color: #e6e7e7;
+}
+
+.search-container .category-buttons {
+  height: 53px;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+
+.search-container .category-buttons button {
+  position: relative;
+  width: 125px;
+  background-color: white;
+  border: none;
+  color: #536471;
+  font-size: 1.2em;
+  transition: background-color 0.2s ease;
+}
+
+.search-container .category-buttons .blue-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 99px;
+  height: 0px;
+  width: 60px;
+  background-color: #2b9bf0;
+  transition: 0.2s ease;
+}
+
+.search-container .category-buttons button.active .blue-bar {
+  height: 5px;
+}
+
+@media (min-width: 480px) {
+  .search-container .category-buttons button:hover {
+    background-color: #e6e7e7;
+  }
+
+  .user-wrapper button.follow:hover {
+    background-color: #272c30;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-container .category-buttons button:active {
+    background-color: #e6e7e7;
+  }
+
+  .user-wrapper button.follow:active {
+    background-color: #272c30;
+  }
+}
+
+.search-container .user-wrapper {
+  position: relative;
+}
+
+.user-wrapper button.follow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 32px;
+  width: 77px;
+  border-radius: 99px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  transition: background-color 0.2s ease;
+}
+
+.search-container .user-component {
+  height: 80px;
+}
+
+.search-container .user-component .profile-info {
+  font-size: 17px;
+  gap: 6px;
+}
+
+.search-container .user-component .user-icon {
+  height: 50px;
+  width: 50px;
+}
+
+.search-container .search-results {
+  position: relative;
+}
+
+.search-container .search-results .loading-container {
+  background-color: transparent !important;
+  min-height: 0;
+  min-width: 0;
 }

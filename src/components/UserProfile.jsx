@@ -1,14 +1,35 @@
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/UserProfile.css";
 import Tweet from "./Tweet";
-import { Link, Outlet, useNavigate, useOutletContext } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
 import { format } from "date-fns"; // library for formatting Date into human readable format
-import { signOutUser } from "../FirebaseBackend";
+import { getUserInfo, signOutUser } from "../FirebaseBackend";
+import { useEffect, useState } from "react";
+import Loading from "./Loading";
 export default function UserProfile() {
-  const [userInfo, setUserInfo] = useOutletContext();
+  const [userInfo, setUserInfo] = useState(null);
+  const [showLoading, setShowLoading] = useState(true);
   const navigate = useNavigate();
-  console.log(userInfo);
+  const urlParam = useParams(); // access params from URL
+  console.log(urlParam.profileId);
+
+  async function setUserInfoFromFirebase() {
+    const usersnap = await getUserInfo(urlParam.profileId);
+    setUserInfo(usersnap);
+    setShowLoading(false);
+  }
+
+  useEffect(() => {
+    setUserInfoFromFirebase();
+  }, []);
+
   const arr = []; // placeholder for rendering some tweets
   for (let i = 0; i < 12; i++) {
     arr.push({
@@ -23,6 +44,7 @@ export default function UserProfile() {
   }
   return (
     <div className="user-profile-container">
+      {showLoading && <Loading />}
       <Outlet context={[userInfo, setUserInfo]} />
       <div className="top-bar">
         <button onClick={navigateBack} className="back">

@@ -22,6 +22,7 @@ a {
 }
 
 a {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -99,7 +100,6 @@ aside.right-bar {
   .app-container .main-content .center-content-container .loading-container {
     height: calc(100vh - 52px);
     min-height: 0;
-
   }
 
   .top-bar > .latest-tweets {
