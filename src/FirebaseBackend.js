@@ -27,7 +27,6 @@ import {
   deleteDoc,
   where,
 } from "firebase/firestore";
-import { upload } from "@testing-library/user-event/dist/upload";
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -119,9 +118,19 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
   // doesn't check for already existing usernames
   // existing usernames should checked before calling this function
   try {
-    const Doc = await addDoc(collection(db, "userCollection", uid, "tweets"), {
+    const Doc = await addDoc(
+      collection(db, "userCollection", uid, "tweetsCollection"),
+      {
+        skip: true,
+      }
+    ); // add tweets collection for future use
+    await addDoc(collection(db, "userCollection", uid, "followCollection"), {
       skip: true,
-    });
+    }); // add follow collection for future use
+
+    await addDoc(collection(db, "userCollection", uid, "followerCollection"), {
+      skip: true,
+    }); // add follower collection for future use
 
     const userRef = doc(db, "userCollection", uid);
     await setDoc(
@@ -249,10 +258,114 @@ async function searchUsers(searchValue) {
   return resultArr;
 }
 
-window.searchUsers = searchUsers;
-window.searchUsersByUsername = searchUsersByUsername;
-window.searchUsersByDisplayName = searchUsersByDisplayName;
+async function addFollower(targetUser, newFollower) {
+  // adds an entry to userToBeFolled's followerCollection
+  // returns true if executes without errors
+  // returns false if  encounters an error
+  if (targetUser === newFollower || !targetUser || !newFollower) {
+    return false;
+  }
+  await setDoc(
+    doc(db, "userCollection", targetUser, "followerCollection", newFollower),
+    {
+      timestamp: serverTimestamp(),
+      uid: newFollower,
+    }
+  );
+  console.log(`Follower added with id ${newFollower}`);
+}
 
+async function addFollowing(targetUser, userToFollow) {
+  // adds an entry to userToBeFolled's followerCollection
+  // returns true if executes without errors
+  // returns false if  encounters an error
+  try {
+    if (targetUser === userToFollow || !targetUser || !userToFollow) {
+      return false;
+    }
+    await setDoc(
+      doc(db, "userCollection", targetUser, "followCollection", userToFollow),
+      {
+        timestamp: serverTimestamp(),
+        uid: userToFollow,
+      }
+    );
+    console.log(`Followed user added with id ${userToFollow}`);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
+async function followUser(currentUser, userToBeFollowed) {
+  // follow a user and add corresponding entries to both users
+  // returns true if executes withour errors
+  // returns false otherwise
+  try {
+    const addFollowingResult = await addFollowing(
+      currentUser,
+      userToBeFollowed
+    );
+
+    const addFollowerResult = await addFollower(userToBeFollowed, currentUser);
+    if (addFollowingResult === false || addFollowerResult === false) {
+      return false;
+    }
+    console.log("Sucess adding a follower");
+    return true;
+  } catch (e) {
+    console.log(`Error in followUser: ${e}`);
+    return true;
+  }
+}
+
+async function getFollowers(userId) {
+  try {
+    // returns an array with followers userIds
+
+    const resultArr = [];
+
+    const querySnapshot = await getDocs(
+      collection(db, "userCollection", userId, "followerCollection")
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data().skip !== true) {
+        resultArr.push(doc.data());
+      }
+    });
+    console.log(resultArr);
+    return resultArr;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function getFollowing(userId) {
+  try {
+    // returns an array with the followerd users' userIds
+
+    const resultArr = [];
+
+    const querySnapshot = await getDocs(
+      collection(db, "userCollection", userId, "followCollection")
+    );
+    querySnapshot.forEach((doc) => {
+      if (doc.data().skip !== true) {
+        resultArr.push(doc.data());
+      }
+    });
+    console.log(resultArr);
+    return resultArr;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+window.followUser = followUser;
+window.addFollower = addFollower;
+window.getFollowers = getFollowers;
+window.getFollowing = getFollowing;
 export {
   sigInWithGoogle,
   signOutUser,

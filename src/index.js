@@ -13,10 +13,7 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 
 // React Router libarary
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
 import Conversation from "./components/Conversation";
@@ -96,6 +93,10 @@ const router = createBrowserRouter([
           {
             path: "tweetId/reply",
             element: <ComposeTweet reply={true} />,
+          },
+          {
+            path: "followers",
+            element: null,
           },
         ],
       },

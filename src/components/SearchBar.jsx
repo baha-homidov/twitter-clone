@@ -16,7 +16,6 @@ function SearchBar(props) {
     }
 
     event.preventDefault();
-    console.log(redirect);
     navigate(`/search/${searchValue}`);
     // props.showSearchOnFeed(searchValue);
     setSearchValue("");

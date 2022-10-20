@@ -16,9 +16,10 @@ import Loading from "./Loading";
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [showLoading, setShowLoading] = useState(true);
+  const [showProfileControl, setShowProfileControl] = useState(false);
+  const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext();
   const navigate = useNavigate();
   const urlParam = useParams(); // access params from URL
-  console.log(urlParam.profileId);
 
   async function setUserInfoFromFirebase() {
     const usersnap = await getUserInfo(urlParam.profileId);
@@ -29,6 +30,12 @@ export default function UserProfile() {
   useEffect(() => {
     setUserInfoFromFirebase();
   }, []);
+
+  useEffect(() => {
+    if (currentAuthedUser && userInfo) {
+      setShowProfileControl(currentAuthedUser.uid === userInfo.uid);
+    }
+  }, [currentAuthedUser, userInfo]);
 
   const arr = []; // placeholder for rendering some tweets
   for (let i = 0; i < 12; i++) {
@@ -77,7 +84,9 @@ export default function UserProfile() {
               className="userphoto"
             />
           </div>
-          <button className="edit-profile">Edit profile</button>
+          {showProfileControl && (
+            <button className="edit-profile">Edit profile</button>
+          )}
         </div>
         <div className="name">{userInfo && userInfo.displayName}</div>
         <div className="username">{`@${userInfo && userInfo.username}`}</div>
@@ -121,16 +130,20 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="sign-out-container">
-        <button
-          onClick={() => {
-            signOutUser();
-            navigate("/welcome");
-          }}
-        >
-          Sign out
-        </button>
-      </div>
+
+      {showProfileControl && (
+        <div className="sign-out-container">
+          <button
+            onClick={() => {
+              signOutUser();
+              navigate("/welcome");
+            }}
+          >
+            Sign out
+          </button>
+        </div>
+      )}
+
       <div className="selection">
         <div className="text">
           Tweets & replies

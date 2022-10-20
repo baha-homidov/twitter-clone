@@ -64,10 +64,6 @@
   background-color: #e6e7e7;
 }
 
-.sign-out-container {
-  display: none;
-}
-
 .user-profile-container .user-info .userphoto-container {
   width: 25%;
   height: auto;
@@ -164,27 +160,23 @@
   padding-bottom: 50px;
 }
 
-@media (max-width: 480px) {
-  .sign-out-container {
-    display: block;
-    padding: 16px;
+.sign-out-container {
+  padding: 16px;
+}
 
-  }
+.sign-out-container button {
+  margin-left: auto;
+  border-radius: 999px;
+  height: 36px;
+  padding: 0px 16px 0px 16px;
+  font-size: 1em;
+  font-weight: bold;
+  background-color: white;
+  border: 1px solid #d2dbe0;
+  color: #1b2025;
+  transition: background-color 0.2s ease;
+}
 
-  .sign-out-container button {
-    margin-left: auto;
-    border-radius: 999px;
-    height: 36px;
-    padding: 0px 16px 0px 16px;
-    font-size: 1em;
-    font-weight: bold;
-    background-color: white;
-    border: 1px solid #d2dbe0;
-    color: #1b2025;
-    transition: background-color 0.2s ease;
-  }
-
-  .sign-out-container button:active {
-    background-color: #f0bec9d7;
-  }
+.sign-out-container button:hover {
+  background-color: #f0bec9d7;
 }
