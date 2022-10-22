@@ -21,13 +21,12 @@ export default function UserProfile() {
   const navigate = useNavigate();
   const urlParam = useParams(); // access params from URL
 
-  async function setUserInfoFromFirebase() {
-    const usersnap = await getUserInfo(urlParam.profileId);
-    setUserInfo(usersnap);
-    setShowLoading(false);
-  }
-
   useEffect(() => {
+    async function setUserInfoFromFirebase() {
+      const usersnap = await getUserInfo(urlParam.profileId);
+      setUserInfo(usersnap);
+      setShowLoading(false);
+    }
     setUserInfoFromFirebase();
   }, []);
 
@@ -120,14 +119,18 @@ export default function UserProfile() {
         </div>
 
         <div className="follower-container">
-          <div className="following">
-            <span className="number">28</span>{" "}
-            <span className="text">Following</span>
-          </div>
-          <div className="followers">
-            <span className="number">5</span>{" "}
-            <span className="text">Followers</span>
-          </div>
+          <Link to="followlist" state={{ active: "followers", userInfo }}>
+            <div className="followers">
+              <span className="number">5</span>{" "}
+              <span className="text">Followers</span>
+            </div>
+          </Link>
+          <Link to="followlist" state={{ active: "following", userInfo }}>
+            <div className="following">
+              <span className="number">28</span>{" "}
+              <span className="text">Following</span>
+            </div>
+          </Link>
         </div>
       </div>
 

@@ -18,6 +18,7 @@ import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
 import Conversation from "./components/Conversation";
 import CreateUserFromGoogle from "./components/CreateUserFromGoogle";
+import FollowList from "./components/FollowList";
 
 window.version = "0.3.1";
 
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
             element: <ComposeTweet reply={true} />,
           },
         ],
+      },
+      
+      {
+        path: "profile/:profileId/followlist",
+        element: <FollowList />,
       },
       {
         path: "search",
@@ -94,14 +100,11 @@ const router = createBrowserRouter([
             path: "tweetId/reply",
             element: <ComposeTweet reply={true} />,
           },
-          {
-            path: "followers",
-            element: null,
-          },
         ],
       },
     ],
   },
+
   {
     path: "/welcome",
     element: <Welcome />,

@@ -123,7 +123,7 @@
   position: relative;
 }
 
-.user-wrapper button.follow {
+.search-container .user-wrapper button.follow {
   position: absolute;
   right: 16px;
   top: 50%;

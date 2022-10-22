@@ -331,10 +331,9 @@ async function getFollowers(userId) {
     );
     querySnapshot.forEach((doc) => {
       if (doc.data().skip !== true) {
-        resultArr.push(doc.data());
+        resultArr.push(doc.data().uid);
       }
     });
-    console.log(resultArr);
     return resultArr;
   } catch (e) {
     console.log(e);
@@ -352,20 +351,68 @@ async function getFollowing(userId) {
     );
     querySnapshot.forEach((doc) => {
       if (doc.data().skip !== true) {
-        resultArr.push(doc.data());
+        resultArr.push(doc.data().uid);
       }
     });
-    console.log(resultArr);
     return resultArr;
   } catch (e) {
     console.log(e);
   }
 }
 
+async function getUserInfoFromIdArray(idArray) {
+  // recieves an array of userId strings
+  // if idArray.length is bigger than 10 divides it in 10 element chunks
+  // because of Firestore chunk query limitations
+  // constructs and returns an array of userInfo
+
+  const makeChunksOf10 = (array) => {
+    // helper function
+    const chunkSize = 10;
+    const resultArr = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      const chunk = array.slice(i, i + chunkSize);
+      resultArr.push(chunk);
+    }
+    return resultArr;
+  };
+
+  const resultArr = [];
+
+  idArray = makeChunksOf10(idArray); // make chunks of length<=10 arrays to accomodate firestore limitations
+
+  await Promise.all(
+    // fire multiple queries at the same time and wait for all of them to finish
+    idArray.map(async (arrElement) => {
+      const usersRef = collection(db, "userCollection");
+      const q = query(usersRef, where("uid", "in", arrElement));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        resultArr.push(doc.data());
+      });
+    })
+  );
+
+  return resultArr;
+}
+
+async function getFollowListUserInfo(userId) {
+  // constructs and returns userInfo array of followers
+  //                                          user followed
+  const followersIdArray = await getFollowers(userId);
+  const followingIdArray = await getFollowing(userId);
+
+  const followersUserInfoArray = await getUserInfoFromIdArray(followersIdArray);
+  const followingUserInfoArray = await getUserInfoFromIdArray(followingIdArray);
+
+  return { followersUserInfoArray, followingUserInfoArray };
+}
+
 window.followUser = followUser;
 window.addFollower = addFollower;
 window.getFollowers = getFollowers;
 window.getFollowing = getFollowing;
+window.getFollowListUserInfo = getFollowListUserInfo;
 export {
   sigInWithGoogle,
   signOutUser,
@@ -379,5 +426,8 @@ export {
   isNewUser,
   getUserInfo,
   searchUsers,
+  getFollowers,
+  getFollowing,
+  getFollowListUserInfo,
   storage,
 };

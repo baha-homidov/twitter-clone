@@ -54,7 +54,7 @@ function App() {
         if (userInfo === null) {
           const usersnap = await getUserInfo(user.uid);
           setUserInfo (usersnap);
-          console.log(usersnap);
+          // console.log(usersnap);
         }
       } else {
         navigate("/welcome");
