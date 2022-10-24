@@ -26,6 +26,7 @@ import {
   query,
   deleteDoc,
   where,
+  waitForPendingWrites,
 } from "firebase/firestore";
 
 // My web app's Firebase configuration
@@ -259,7 +260,7 @@ async function searchUsers(searchValue) {
 }
 
 async function addFollower(targetUser, newFollower) {
-  // adds an entry to userToBeFolled's followerCollection
+  // adds an entry to targetUser's followerCollection
   // returns true if executes without errors
   // returns false if  encounters an error
   if (targetUser === newFollower || !targetUser || !newFollower) {
@@ -275,26 +276,69 @@ async function addFollower(targetUser, newFollower) {
   console.log(`Follower added with id ${newFollower}`);
 }
 
-async function addFollowing(targetUser, userToFollow) {
-  // adds an entry to userToBeFolled's followerCollection
+async function removeFollower(currentUserId, targetUserId) {
+  // removes targetUser's entry to from currentUser's followerCollection
+  try {
+    if (currentUserId === targetUserId) {
+      return;
+    }
+    await deleteDoc(
+      doc(
+        db,
+        "userCollection",
+        currentUserId,
+        "followerCollection",
+        targetUserId
+      )
+    );
+    console.log("Follower removed");
+  } catch (e) {
+    console.log("error removing a follower" + e);
+  }
+}
+
+async function addFollowing(targetUserId, userToFollowId) {
+  // adds an entry to targetUser's followerCollection
   // returns true if executes without errors
   // returns false if  encounters an error
   try {
-    if (targetUser === userToFollow || !targetUser || !userToFollow) {
+    if (targetUserId === userToFollowId || !targetUserId || !userToFollowId) {
       return false;
     }
     await setDoc(
-      doc(db, "userCollection", targetUser, "followCollection", userToFollow),
+      doc(
+        db,
+        "userCollection",
+        targetUserId,
+        "followCollection",
+        userToFollowId
+      ),
       {
         timestamp: serverTimestamp(),
-        uid: userToFollow,
+        uid: userToFollowId,
       }
     );
-    console.log(`Followed user added with id ${userToFollow}`);
+    console.log(`Followed user added with id ${userToFollowId}`);
     return true;
   } catch (e) {
     console.log(e);
     return false;
+  }
+}
+
+async function removeFollowing(currentUserId, targetUserId) {
+  // removes targetUser's entry in currentUser's following collecion
+  // removes targetUser's entry to from currentUser's followerCollection
+  try {
+    if (currentUserId === targetUserId) {
+      return;
+    }
+    await deleteDoc(
+      doc(db, "userCollection", currentUserId, "followCollection", targetUserId)
+    );
+    console.log("Followed user removed");
+  } catch (e) {
+    console.log("error removing a follower" + e);
   }
 }
 
@@ -317,6 +361,16 @@ async function followUser(currentUser, userToBeFollowed) {
   } catch (e) {
     console.log(`Error in followUser: ${e}`);
     return true;
+  }
+}
+
+async function unfollowUser(currentUserId, userToBeUnfollowedId) {
+  // unfollow a user and remove corresponding entries from the both users
+  try {
+    await removeFollowing(currentUserId, userToBeUnfollowedId);
+    await removeFollower(userToBeUnfollowedId, currentUserId);
+  } catch (e) {
+    console.log("Error unfollowing a user" + e);
   }
 }
 
@@ -408,6 +462,23 @@ async function getFollowListUserInfo(userId) {
   return { followersUserInfoArray, followingUserInfoArray };
 }
 
+async function isFollowing(currentUserId, targetUserId) {
+  // returns if currentUser follows targetUser
+  const docRef = doc(
+    db,
+    "userCollection",
+    currentUserId,
+    "followCollection",
+    targetUserId
+  );
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+window.isFollowing = isFollowing;
 window.followUser = followUser;
 window.addFollower = addFollower;
 window.getFollowers = getFollowers;
@@ -430,5 +501,7 @@ export {
   getFollowing,
   getFollowListUserInfo,
   followUser,
+  unfollowUser,
   storage,
+  isFollowing,
 };

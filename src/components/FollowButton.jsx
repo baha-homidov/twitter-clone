@@ -1,18 +1,43 @@
 import "../assets/css/FollowButton.css";
-import { useState } from "react";
-import { followUser } from "../FirebaseBackend";
-import Loading from "./Loading";
+import { useEffect, useState } from "react";
+import { unfollowUser, followUser, isFollowing } from "../FirebaseBackend";
 export default function FollowButton(props) {
-  const [isFollowing, setIsFollowing] = useState(false); // track if currentUser is following targetUser
+  const [currentFollowingTarget, setCurrentFollowingTarget] = useState(false); // track if currentUser is following targetUser
   const [showLoader, setShowLoader] = useState(false);
+
+  async function followAction() {
+    setShowLoader(true);
+    // follows or unfollows the targetUser depending on currentFollowingTarget state
+    if (currentFollowingTarget === true) {
+      console.log("unfollow action");
+      await unfollowUser(props.currentUserId, props.targetUserId);
+    } else {
+      console.log("follow action");
+      await followUser(props.currentUserId, props.targetUserId);
+    }
+    setShowLoader(false);
+    setCurrentFollowingTarget(!currentFollowingTarget);
+  }
+
+  useEffect(() => {
+    const initButton = async () => {
+      setShowLoader(true);
+      const result = await isFollowing(props.currentUserId, props.targetUserId);
+      setShowLoader(false);
+      console.log(result);
+      setCurrentFollowingTarget(result);
+    };
+
+    initButton();
+  }, []);
+
   return (
     <button
       onClick={(e) => {
         e.preventDefault();
-        console.log("clickalo");
-        setIsFollowing(!isFollowing);
+        followAction();
       }}
-      className={isFollowing ? "follow following" : "follow"}
+      className={currentFollowingTarget ? "follow following" : "follow"}
     >
       {showLoader && (
         <div id="dots4">
@@ -23,7 +48,7 @@ export default function FollowButton(props) {
         </div>
       )}
 
-      {isFollowing
+      {currentFollowingTarget
         ? !showLoader && (
             <div>
               <span className="hovered">Unfollow</span>

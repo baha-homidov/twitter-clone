@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams, useLocation, Link } from "react-router-dom";
+import {
+  useNavigate,
+  useParams,
+  useLocation,
+  Link,
+  useOutletContext,
+} from "react-router-dom";
 import {
   getUserInfo,
   getFollowers,
@@ -21,17 +27,19 @@ export default function FollowList(props) {
   const [showFollowListLoading, setShowFollowListLoading] = useState(true);
   const [followerList, setFollowerList] = useState(null);
   const [followingList, setFollowingList] = useState(null);
+  const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext(); // get authInfo passed by App.jsx
 
   async function initData() {
     // initialyze data from firebase
     // use Promise.all to fire two async function at the same time and wait for them to finish
-    await Promise.all([initUserInfo(), initFollowList()]);
+    await Promise.all([initUserInfo(), getFollowListFromBackend()]);
     console.log("finish init data");
   }
 
-  async function initFollowList() {
+  async function getFollowListFromBackend() {
     // get userData for all the followers and users followed from firestore
     // update states
+    setShowFollowListLoading(true);
     const { followersUserInfoArray, followingUserInfoArray } =
       await getFollowListUserInfo(userId);
     setFollowerList(followersUserInfoArray);
@@ -40,6 +48,7 @@ export default function FollowList(props) {
   }
 
   async function initUserInfo() {
+    setShowLoading(true);
     if (location.state.userInfo) {
       // if userInfo passed from parent node, don't retrieve data form backend
       setUserInfo(location.state.userInfo);
@@ -93,6 +102,7 @@ export default function FollowList(props) {
       <div className="category-buttons">
         <button
           onClick={() => {
+            getFollowListFromBackend();
             setActiveButton("followers");
           }}
           className={
@@ -103,6 +113,7 @@ export default function FollowList(props) {
         </button>
         <button
           onClick={() => {
+            getFollowListFromBackend();
             setActiveButton("following");
           }}
           className={
@@ -123,7 +134,10 @@ export default function FollowList(props) {
                   <Link key={index} to={`/profile/${element.uid}`}>
                     <div className="user-wrapper">
                       <User userInfo={element} />
-                      <FollowButton />
+                      <FollowButton
+                        currentUserId={currentAuthedUser.uid}
+                        targetUserId={element.uid}
+                      />
                     </div>
                   </Link>
                 );
@@ -137,7 +151,13 @@ export default function FollowList(props) {
                   <Link key={index} to={`/profile/${element.uid}`}>
                     <div className="user-wrapper">
                       <User userInfo={element} />
-                      <FollowButton />
+
+                      {element.uid !== currentAuthedUser.uid && (
+                        <FollowButton
+                          currentUserId={currentAuthedUser.uid}
+                          targetUserId={element.uid}
+                        />
+                      )}
                     </div>
                   </Link>
                 );
