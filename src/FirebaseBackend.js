@@ -429,5 +429,6 @@ export {
   getFollowers,
   getFollowing,
   getFollowListUserInfo,
+  followUser,
   storage,
 };

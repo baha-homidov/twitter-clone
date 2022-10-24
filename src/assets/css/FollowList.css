@@ -93,6 +93,16 @@
   min-height: 0;
 }
 
-.follow-list-container .user-list-container {
+
+
+.follow-list-container .user-wrapper {
   border: 1px solid red;
+  position: relative;
+}
+
+.follow-list-container button.follow {
+position: absolute;
+right: 16px;
+top: 50%;
+transform: translateY(-50%);
 }

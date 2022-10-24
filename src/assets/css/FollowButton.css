@@ -1,0 +1,149 @@
+button.follow {
+  height: 32px;
+  width: 77px;
+  border-radius: 99px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  transition: 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button.follow.following {
+  background-color: white;
+  border: 1px solid #cfd9de;
+  color: black;
+}
+
+button.follow.following div span {
+  transition: 0.2s ease;
+}
+button.follow.following span.hovered {
+  display: none;
+}
+
+button.follow.following:hover span.hovered {
+  color: red;
+  display: block;
+}
+
+button.follow.following:hover span.unhovered {
+  display: none;
+}
+@media (min-width: 480px) {
+  .user-wrapper button.follow:hover:not(button) {
+    background-color: #272c30;
+  }
+
+  button.follow.following:hover {
+    background-color: #f7e1e3;
+    border: 1px solid red;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-wrapper button.follow:not(.following):active {
+    background-color: #272c30;
+  }
+
+  button.follow.following:active {
+    background-color: #f7e1e3;
+    border: 1px solid red;
+  }
+}
+
+button.follow .loading-container {
+  min-height: 0;
+  min-width: 0;
+}
+
+button.follow .loading-container .lds-ring {
+  width: 20px;
+  height: 20px;
+}
+
+button.follow .loading-container .lds-ring div {
+  width: 20px;
+  height: 20px;
+  margin: 0px;
+  border: 16px solid pink;
+}
+
+/*-----------------------------------------------------------------------*/
+/**===== dots4 =====*/
+#dots4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  height: 20px;
+  width: 40px;
+}
+
+#dots4 span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2b9bf0;
+  -webkit-animation: dots4 1.7s infinite ease-in-out both;
+  animation: dots4 1.7s infinite ease-in-out both;
+}
+
+#dots4 span:nth-child(1) {
+  -webkit-animation-delay: 0.6s;
+  animation-delay: 0.6s;
+}
+
+#dots4 span:nth-child(2) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+#dots4 span:nth-child(3) {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+#dots4 span:nth-child(4) {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+@keyframes dots4 {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 0;
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes dots4 {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    opacity: 0;
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+/** END of dots4 */
+/*-----------------------------------------------------------------------*/

@@ -9,6 +9,7 @@ import {
 import "../assets/css/FollowList.css";
 import Loading from "./Loading";
 import User from "./User";
+import FollowButton from "./FollowButton";
 
 export default function FollowList(props) {
   const userId = useParams().profileId;
@@ -122,15 +123,7 @@ export default function FollowList(props) {
                   <Link key={index} to={`/profile/${element.uid}`}>
                     <div className="user-wrapper">
                       <User userInfo={element} />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          console.log("clickalo");
-                        }}
-                        className="follow"
-                      >
-                        Follow
-                      </button>
+                      <FollowButton />
                     </div>
                   </Link>
                 );
@@ -144,15 +137,7 @@ export default function FollowList(props) {
                   <Link key={index} to={`/profile/${element.uid}`}>
                     <div className="user-wrapper">
                       <User userInfo={element} />
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          console.log("clickalo");
-                        }}
-                        className="follow"
-                      >
-                        Follow
-                      </button>
+                      <FollowButton />
                     </div>
                   </Link>
                 );

@@ -7,6 +7,7 @@ import arrow from "../assets/img/icons/arrow.svg";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { searchUsers } from "../FirebaseBackend";
 import Loading from "./Loading";
+import FollowButton from "./FollowButton";
 
 function Search(props) {
   const navigate = useNavigate();
@@ -98,15 +99,7 @@ function Search(props) {
                 <Link key={index} to={`/profile/${element.uid}`}>
                   <div className="user-wrapper">
                     <User userInfo={element} />
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        console.log("clickalo");
-                      }}
-                      className="follow"
-                    >
-                      Follow
-                    </button>
+                    <FollowButton />
                   </div>
                 </Link>
               );
