@@ -4,7 +4,12 @@ import "../assets/css/Search.css";
 import searchIcon from "../assets/img/icons/search.svg";
 import User from "./User";
 import arrow from "../assets/img/icons/arrow.svg";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import {
+  useParams,
+  Link,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import { searchUsers } from "../FirebaseBackend";
 import Loading from "./Loading";
 import FollowButton from "./FollowButton";
@@ -15,7 +20,10 @@ function Search(props) {
   const [activeButton, setActiveButton] = useState("people"); //"people"||"posts"    state for controlling active buttons
   const [userResultArr, setUserResultArr] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext(); // get authInfo passed by App.jsx
   const searchParam = useParams(); // access params from URL
+
+  console.log(currentAuthedUser);
 
   async function searchUserFromBackend(searchValue) {
     setShowLoading(true);
@@ -99,7 +107,13 @@ function Search(props) {
                 <Link key={index} to={`/profile/${element.uid}`}>
                   <div className="user-wrapper">
                     <User userInfo={element} />
-                    <FollowButton />
+
+                    {element.uid !== currentAuthedUser.uid && (
+                      <FollowButton
+                        currentUserId={currentAuthedUser.uid}
+                        targetUserId={element.uid}
+                      />
+                    )}
                   </div>
                 </Link>
               );

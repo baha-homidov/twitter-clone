@@ -22,12 +22,15 @@ import {
   getDocs,
   setDoc,
   serverTimestamp,
-  orderBy,
   query,
   deleteDoc,
   where,
-  waitForPendingWrites,
+  increment,
+  DocumentSnapshot,
 } from "firebase/firestore";
+import { async } from "@firebase/util";
+import { useFormAction } from "react-router-dom";
+import { startOfSecond } from "date-fns";
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -44,6 +47,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
 const storage = getStorage(app);
 
 async function sigInWithGoogle() {
@@ -141,9 +145,13 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         lowercaseUsername: username.toLowerCase(),
         displayName: name,
         lowercaseDisplayName: name.toLowerCase(),
-        userPhotoUrl: userPhoto,
+        userPhotoUrl: userPhoto
+          ? userPhoto
+          : "https://firebasestorage.googleapis.com/v0/b/twitter-clone-a252d.appspot.com/o/userphotos%2Fdefault-userphoto.png?alt=media&token=06b9727b-0b33-4a35-93a3-d7277565b93e",
         timestamp: serverTimestamp(),
         uid: uid,
+        followerCount: 0,
+        followingCount: 0,
       },
       { merge: true }
     );
@@ -342,6 +350,42 @@ async function removeFollowing(currentUserId, targetUserId) {
   }
 }
 
+async function incrementFollowerCount(userId) {
+  try {
+    const userRef = doc(db, "userCollection", userId);
+    await setDoc(userRef, { followerCount: increment(1) }, { merge: true });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function decrementFollowerCount(userId) {
+  try {
+    const userRef = doc(db, "userCollection", userId);
+    await setDoc(userRef, { followerCount: increment(-1) }, { merge: true });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function incrementFollowingCount(userId) {
+  try {
+    const userRef = doc(db, "userCollection", userId);
+    await setDoc(userRef, { followingCount: increment(1) }, { merge: true });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function decrementFollowingCount(userId) {
+  try {
+    const userRef = doc(db, "userCollection", userId);
+    await setDoc(userRef, { followingCount: increment(-1) }, { merge: true });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 async function followUser(currentUser, userToBeFollowed) {
   // follow a user and add corresponding entries to both users
   // returns true if executes withour errors
@@ -357,6 +401,8 @@ async function followUser(currentUser, userToBeFollowed) {
       return false;
     }
     console.log("Sucess adding a follower");
+    await incrementFollowerCount(userToBeFollowed);
+    await incrementFollowingCount(currentUser);
     return true;
   } catch (e) {
     console.log(`Error in followUser: ${e}`);
@@ -369,6 +415,8 @@ async function unfollowUser(currentUserId, userToBeUnfollowedId) {
   try {
     await removeFollowing(currentUserId, userToBeUnfollowedId);
     await removeFollower(userToBeUnfollowedId, currentUserId);
+    await decrementFollowingCount(currentUserId);
+    await decrementFollowerCount(userToBeUnfollowedId);
   } catch (e) {
     console.log("Error unfollowing a user" + e);
   }
@@ -478,12 +526,38 @@ async function isFollowing(currentUserId, targetUserId) {
     return false;
   }
 }
+
+async function publishTweet(userInfo, bodyText, image) {
+  // gets userId, tweet bodyText, and an optioanl image
+  // if image is present uploads it to firebase storage and gets result url
+  // adds an entry to userId/tweetCollection
+  try {
+    const tweet = {
+      authorId: userInfo.uid,
+      displayName: userInfo.displayName,
+      username: userInfo.username,
+      userPhotoUrl: userInfo.userPhotoUrl,
+      bodyText: bodyText,
+      timestamp: serverTimestamp(),
+    };
+    const tweetRef = await addDoc(
+      collection(db, "userCollection", userInfo.uid, "tweetCollection"),
+      tweet
+    );
+    console.log(`Tweet written with id: ${tweetRef.id}`);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 window.isFollowing = isFollowing;
 window.followUser = followUser;
 window.addFollower = addFollower;
 window.getFollowers = getFollowers;
 window.getFollowing = getFollowing;
 window.getFollowListUserInfo = getFollowListUserInfo;
+window.incrementFollowerCount = incrementFollowerCount;
+window.publishTweet = publishTweet;
 export {
   sigInWithGoogle,
   signOutUser,
@@ -504,4 +578,5 @@ export {
   unfollowUser,
   storage,
   isFollowing,
+  publishTweet,
 };

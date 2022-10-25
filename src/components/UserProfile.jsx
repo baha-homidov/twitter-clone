@@ -121,13 +121,21 @@ export default function UserProfile() {
         <div className="follower-container">
           <Link to="followlist" state={{ active: "followers", userInfo }}>
             <div className="followers">
-              <span className="number">5</span>{" "}
-              <span className="text">Followers</span>
+              <span className="number">
+                {userInfo ? userInfo.followerCount : ""}
+              </span>{" "}
+              <span className="text">
+                {userInfo && userInfo.followerCount > 1
+                  ? "Followers"
+                  : "Follower"}
+              </span>
             </div>
           </Link>
           <Link to="followlist" state={{ active: "following", userInfo }}>
             <div className="following">
-              <span className="number">28</span>{" "}
+              <span className="number">
+                {userInfo ? userInfo.followingCount : ""}
+              </span>{" "}
               <span className="text">Following</span>
             </div>
           </Link>

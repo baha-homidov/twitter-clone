@@ -7,6 +7,7 @@ import Tweet from "./Tweet";
 function Feed(props) {
   const [tweetArray, setTweetArray] = useState([]);
   const [userInfo, setUserInfo] = useOutletContext();
+
   useEffect(() => {
     const tweetArray = [];
 
@@ -22,7 +23,7 @@ function Feed(props) {
 
   return (
     <div className="feed-container">
-      <Outlet />
+      <Outlet context={userInfo} />
       <div className="top-bar">
         <Link to={userInfo ? `/profile/${userInfo.uid}` : "#"}>
           <div className="profile-icon">

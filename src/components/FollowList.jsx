@@ -134,10 +134,12 @@ export default function FollowList(props) {
                   <Link key={index} to={`/profile/${element.uid}`}>
                     <div className="user-wrapper">
                       <User userInfo={element} />
-                      <FollowButton
-                        currentUserId={currentAuthedUser.uid}
-                        targetUserId={element.uid}
-                      />
+                      {element.uid !== currentAuthedUser.uid && (
+                        <FollowButton
+                          currentUserId={currentAuthedUser.uid}
+                          targetUserId={element.uid}
+                        />
+                      )}
                     </div>
                   </Link>
                 );

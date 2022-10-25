@@ -1,11 +1,13 @@
 import "../assets/css/ComposeTweet.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useState, useEffect } from "react";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 export default function ComposeTweet(props) {
   const [value, setValue] = useState("");
   const [length, setLength] = useState(0);
   const navigate = useNavigate();
+  const userInfo = useOutletContext();
+
   function handleChange(event) {
     setValue(event.target.value);
 
