@@ -260,6 +260,7 @@ function Navbar(props) {
                 </div>
               </div>
               <img
+                referrerPolicy="no-referrer"
                 src={
                   props.userInfo
                     ? props.userInfo.userPhotoUrl

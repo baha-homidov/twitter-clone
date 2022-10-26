@@ -4,6 +4,7 @@ export default function User(props) {
   return (
     <div className="user-component">
       <img
+        referrerPolicy="no-referrer"
         src={
           props.userInfo ? props.userInfo.userPhotoUrl : userPhotoPlaceholder
         }

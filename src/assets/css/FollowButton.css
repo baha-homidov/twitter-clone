@@ -75,7 +75,7 @@ button.follow .loading-container .lds-ring div {
 
 /*-----------------------------------------------------------------------*/
 /**===== dots4 =====*/
-#dots4 {
+button.follow #dots4 {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -84,7 +84,7 @@ button.follow .loading-container .lds-ring div {
   width: 40px;
 }
 
-#dots4 span {
+button.follow #dots4 span {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -93,22 +93,22 @@ button.follow .loading-container .lds-ring div {
   animation: dots4 1.7s infinite ease-in-out both;
 }
 
-#dots4 span:nth-child(1) {
+button.follow #dots4 span:nth-child(1) {
   -webkit-animation-delay: 0.6s;
   animation-delay: 0.6s;
 }
 
-#dots4 span:nth-child(2) {
+button.follow #dots4 span:nth-child(2) {
   -webkit-animation-delay: 0.4s;
   animation-delay: 0.4s;
 }
 
-#dots4 span:nth-child(3) {
+button.follow #dots4 span:nth-child(3) {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s;
 }
 
-#dots4 span:nth-child(4) {
+button.follow #dots4 span:nth-child(4) {
   -webkit-animation-delay: 0.1s;
   animation-delay: 0.1s;
 }
