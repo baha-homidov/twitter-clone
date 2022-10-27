@@ -158,6 +158,14 @@
 
 .user-profile-container .tweets-container {
   padding-bottom: 50px;
+  position: relative;
+}
+
+.user-profile-container .tweets-container .loading-container {
+  border: 1px solid red;
+  min-height: 0 !important;
+  height: auto !important;
+  z-index: 1;
 }
 
 .sign-out-container {

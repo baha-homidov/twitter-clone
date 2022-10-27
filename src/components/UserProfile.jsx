@@ -1,4 +1,3 @@
-import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/UserProfile.css";
 import Tweet from "./Tweet";
 import {
@@ -8,15 +7,17 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
-import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
+
 import { format } from "date-fns"; // library for formatting Date into human readable format
-import { getUserInfo, signOutUser } from "../FirebaseBackend";
+import { getAllTweets, getUserInfo, signOutUser } from "../FirebaseBackend";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [showLoading, setShowLoading] = useState(true);
+  const [showTweetListLoading, setShowTweetListLoading] = useState(true); // loading spinner in Tweets Replies area
   const [showProfileControl, setShowProfileControl] = useState(false);
+  const [tweetArr, setTweetArr] = useState([]);
   const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext();
   const navigate = useNavigate();
   const urlParam = useParams(); // access params from URL
@@ -28,6 +29,13 @@ export default function UserProfile() {
       setShowLoading(false);
     }
     setUserInfoFromFirebase();
+    async function setTweetArrFromFirebase() {
+      const tweetArrSnap = await getAllTweets(urlParam.profileId);
+
+      setTweetArr(tweetArrSnap);
+      setShowTweetListLoading(false);
+    }
+    setTweetArrFromFirebase();
   }, []);
 
   useEffect(() => {
@@ -35,15 +43,6 @@ export default function UserProfile() {
       setShowProfileControl(currentAuthedUser.uid === userInfo.uid);
     }
   }, [currentAuthedUser, userInfo]);
-
-  const arr = []; // placeholder for rendering some tweets
-  for (let i = 0; i < 12; i++) {
-    arr.push({
-      name: "Alex Smith",
-      username: "@alexsmith",
-      text: "Lorem ipsum lorem ipsum lorem ipsum sit domet!",
-    });
-  }
 
   function navigateBack() {
     navigate(-1);
@@ -70,7 +69,9 @@ export default function UserProfile() {
 
         <div className="info-wrapper">
           <div className="name">{userInfo ? userInfo.displayName : ""}</div>
-          <div className="tweets-num">12 tweets</div>
+          <div className="tweets-num">
+            {userInfo ? userInfo.tweetCount : 0} tweets
+          </div>
         </div>
       </div>
       <div className="blank-space"></div>
@@ -162,9 +163,15 @@ export default function UserProfile() {
         </div>
       </div>
       <div className="tweets-container">
-        {arr.map((element, index) => {
-          return <Tweet key={index.toString()} {...element} />;
-        })}
+        {showTweetListLoading ? (
+          <Loading />
+        ) : (
+          <div>
+            {tweetArr.map((element, index) => {
+              return <Tweet key={index.toString()} {...element} />;
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

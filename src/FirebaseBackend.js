@@ -27,10 +27,11 @@ import {
   where,
   increment,
   DocumentSnapshot,
+  orderBy,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 import { useFormAction } from "react-router-dom";
-import { startOfSecond } from "date-fns";
+import { getDate, getTime, startOfSecond } from "date-fns";
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -152,6 +153,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         uid: uid,
         followerCount: 0,
         followingCount: 0,
+        tweetCount: 0,
       },
       { merge: true }
     );
@@ -179,6 +181,33 @@ async function uploadUserPhoto(userphoto, username) {
     const uploadSnapshot = await uploadBytes(storageRef, userphoto);
     const url = await getDownloadURL(uploadSnapshot.ref);
     return url;
+  } catch (e) {
+    console.log(`Error uploading file to storage: ${e}`);
+  }
+}
+
+async function uploadTweetPhoto(userphoto, username) {
+  try {
+    console.log(userphoto);
+    // a file to be uploaded
+    // constructs a filename
+    // uploads to firebase storage
+    // returns upload's url
+
+    // *for a commercial product 'Resize Images' extension can be used for resizing images on server side
+
+    // construct a filename from username+millisecondsSinceEpoch
+    const filename =
+      `${username}-${new Date().getTime()}.${userphoto.name.substring(
+        userphoto.name.indexOf(".") + 1
+      )}`.toLowerCase(); // construct a filename
+    const path = `/tweetPhotos/${filename}`;
+    //upload to /tweetPhotos folder
+    const storageRef = ref(storage, path);
+    const uploadSnapshot = await uploadBytes(storageRef, userphoto);
+    const url = await getDownloadURL(uploadSnapshot.ref);
+
+    return { url: url, path: path };
   } catch (e) {
     console.log(`Error uploading file to storage: ${e}`);
   }
@@ -359,6 +388,15 @@ async function incrementFollowerCount(userId) {
   }
 }
 
+async function incrementTweetCount(userId) {
+  try {
+    const userRef = doc(db, "userCollection", userId);
+    await setDoc(userRef, { tweetCount: increment(1) }, { merge: true });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 async function decrementFollowerCount(userId) {
   try {
     const userRef = doc(db, "userCollection", userId);
@@ -527,7 +565,7 @@ async function isFollowing(currentUserId, targetUserId) {
   }
 }
 
-async function publishTweet(userInfo, bodyText, image) {
+async function publishTweet(userInfo, bodyText, imageUrl, imageStoragePath) {
   // gets userId, tweet bodyText, and an optioanl image
   // if image is present uploads it to firebase storage and gets result url
   // adds an entry to userId/tweetCollection
@@ -539,25 +577,48 @@ async function publishTweet(userInfo, bodyText, image) {
       userPhotoUrl: userInfo.userPhotoUrl,
       bodyText: bodyText,
       timestamp: serverTimestamp(),
+      imageUrl: imageUrl ? imageUrl : "",
+      imageStoragePath: imageStoragePath ? imageStoragePath : "",
+      retweetCount: 0,
+      likeCount: 0,
+      replyCount: 0,
     };
     const tweetRef = await addDoc(
       collection(db, "userCollection", userInfo.uid, "tweetCollection"),
       tweet
     );
+    incrementTweetCount(userInfo.uid);
     console.log(`Tweet written with id: ${tweetRef.id}`);
   } catch (e) {
     console.log(e);
   }
 }
 
-window.isFollowing = isFollowing;
-window.followUser = followUser;
-window.addFollower = addFollower;
-window.getFollowers = getFollowers;
-window.getFollowing = getFollowing;
-window.getFollowListUserInfo = getFollowListUserInfo;
-window.incrementFollowerCount = incrementFollowerCount;
-window.publishTweet = publishTweet;
+async function getAllTweets(userId) {
+  // queries Firestore database
+  // returns an array of tweetObjs in descending order
+  try {
+    const resultArr = [];
+    const tweetCollectionRef = collection(
+      db,
+      "userCollection",
+      userId,
+      "tweetCollection"
+    );
+    const q = query(tweetCollectionRef, orderBy("timestamp", "desc"));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      resultArr.push(doc.data());
+    });
+    return resultArr;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+window.getAllOwnTweets = getAllTweets;
+
 export {
   sigInWithGoogle,
   signOutUser,
@@ -579,4 +640,6 @@ export {
   storage,
   isFollowing,
   publishTweet,
+  uploadTweetPhoto,
+  getAllTweets,
 };

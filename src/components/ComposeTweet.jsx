@@ -1,13 +1,14 @@
 import "../assets/css/ComposeTweet.css";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
-import { publishTweet } from "../FirebaseBackend";
+import { publishTweet, uploadTweetPhoto } from "../FirebaseBackend";
 export default function ComposeTweet(props) {
   const [value, setValue] = useState("");
   const [length, setLength] = useState(0);
   const [loading, setLoading] = useState(false);
   const [showPublished, setShowPublished] = useState(false);
+  const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const userInfo = useOutletContext();
 
@@ -15,6 +16,12 @@ export default function ComposeTweet(props) {
     setValue(event.target.value);
 
     setLength(event.target.value.length);
+  }
+
+  function handleImage(event) {
+    if (event.target.files && event.target.files[0]) {
+      setImage(event.target.files[0]);
+    }
   }
 
   function hidePublishedWithDelay(seconds) {
@@ -28,10 +35,27 @@ export default function ComposeTweet(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    let imageUploadObj = {
+      url: "",
+      path: "",
+    };
     setLoading(true);
-    await publishTweet(userInfo, value);
+    if (image) {
+      imageUploadObj = await uploadTweetPhoto(
+        image,
+        userInfo.lowercaseUsername
+      );
+    }
+
+    await publishTweet(
+      userInfo,
+      value,
+      imageUploadObj.url,
+      imageUploadObj.path
+    );
     setShowPublished(true);
     await hidePublishedWithDelay(2);
+
     navigateBack();
   }
 
@@ -81,7 +105,15 @@ export default function ComposeTweet(props) {
             </button>
 
             <button form="tweet-form" type="submit" className="tweet mobile">
-              Tweet
+              {!loading && <span>Tweet</span>}
+              {loading && (
+                <div id="dots4">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              )}
             </button>
           </div>
           {props.reply && (
@@ -110,7 +142,7 @@ export default function ComposeTweet(props) {
           )}
           <div className="flex-container">
             <div className="avatar-container">
-              <img src={userPhoto} alt="" />
+              <img src={userInfo ? userInfo.userPhotoUrl : ""} alt="" />
             </div>
             <div className="input-area">
               <form
@@ -118,6 +150,11 @@ export default function ComposeTweet(props) {
                 className="tweet-input"
                 onSubmit={handleSubmit}
               >
+                {!!image && (
+                  <div className="image-preview">
+                    <img src={image ? URL.createObjectURL(image) : ""} alt="" />
+                  </div>
+                )}
                 <textarea
                   placeholder="What's happening?"
                   value={value}
@@ -129,7 +166,12 @@ export default function ComposeTweet(props) {
 
                 <div className="submit-container">
                   <label className="image-picker">
-                    <input type="file" multiple accept="image/*" />
+                    <input
+                      onChange={handleImage}
+                      type="file"
+                      multiple
+                      accept="image/*"
+                    />
                     <svg
                       version="1.1"
                       xmlns="http://www.w3.org/2000/svg"

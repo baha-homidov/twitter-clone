@@ -82,6 +82,16 @@
   display: none;
 }
 
+.compose-tweet-container .image-preview {
+  border: none;
+}
+
+.compose-tweet-container .image-preview img {
+  contain: content;
+  height: 90px;
+  border-radius: 8px;
+}
+
 .compose-tweet-container button.tweet {
   margin-left: auto;
   height: 36px;

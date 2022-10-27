@@ -5,11 +5,13 @@ import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import { useNavigate } from "react-router-dom";
 import { Link, Outlet } from "react-router-dom";
 import "../assets/css/Tweet.css";
+import { format } from "date-fns";
 function Tweet(props) {
-  const redirect = useNavigate();
+  const navigate = useNavigate();
 
   function goToTweet(tweetId) {
-    redirect(`/tweet/${tweetId}`);
+    console.log("tweetClick");
+    navigate(`/tweet/${tweetId}`);
   }
   return (
     <div className="tweet-component">
@@ -30,13 +32,36 @@ function Tweet(props) {
         }}
         className="tweet-container"
       >
-        <img src={userPhoto} alt="" className="tweet-userphoto" />
+        <img src={props.userPhotoUrl} alt="" className="tweet-userphoto" />
 
         <div className="profile-info">
-          <span className="profile-name">{props.name}</span>
-          <span className="username">{props.username}</span>
+          <span
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/profile/${props.authorId}`);
+            }}
+            className="profile-name"
+          >
+            {props.displayName}
+          </span>
+
+          <span className="username">@{props.username}</span>
+          <div className="dot"></div>
+          {props.timestamp && (
+            <div className="date">
+              {format(new Date(props.timestamp.seconds * 1000), "MMM d")}
+            </div>
+          )}
         </div>
-        <div className="tweet-text">{props.text}</div>
+
+        <div className="tweet-text">
+          {props.imageUrl !== "" && (
+            <div className="image">
+              <img src={props.imageUrl} alt="" />
+            </div>
+          )}
+          {props.bodyText}
+        </div>
         <div className="action-buttons">
           <Link to="tweetId/reply" className="link">
             <button
@@ -48,7 +73,7 @@ function Tweet(props) {
               <div className="reply-icon">
                 <img src={commentIcon} alt="" />
               </div>
-              <span className="reply-num">12</span>
+              <span className="reply-num">{props.replyCount}</span>
             </button>
           </Link>
           <button
@@ -60,7 +85,7 @@ function Tweet(props) {
             <div className="retweet-icon">
               <img src={retweetIcon} alt="" />
             </div>
-            <span className="retweet-num">12</span>
+            <span className="retweet-num">{props.retweetCount}</span>
           </button>
           <button
             onClick={(e) => {
@@ -71,7 +96,7 @@ function Tweet(props) {
             <div className="like-icon">
               <img src={likeIcon} alt="" />
             </div>
-            <span className="like-num">12</span>
+            <span className="like-num">{props.likeCount}</span>
           </button>
         </div>
       </div>

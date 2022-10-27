@@ -5,6 +5,7 @@
   grid-template-columns: 52px 1fr;
   grid-template-rows: 16px auto auto;
   gap: 10px;
+  cursor: pointer;
 }
 
 .tweet-component div.retweeted {
@@ -31,9 +32,46 @@
   grid-row: 1/2;
 }
 
-.profile-info {
+.tweet-container .profile-info {
   grid-column: 2/3;
   grid-row: 1/2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tweet-container .profile-info .profile-name {
+  font-weight: bold;
+
+  font-size: 0.87em;
+  cursor: pointer;
+}
+.tweet-container .profile-name:hover {
+  border-bottom: 1px solid black;
+}
+.tweet-container .profile-info .username,
+.tweet-container .date {
+  color: #576874;
+}
+
+.tweet-container .profile-info .dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 99px;
+  background-color: black;
+}
+
+.tweet-container .image {
+  margin-bottom: 12px;
+  margin-top: 12px;
+  height: 130px;
+}
+
+.tweet-component .image img {
+  max-width: 100%;
+  max-height: 100%;
+
+  border-radius: 12px;
 }
 
 .tweet-container .tweet-text {
@@ -105,6 +143,14 @@
 
   .action-buttons button:hover .like-num {
     color: #f41780;
+  }
+}
+
+@media (max-width: 580px) {
+  .tweet-container .profile-info .profile-name {
+    border: 1px solid red;
+
+    max-width: 150px;
   }
 }
 
