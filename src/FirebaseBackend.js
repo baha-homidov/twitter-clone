@@ -28,6 +28,7 @@ import {
   increment,
   DocumentSnapshot,
   orderBy,
+  collectionGroup,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 import { useFormAction } from "react-router-dom";
@@ -499,23 +500,24 @@ async function getFollowing(userId) {
     console.log(e);
   }
 }
+const makeChunksOf10 = (array) => {
+  // helper function
+  // takes an array
+  // returns an array containing the original array divided into array's of size <=10
+  const chunkSize = 10;
+  const resultArr = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    const chunk = array.slice(i, i + chunkSize);
+    resultArr.push(chunk);
+  }
+  return resultArr;
+};
 
 async function getUserInfoFromIdArray(idArray) {
   // recieves an array of userId strings
   // if idArray.length is bigger than 10 divides it in 10 element chunks
   // because of Firestore chunk query limitations
   // constructs and returns an array of userInfo
-
-  const makeChunksOf10 = (array) => {
-    // helper function
-    const chunkSize = 10;
-    const resultArr = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      const chunk = array.slice(i, i + chunkSize);
-      resultArr.push(chunk);
-    }
-    return resultArr;
-  };
 
   const resultArr = [];
 
@@ -617,6 +619,45 @@ async function getAllTweets(userId) {
   }
 }
 
+async function getFollowedTweets(userId) {
+  // takes a userId
+  // gets userId's followers
+  // contructs an array of followed user's userIds
+  // chunk it into size <= 10 arrays
+  // make a group collection query and gets the tweets
+  // sorts and returns the tweets
+
+  const tweetArray = []; // array containing all the tweets
+  let followListArray = []; // array containing all the followed user's userIds
+
+  const followCollectionDocs = await getDocs(
+    // get all the followed user entries
+    collection(db, "userCollection", userId, "followCollection")
+  );
+  followCollectionDocs.forEach((doc) => {
+    // construct an array only containing userIds
+    if (doc.data().skip !== true) {
+      followListArray.push(doc.data().uid);
+    }
+  });
+  followListArray = makeChunksOf10(followListArray);
+
+  await Promise.all(
+    // fire multiple queries at the same time and wait for all of them to finish
+    followListArray.map(async (arrElement) => {
+      const tweetsRef = collectionGroup(db, "tweetCollection");
+      const q = query(tweetsRef, where("authorId", "in", arrElement));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        tweetArray.push(doc.data());
+      });
+    })
+  );
+
+  tweetArray.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
+  return tweetArray;
+}
+window.getFollowedTweets = getFollowedTweets;
 window.getAllOwnTweets = getAllTweets;
 
 export {
@@ -642,4 +683,5 @@ export {
   publishTweet,
   uploadTweetPhoto,
   getAllTweets,
+  getFollowedTweets,
 };

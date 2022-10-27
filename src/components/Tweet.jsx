@@ -32,7 +32,9 @@ function Tweet(props) {
         }}
         className="tweet-container"
       >
-        <img src={props.userPhotoUrl} alt="" className="tweet-userphoto" />
+        <div className="tweet-userphoto">
+          <img src={props.userPhotoUrl} alt="" />
+        </div>
 
         <div className="profile-info">
           <span
