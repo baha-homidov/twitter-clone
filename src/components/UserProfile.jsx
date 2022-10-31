@@ -32,6 +32,7 @@ export default function UserProfile() {
     async function setTweetArrFromFirebase() {
       const tweetArrSnap = await getAllTweets(urlParam.profileId);
 
+      // console.log(JSON.stringify(tweetArrSnap[0], null, 4));
       setTweetArr(tweetArrSnap);
       setShowTweetListLoading(false);
     }
@@ -78,6 +79,8 @@ export default function UserProfile() {
       <div className="user-info">
         <div className="wrapper">
           <div className="userphoto-container">
+            {/* little-css trick to make a 1:1 aspect ratio */}
+            <div className="dummy"></div>
             <img
               src={userInfo && userInfo.userPhotoUrl}
               alt=""
@@ -168,7 +171,13 @@ export default function UserProfile() {
         ) : (
           <div>
             {tweetArr.map((element, index) => {
-              return <Tweet key={index.toString()} {...element} />;
+              return (
+                <Tweet
+                  key={index.toString()}
+                  tweetInfo={element}
+                  userInfo={currentAuthedUser}
+                />
+              );
             })}
           </div>
         )}

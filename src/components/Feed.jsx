@@ -12,6 +12,7 @@ function Feed(props) {
   useEffect(() => {
     async function updateTweets() {
       const followedTweets = await getFollowedTweets(userInfo.uid);
+     
       setTweetArray(followedTweets);
     }
 
@@ -37,7 +38,13 @@ function Feed(props) {
         <h1 className="latest-tweets">Latest Tweets</h1>
       </div>
       {tweetArray.map((element, index) => {
-        return <Tweet key={index.toString()} {...element} />;
+        return (
+          <Tweet
+            key={index.toString()}
+            tweetInfo={element}
+            userInfo={userInfo}
+          />
+        );
       })}
       <Link to="/home/compose/tweet" className="tweet-link">
         <button className="tweet">

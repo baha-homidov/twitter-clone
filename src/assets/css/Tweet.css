@@ -38,6 +38,7 @@
   height: 100%;
   object-fit: cover;
   border-radius: 99px;
+  background-color: rgb(167, 167, 167);
 }
 
 .tweet-container .profile-info {
@@ -76,9 +77,9 @@
 }
 
 .tweet-component .image img {
+  background-color: rgb(167, 167, 167);
   max-width: 100%;
   max-height: 100%;
-
   border-radius: 12px;
 }
 
@@ -100,6 +101,12 @@
   width: 16px;
   height: 16px;
 }
+.action-buttons button div svg {
+  color: #536471;
+  width: 20px;
+  height: 20px;
+  transition: 0.3s ease;
+}
 
 .action-buttons button div {
   display: flex;
@@ -112,6 +119,8 @@
 
 .action-buttons button > span {
   transition: 0.3s ease;
+  color: #536471;
+  font-size: 1.1em;
 }
 
 .tweet-container .action-buttons button {
@@ -120,7 +129,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 5px;
+}
+
+.tweet-container .action-buttons button.retweet.inactive .retweet-num,
+.tweet-container .action-buttons button.retweet.inactive svg {
+  color: #3eba7b;
 }
 
 @media (min-width: 480px) {
@@ -133,7 +147,8 @@
     background-color: #e1eef7;
   }
 
-  .action-buttons button:hover .reply-num {
+  .action-buttons button:hover .reply-num,
+  .action-buttons button:hover .reply-icon svg {
     color: #2b9bf0;
   }
 
@@ -141,7 +156,8 @@
     background-color: #def1eb;
   }
 
-  .action-buttons > button:hover .retweet-num {
+  .action-buttons > button:hover .retweet-num,
+  .action-buttons button:hover .retweet-icon svg {
     color: #3eba7b;
   }
 
@@ -149,15 +165,14 @@
     background-color: #f8e0eb;
   }
 
-  .action-buttons button:hover .like-num {
+  .action-buttons button:hover .like-num,
+  .action-buttons button:hover .like-icon svg {
     color: #f41780;
   }
 }
 
 @media (max-width: 580px) {
   .tweet-container .profile-info .profile-name {
-    border: 1px solid red;
-
     max-width: 150px;
   }
 }
@@ -170,9 +185,11 @@
 
   .action-buttons button:active .reply-icon {
     background-color: #e1eef7;
+    color: #2b9bf0;
   }
 
-  .action-buttons button:active .reply-num {
+  .action-buttons button:active .reply-num,
+  .action-buttons button:active .reply-icon svg {
     color: #2b9bf0;
   }
 
@@ -180,7 +197,8 @@
     background-color: #def1eb;
   }
 
-  .action-buttons button:active .retweet-num {
+  .action-buttons button:active .retweet-num,
+  .action-buttons button:active .retweet-icon svg {
     color: #3eba7b;
   }
 
@@ -188,7 +206,8 @@
     background-color: #f8e0eb;
   }
 
-  .action-buttons button:active .like-num {
+  .action-buttons button:active .like-num,
+  .action-buttons button:active .like-icon svg {
     color: #f41780;
   }
 }

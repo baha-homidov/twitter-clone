@@ -50,6 +50,7 @@ export default function ComposeTweet(props) {
     await publishTweet(
       userInfo,
       value,
+      false,
       imageUploadObj.url,
       imageUploadObj.path
     );

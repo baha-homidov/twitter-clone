@@ -29,10 +29,12 @@ import {
   DocumentSnapshot,
   orderBy,
   collectionGroup,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 import { useFormAction } from "react-router-dom";
-import { getDate, getTime, startOfSecond } from "date-fns";
+import { getDate, getDecade, getTime, startOfSecond } from "date-fns";
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -59,7 +61,6 @@ async function sigInWithGoogle() {
   const auth = getAuth();
   const user = auth.currentUser;
   const userId = user.uid;
-  console.log(userId);
 }
 
 async function singUpWithLoginPassword(login, password, username, name) {
@@ -126,7 +127,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
   // existing usernames should checked before calling this function
   try {
     const Doc = await addDoc(
-      collection(db, "userCollection", uid, "tweetsCollection"),
+      collection(db, "userCollection", uid, "tweetCollection"),
       {
         skip: true,
       }
@@ -567,11 +568,21 @@ async function isFollowing(currentUserId, targetUserId) {
   }
 }
 
-async function publishTweet(userInfo, bodyText, imageUrl, imageStoragePath) {
-  // gets userId, tweet bodyText, and an optioanl image
-  // if image is present uploads it to firebase storage and gets result url
-  // adds an entry to userId/tweetCollection
+async function publishTweet(
+  userInfo,
+  bodyText,
+  isRetweet,
+  imageUrl,
+  imageStoragePath
+) {
   try {
+    // gets userId, tweet bodyText, and an optioanl image
+    // if image is present uploads it to firebase storage and gets result url
+    // adds an entry to userId/tweetCollection
+
+    const newTweetRef = doc(
+      collection(db, "userCollection", userInfo.uid, "tweetCollection")
+    );
     const tweet = {
       authorId: userInfo.uid,
       displayName: userInfo.displayName,
@@ -584,13 +595,13 @@ async function publishTweet(userInfo, bodyText, imageUrl, imageStoragePath) {
       retweetCount: 0,
       likeCount: 0,
       replyCount: 0,
+      retweetedBy: [],
+      isRetweet: isRetweet,
+      tweetId: newTweetRef.id,
     };
-    const tweetRef = await addDoc(
-      collection(db, "userCollection", userInfo.uid, "tweetCollection"),
-      tweet
-    );
+
+    await setDoc(newTweetRef, tweet);
     incrementTweetCount(userInfo.uid);
-    console.log(`Tweet written with id: ${tweetRef.id}`);
   } catch (e) {
     console.log(e);
   }
@@ -613,6 +624,19 @@ async function getAllTweets(userId) {
     querySnapshot.forEach((doc) => {
       resultArr.push(doc.data());
     });
+
+    await Promise.all(
+      // look for retweets and get the source tweet
+      resultArr.map(async (tweetData) => {
+        if (tweetData.isRetweet === true) {
+          const sourceTweet = await getTweetDataById(tweetData.originalTweetId);
+          Object.assign(tweetData, sourceTweet);
+          tweetData.isRetweet = true;
+        }
+      })
+    );
+
+    console.log(resultArr);
     return resultArr;
   } catch (e) {
     console.log(e);
@@ -640,6 +664,8 @@ async function getFollowedTweets(userId) {
       followListArray.push(doc.data().uid);
     }
   });
+  followListArray.push(userId); // also add current user's own userId
+
   followListArray = makeChunksOf10(followListArray);
 
   await Promise.all(
@@ -657,6 +683,87 @@ async function getFollowedTweets(userId) {
   tweetArray.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds);
   return tweetArray;
 }
+
+async function getTweetRefById(tweetId) {
+  // finds a tweet with a give tweedId using collectionGroup query
+  // returns a *reference* to that tweet
+  // returns undefined if no tweet with a given tweetId exists
+  let resultTweetRef = undefined;
+  const tweetsRef = collectionGroup(db, "tweetCollection");
+  const q = query(tweetsRef, where("tweetId", "==", tweetId));
+  const tweetSnap = await getDocs(q);
+  tweetSnap.forEach((doc) => {
+    resultTweetRef = doc.ref;
+  });
+  return resultTweetRef;
+}
+
+async function getTweetDataById(tweetId) {
+  // finds a tweet with a give tweedId using collectionGroup query
+  // returns a data object to that tweet
+  // returns undefined if no tweet with a given tweetId exists
+  let resultTweetRef = undefined;
+  const tweetsRef = collectionGroup(db, "tweetCollection");
+  const q = query(tweetsRef, where("tweetId", "==", tweetId));
+  const tweetSnap = await getDocs(q);
+  tweetSnap.forEach((doc) => {
+    resultTweetRef = doc.data();
+  });
+  return resultTweetRef;
+}
+
+async function updateRetweetDataOnTargetTweet(tweetId, userId) {
+  try {
+    // takes target tweet's tweedId, userId of the user who did retweet action
+    // gets reference to the target tweet and updates data
+    const targetTweetRef = await getTweetRefById(tweetId);
+
+    await updateDoc(targetTweetRef, {
+      retweetedBy: arrayUnion(userId),
+      retweetCount: increment(1),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function addRetweetToCollection(userInfo, tweetInfo) {
+  try {
+    // takes targetUser's uid
+    // ready-to-publish retweet as a tweetInfo
+    // adds the retweet to the tweetCollection after manipulating some data
+    const newRetweetRef = doc(
+      collection(db, "userCollection", userInfo.uid, "tweetCollection")
+    );
+
+    // add the current user as a retweeter
+    tweetInfo.retweetedBy.push(userInfo.uid);
+
+    const retweetInfo = {
+      retweeterDislayName: userInfo.displayName,
+      retweeterUserId: userInfo.uid,
+      isRetweet: true,
+      originalTweetId: tweetInfo.tweetId,
+      timestamp: serverTimestamp(),
+    };
+
+    await setDoc(newRetweetRef, retweetInfo);
+  } catch (e) {}
+}
+
+async function publishRetweet(userInfo, tweetInfo) {
+  try {
+    await Promise.all([
+      updateRetweetDataOnTargetTweet(tweetInfo.tweetId, userInfo.uid),
+      addRetweetToCollection(userInfo, tweetInfo),
+    ]);
+    console.log("success");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+window.updateRetweetDataOnTargetTweet = updateRetweetDataOnTargetTweet;
 window.getFollowedTweets = getFollowedTweets;
 window.getAllOwnTweets = getAllTweets;
 
@@ -684,4 +791,6 @@ export {
   uploadTweetPhoto,
   getAllTweets,
   getFollowedTweets,
+  publishRetweet,
+  getTweetDataById,
 };
