@@ -630,8 +630,10 @@ async function getAllTweets(userId) {
       resultArr.map(async (tweetData) => {
         if (tweetData.isRetweet === true) {
           const sourceTweet = await getTweetDataById(tweetData.originalTweetId);
-          Object.assign(tweetData, sourceTweet);
+          const timestamp = tweetData.timestamp;
+          Object.assign(tweetData, sourceTweet); // merge to objects
           tweetData.isRetweet = true;
+          tweetData.timestamp = timestamp;
         }
       })
     );
@@ -672,11 +674,35 @@ async function getFollowedTweets(userId) {
     // fire multiple queries at the same time and wait for all of them to finish
     followListArray.map(async (arrElement) => {
       const tweetsRef = collectionGroup(db, "tweetCollection");
-      const q = query(tweetsRef, where("authorId", "in", arrElement));
-      const querySnapshot = await getDocs(q);
+
+      // get Tweets
+      let q = query(tweetsRef, where("authorId", "in", arrElement));
+      let querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         tweetArray.push(doc.data());
       });
+
+      // get Retweets
+      q = query(tweetsRef, where("retweeterUserId", "in", arrElement));
+      querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        tweetArray.push(doc.data());
+      });
+
+      await Promise.all(
+        // look for retweets and get the source tweet
+        tweetArray.map(async (tweetData) => {
+          if (tweetData.isRetweet === true) {
+            const sourceTweet = await getTweetDataById(
+              tweetData.originalTweetId
+            );
+            const timestamp = tweetData.timestamp;
+            Object.assign(tweetData, sourceTweet); // merge to objects
+            tweetData.isRetweet = true;
+            tweetData.timestamp = timestamp;
+          }
+        })
+      );
     })
   );
 

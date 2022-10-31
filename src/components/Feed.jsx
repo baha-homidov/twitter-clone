@@ -12,7 +12,7 @@ function Feed(props) {
   useEffect(() => {
     async function updateTweets() {
       const followedTweets = await getFollowedTweets(userInfo.uid);
-     
+    
       setTweetArray(followedTweets);
     }
 

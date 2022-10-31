@@ -1,14 +1,18 @@
-import commentIcon from "../assets/img/icons/comment.svg";
-import retweetIcon from "../assets/img/icons/retweet.svg";
-import likeIcon from "../assets/img/icons/like.svg";
-import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
 import { useNavigate } from "react-router-dom";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../assets/css/Tweet.css";
 import { format } from "date-fns";
-import { useEffect } from "react";
+
 import { publishRetweet } from "../FirebaseBackend";
+import { useState } from "react";
 function Tweet(props) {
+  const [isRetweet, setIsRetweet] = useState(props.tweetInfo.isRetweet);
+  const [retweetedByInlcudes, setRetweetedByInlcudes] = useState(
+    props.tweetInfo.retweetedBy.includes(props.userInfo.uid)
+  );
+  const [retweetCount, setRetweetCount] = useState(
+    props.tweetInfo.retweetCount
+  );
   const navigate = useNavigate();
 
   function goToTweet(tweetId) {
@@ -17,7 +21,7 @@ function Tweet(props) {
   }
   return (
     <div className="tweet-component">
-      {props.tweetInfo.isRetweet && (
+      {isRetweet && (
         <div className={"retweeted"}>
           <svg className="retweet-icon" viewBox="0 0 24 24">
             <path
@@ -103,13 +107,12 @@ function Tweet(props) {
                 props.tweetInfo.authorId !== props.userInfo.uid
               ) {
                 publishRetweet(props.userInfo, props.tweetInfo);
+                setIsRetweet(true);
+                setRetweetedByInlcudes(true);
+                setRetweetCount(retweetCount + 1);
               }
             }}
-            className={
-              props.tweetInfo.retweetedBy.includes(props.userInfo.uid)
-                ? "retweet inactive"
-                : "retweet"
-            }
+            className={retweetedByInlcudes ? "retweet inactive" : "retweet"}
           >
             <div className="retweet-icon">
               <svg
@@ -125,7 +128,7 @@ function Tweet(props) {
                 ></path>
               </svg>
             </div>
-            <span className="retweet-num">{props.tweetInfo.retweetCount}</span>
+            <span className="retweet-num">{retweetCount}</span>
           </button>
           <button
             onClick={(e) => {
