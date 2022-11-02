@@ -1,8 +1,18 @@
 import "../assets/css/ComposeTweet.css";
-import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useOutletContext,
+  useLocation,
+} from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
-import { publishTweet, uploadTweetPhoto } from "../FirebaseBackend";
+import {
+  publishReply,
+  publishTweet,
+  uploadTweetPhoto,
+} from "../FirebaseBackend";
+
 export default function ComposeTweet(props) {
   const [value, setValue] = useState("");
   const [length, setLength] = useState(0);
@@ -10,11 +20,14 @@ export default function ComposeTweet(props) {
   const [showPublished, setShowPublished] = useState(false);
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
-  const userInfo = useOutletContext();
+  const location = useLocation();
+  const userInfo = location.state.userInfo;
+  const sourceTweetInfo = location.state.tweetInfo
+    ? location.state.tweetInfo
+    : null;
 
   function handleChange(event) {
     setValue(event.target.value);
-
     setLength(event.target.value.length);
   }
 
@@ -33,13 +46,17 @@ export default function ComposeTweet(props) {
     });
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function tweet() {
+    // publish a tweet to the firestore and navigate back
+
+    // if there is an image upload it to the firebase storage
     let imageUploadObj = {
       url: "",
       path: "",
     };
+
     setLoading(true);
+
     if (image) {
       imageUploadObj = await uploadTweetPhoto(
         image,
@@ -56,8 +73,43 @@ export default function ComposeTweet(props) {
     );
     setShowPublished(true);
     await hidePublishedWithDelay(2);
-
     navigateBack();
+  }
+
+  async function reply() {
+    // publish reply to in the parent tweets subcollection in firestore
+
+    // TODO: if there is an image upload it to the firebase storage
+    let imageUploadObj = {
+      url: "",
+      path: "",
+    };
+
+    if (image) {
+      // eslint-disable-next-line no-unused-vars
+      imageUploadObj = await uploadTweetPhoto(
+        image,
+        userInfo.lowercaseUsername
+      );
+    }
+    // construct a tweetInfo object
+    const tweetInfo = {
+      bodyText: value,
+      imageStoragePath: imageUploadObj.path,
+      imageUrl: imageUploadObj.url,
+    };
+    // setLoading(true);
+
+    await publishReply(userInfo, tweetInfo, sourceTweetInfo);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    if (props.reply) {
+      await reply();
+    } else {
+      await tweet();
+    }
   }
 
   function navigateBack() {
@@ -121,21 +173,30 @@ export default function ComposeTweet(props) {
             <div className="source-tweet">
               <div className="source-flex-container">
                 <div className="avatar-container">
-                  <img src={userPhoto} alt="" />
+                  <img src={sourceTweetInfo.userPhotoUrl} alt="" />
                   <div className="vertical-line"></div>
                 </div>
                 <div className="text-container">
                   <div className="user-info">
-                    <span className="name">John Smith</span>
-                    <span className="username">@johnsmith</span>
+                    <span
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/profile/${sourceTweetInfo.username}`);
+                      }}
+                      className="name"
+                    >
+                      {sourceTweetInfo.displayName}
+                    </span>
+                    <span className="username">
+                      @{sourceTweetInfo.username}
+                    </span>
                   </div>
-                  <div className="tweet-text">
-                    Lorem ipsum sit domot amen lala bla lolo Lorem ipsum sit
-                    domot amen lala bla lolo
-                  </div>
+                  <div className="tweet-text">{sourceTweetInfo.bodyText}</div>
                   <div className="replying-to">
                     Replying to
-                    <span className="username">@johnsmith</span>
+                    <span className="username">
+                      @{sourceTweetInfo.username}
+                    </span>
                   </div>
                 </div>
               </div>

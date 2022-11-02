@@ -12,7 +12,7 @@ function Feed(props) {
   useEffect(() => {
     async function updateTweets() {
       const followedTweets = await getFollowedTweets(userInfo.uid);
-    
+
       setTweetArray(followedTweets);
     }
 
@@ -46,7 +46,11 @@ function Feed(props) {
           />
         );
       })}
-      <Link to="/home/compose/tweet" className="tweet-link">
+      <Link
+        to="/home/compose/tweet"
+        state={{ userInfo: userInfo }}
+        className="tweet-link"
+      >
         <button className="tweet">
           <img src={tweetIcon} alt="" className="navbar-icon" />
         </button>

@@ -32,7 +32,6 @@ export default function UserProfile() {
     async function setTweetArrFromFirebase() {
       const tweetArrSnap = await getAllTweets(urlParam.profileId);
 
-      // console.log(JSON.stringify(tweetArrSnap[0], null, 4));
       setTweetArr(tweetArrSnap);
       setShowTweetListLoading(false);
     }
@@ -51,7 +50,7 @@ export default function UserProfile() {
   return (
     <div className="user-profile-container">
       {showLoading && <Loading />}
-      <Outlet context={[userInfo, setUserInfo]} />
+      <Outlet context={currentAuthedUser} />
       <div className="top-bar">
         <button onClick={navigateBack} className="back">
           <svg

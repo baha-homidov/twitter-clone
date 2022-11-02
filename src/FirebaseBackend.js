@@ -597,6 +597,7 @@ async function publishTweet(
       replyCount: 0,
       retweetedBy: [],
       isRetweet: isRetweet,
+      isReply: false,
       tweetId: newTweetRef.id,
     };
 
@@ -612,18 +613,28 @@ async function getAllTweets(userId) {
   // returns an array of tweetObjs in descending order
   try {
     const resultArr = [];
-    const tweetCollectionRef = collection(
-      db,
-      "userCollection",
-      userId,
-      "tweetCollection"
-    );
-    const q = query(tweetCollectionRef, orderBy("timestamp", "desc"));
-    const querySnapshot = await getDocs(q);
 
+    const tweetsRef = collectionGroup(db, "tweetCollection");
+    // get Tweets
+    let q = query(tweetsRef, where("authorId", "==", userId));
+    let querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       resultArr.push(doc.data());
     });
+
+    // get Retweets
+    q = query(tweetsRef, where("retweeterUserId", "==", userId));
+    querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      resultArr.push(doc.data());
+    });
+
+    // const q = query(tweetCollectionRef, orderBy("timestamp", "desc"));
+    // const querySnapshot = await getDocs(q);
+
+    // querySnapshot.forEach((doc) => {
+    //   resultArr.push(doc.data());
+    // });
 
     await Promise.all(
       // look for retweets and get the source tweet
@@ -637,8 +648,8 @@ async function getAllTweets(userId) {
         }
       })
     );
+    resultArr.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds); // sort tweets
 
-    console.log(resultArr);
     return resultArr;
   } catch (e) {
     console.log(e);
@@ -782,8 +793,66 @@ async function publishRetweet(userInfo, tweetInfo) {
     await Promise.all([
       updateRetweetDataOnTargetTweet(tweetInfo.tweetId, userInfo.uid),
       addRetweetToCollection(userInfo, tweetInfo),
+      incrementTweetCount(userInfo.uid),
     ]);
     console.log("success");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function incrementReplyCount(tweetId) {
+  try {
+    // takes target tweet's tweedId and increments the reply counter
+    const targetTweetRef = await getTweetRefById(tweetId);
+
+    await updateDoc(targetTweetRef, {
+      replyCount: increment(1),
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function publishReply(userInfo, tweetInfo, sourceTweet) {
+  try {
+    const sourceTweetRef = await getTweetRefById(sourceTweet.tweetId);
+    await incrementReplyCount(sourceTweetRef.id);
+
+    await addReplyToCollection(userInfo, sourceTweetRef, tweetInfo);
+
+    await incrementTweetCount(userInfo.uid);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function addReplyToCollection(userInfo, sourceTweetRef, tweetInfo) {
+  const newTweetRef = doc(collection(sourceTweetRef, "replyCollection"));
+  try {
+    const tweet = {
+      authorId: userInfo.uid,
+      displayName: userInfo.displayName,
+      username: userInfo.username,
+      userPhotoUrl: userInfo.userPhotoUrl,
+      bodyText: tweetInfo.bodyText,
+      timestamp: serverTimestamp(),
+      imageUrl: tweetInfo.imageUrl ? tweetInfo.imageUrl : "",
+      imageStoragePath: tweetInfo.imageStoragePath
+        ? tweetInfo.imageStoragePath
+        : "",
+      retweetCount: 0,
+      likeCount: 0,
+      replyCount: 0,
+      retweetedBy: [],
+      isRetweet: false,
+      isReply: true,
+      parentTweetId: sourceTweetRef.id,
+      tweetId: newTweetRef.id,
+    };
+    const docRef = doc(sourceTweetRef, "tweetCollection", newTweetRef.id);
+    await setDoc(docRef, tweet);
+    console.log("replied");
   } catch (e) {
     console.log(e);
   }
@@ -819,4 +888,5 @@ export {
   getFollowedTweets,
   publishRetweet,
   getTweetDataById,
+  publishReply,
 };
