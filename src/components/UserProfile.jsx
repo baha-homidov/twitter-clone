@@ -12,6 +12,7 @@ import { format } from "date-fns"; // library for formatting Date into human rea
 import { getAllTweets, getUserInfo, signOutUser } from "../FirebaseBackend";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
+import { ReplyPair } from "./ReplyPair";
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [showLoading, setShowLoading] = useState(true);
@@ -170,13 +171,24 @@ export default function UserProfile() {
         ) : (
           <div>
             {tweetArr.map((element, index) => {
-              return (
-                <Tweet
-                  key={index.toString()}
-                  tweetInfo={element}
-                  userInfo={currentAuthedUser}
-                />
-              );
+              if (element.isReply === true) {
+                return (
+                  <ReplyPair
+                    userInfo={currentAuthedUser}
+                    key={index.toString()}
+                    sourceTweetInfo={element.sourceTweetData}
+                    replyTweetInfo={element}
+                  />
+                );
+              } else {
+                return (
+                  <Tweet
+                    key={index.toString()}
+                    tweetInfo={element}
+                    userInfo={currentAuthedUser}
+                  />
+                );
+              }
             })}
           </div>
         )}

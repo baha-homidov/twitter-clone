@@ -629,13 +629,6 @@ async function getAllTweets(userId) {
       resultArr.push(doc.data());
     });
 
-    // const q = query(tweetCollectionRef, orderBy("timestamp", "desc"));
-    // const querySnapshot = await getDocs(q);
-
-    // querySnapshot.forEach((doc) => {
-    //   resultArr.push(doc.data());
-    // });
-
     await Promise.all(
       // look for retweets and get the source tweet
       resultArr.map(async (tweetData) => {
@@ -648,6 +641,18 @@ async function getAllTweets(userId) {
         }
       })
     );
+
+    await Promise.all(
+      // look for replies and get the source tweet
+      resultArr.map(async (tweetData) => {
+        if (tweetData.isReply === true) {
+          const sourceTweet = await getTweetDataById(tweetData.parentTweetId);
+          sourceTweet.isReply = false;
+          tweetData.sourceTweetData = sourceTweet;
+        }
+      })
+    );
+
     resultArr.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds); // sort tweets
 
     return resultArr;
@@ -711,6 +716,17 @@ async function getFollowedTweets(userId) {
             Object.assign(tweetData, sourceTweet); // merge to objects
             tweetData.isRetweet = true;
             tweetData.timestamp = timestamp;
+          }
+        })
+      );
+
+      await Promise.all(
+        // look for replies and get the source tweet
+        tweetArray.map(async (tweetData) => {
+          if (tweetData.isReply === true) {
+            const sourceTweet = await getTweetDataById(tweetData.parentTweetId);
+            sourceTweet.isReply = false;
+            tweetData.sourceTweetData = sourceTweet;
           }
         })
       );

@@ -4,6 +4,7 @@ import tweetIcon from "../assets/img/icons/tweet.svg";
 import "../assets/css/Feed.css";
 import Tweet from "./Tweet";
 import { getFollowedTweets } from "../FirebaseBackend";
+import { ReplyPair } from "./ReplyPair";
 
 function Feed(props) {
   const [tweetArray, setTweetArray] = useState([]);
@@ -12,7 +13,6 @@ function Feed(props) {
   useEffect(() => {
     async function updateTweets() {
       const followedTweets = await getFollowedTweets(userInfo.uid);
-
       setTweetArray(followedTweets);
     }
 
@@ -38,13 +38,24 @@ function Feed(props) {
         <h1 className="latest-tweets">Latest Tweets</h1>
       </div>
       {tweetArray.map((element, index) => {
-        return (
-          <Tweet
-            key={index.toString()}
-            tweetInfo={element}
-            userInfo={userInfo}
-          />
-        );
+        if (element.isReply === true) {
+          return (
+            <ReplyPair
+              userInfo={userInfo}
+              key={index.toString()}
+              sourceTweetInfo={element.sourceTweetData}
+              replyTweetInfo={element}
+            />
+          );
+        } else {
+          return (
+            <Tweet
+              key={index.toString()}
+              tweetInfo={element}
+              userInfo={userInfo}
+            />
+          );
+        }
       })}
       <Link
         to="/home/compose/tweet"

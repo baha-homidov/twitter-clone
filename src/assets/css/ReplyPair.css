@@ -1,0 +1,19 @@
+.reply-pair-container .source-tweet .tweet-container {
+  border-bottom: 1px solid transparent;
+}
+
+.reply-pair-container .source-tweet {
+  position: relative;
+}
+
+.reply-pair-container .source-tweet .reply-line {
+  height: auto;
+  width: 2px;
+  left: 42px;
+  top: 84px;
+  bottom: 0px;
+  position: absolute;
+  background-color: #cfd9de;
+  grid-template-columns: 1/2;
+  grid-template-rows: 1/2;
+}

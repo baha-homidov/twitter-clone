@@ -4,9 +4,10 @@ import "../assets/css/Tweet.css";
 import { format } from "date-fns";
 
 import { publishRetweet } from "../FirebaseBackend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function Tweet(props) {
   const [isRetweet, setIsRetweet] = useState(props.tweetInfo.isRetweet);
+
   const [retweetedByInlcudes, setRetweetedByInlcudes] = useState(
     props.tweetInfo.retweetedBy.includes(props.userInfo.uid)
   );
@@ -19,6 +20,10 @@ function Tweet(props) {
     console.log("tweetClick");
     navigate(`/tweet/${tweetId}`);
   }
+
+  useEffect(() => {
+    console.log("render go brr");
+  }, []);
   return (
     <div className="tweet-component">
       {isRetweet && (
@@ -66,6 +71,14 @@ function Tweet(props) {
         </div>
 
         <div className="tweet-text">
+          {props.tweetInfo.isReply && (
+            <div className="replying-to-container">
+              <span>Replying to</span>
+              <span className="username">
+                @{props.tweetInfo.sourceTweetData.username}
+              </span>
+            </div>
+          )}
           {props.tweetInfo.imageUrl !== "" && (
             <div className="image">
               <img src={props.tweetInfo.imageUrl} alt="" />

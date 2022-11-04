@@ -30,7 +30,7 @@
   width: 52px;
   border-radius: 999px;
   grid-column: 1/2;
-  grid-row: 1/2;
+  grid-row: 1/4;
 }
 
 .tweet-container .tweet-userphoto img {
@@ -54,6 +54,8 @@
   border-bottom: 1px solid transparent;
   font-size: 0.87em;
   cursor: pointer;
+
+  overflow: hidden;
 }
 .tweet-container .profile-name:hover {
   border-bottom: 1px solid black;
@@ -87,6 +89,18 @@
   grid-column: 2/3;
   grid-row: 2/3;
   min-height: 30px;
+  font-size: 1.1em;
+}
+
+.tweet-container .tweet-text .replying-to-container {
+  display: flex;
+  gap: 10px;
+  font-size: 0.9em;
+  margin-bottom: 3px;
+}
+
+.tweet-container .tweet-text .replying-to-container span {
+  color: #536471;
 }
 
 .action-buttons {
@@ -171,9 +185,10 @@
   }
 }
 
-@media (max-width: 580px) {
+@media (max-width: 560px) {
   .tweet-container .profile-info .profile-name {
     max-width: 150px;
+    white-space: nowrap;
   }
 }
 
