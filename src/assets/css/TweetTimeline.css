@@ -15,7 +15,6 @@
 
 .tweet-timeline-container > .timeline-header .link > .back > img {
   height: 20px;
-
 }
 
 .tweet-timeline-container > .timeline-header .link > .back {
@@ -51,12 +50,25 @@
   width: 48px;
   height: auto;
   border-radius: 999px;
-  border: 1px solid black;
+}
+
+.title-tweet > .personal-info > .tweet-userphoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 99px;
+  background-color: rgb(167, 167, 167);
 }
 
 .title-tweet > .personal-info > .profile-info > .profile-name {
   font-size: 1.1em;
   font-weight: bold;
+  border-bottom: 1px solid transparent;
+}
+
+.title-tweet > .personal-info > .profile-info > .profile-name:hover {
+  border-bottom: 1px solid black;
+  cursor: pointer;
 }
 
 .title-tweet > .personal-info > .profile-info > .username {
@@ -78,7 +90,7 @@
   border-bottom: 1px solid #eff3f4;
 }
 
-.title-tweet  .buttons  button {
+.title-tweet .buttons button {
   background-color: white;
   border-radius: 999px;
   border: none;
@@ -88,37 +100,57 @@
   transition: 0.3s ease;
 }
 
-.title-tweet .buttons img {
+.title-tweet .buttons svg {
   padding: 10px;
-  width: 40px;
+  width: 45px;
   height: auto;
   border-radius: 999px;
 
   transition: background-color 0.2s ease;
 }
 
+.tweet-timeline-container .time-content {
+  margin-top: 8px;
+  margin-bottom: -8px;
+  display: flex;
+  gap: 7px;
+  color: #747e86;
+  align-items: center;
+}
+
+.tweet-timeline-container .time-content .dot {
+  width: 2px;
+  height: 2px;
+  background-color: #747e86;
+  border-radius: 99px;
+}
+
+.tweet-timeline-container button.retweet.inactive {
+  color: #3eba7b;
+}
+
 @media (min-width: 480px) {
-  .title-tweet  .buttons  .reply:hover {
+  .title-tweet .buttons .reply:hover {
     color: #2b9bf0;
   }
 
-  .title-tweet  .buttons  .reply:hover  img {
+  .title-tweet .buttons .reply:hover svg {
     background-color: #e1eef7;
   }
 
-  .title-tweet  .buttons > .like:hover  img {
+  .title-tweet .buttons > .like:hover svg {
     background-color: #f8e0eb;
   }
 
-  .title-tweet  .buttons  .like:hover {
+  .title-tweet .buttons .like:hover {
     color: #f41780;
   }
 
-  .title-tweet  .buttons > .retweet:hover  img {
+  .title-tweet .buttons > .retweet:hover svg {
     background-color: #def1eb;
   }
 
-  .title-tweet  .buttons  .retweet:hover {
+  .title-tweet .buttons .retweet:hover {
     color: #3eba7b;
   }
 }

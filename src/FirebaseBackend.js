@@ -646,9 +646,13 @@ async function getAllTweets(userId) {
       // look for replies and get the source tweet
       resultArr.map(async (tweetData) => {
         if (tweetData.isReply === true) {
-          const sourceTweet = await getTweetDataById(tweetData.parentTweetId);
-          sourceTweet.isReply = false;
-          tweetData.sourceTweetData = sourceTweet;
+          if (tweetData.isRetweet === true) {
+            tweetData.isReply = false;
+          } else {
+            const sourceTweet = await getTweetDataById(tweetData.parentTweetId);
+            sourceTweet.isReply = false;
+            tweetData.sourceTweetData = sourceTweet;
+          }
         }
       })
     );
@@ -724,9 +728,15 @@ async function getFollowedTweets(userId) {
         // look for replies and get the source tweet
         tweetArray.map(async (tweetData) => {
           if (tweetData.isReply === true) {
-            const sourceTweet = await getTweetDataById(tweetData.parentTweetId);
-            sourceTweet.isReply = false;
-            tweetData.sourceTweetData = sourceTweet;
+            if (tweetData.isRetweet === true) {
+              tweetData.isReply = false;
+            } else {
+              const sourceTweet = await getTweetDataById(
+                tweetData.parentTweetId
+              );
+              sourceTweet.isReply = false;
+              tweetData.sourceTweetData = sourceTweet;
+            }
           }
         })
       );
@@ -874,6 +884,24 @@ async function addReplyToCollection(userInfo, sourceTweetRef, tweetInfo) {
   }
 }
 
+async function getReplies(tweetId) {
+  // get tweets from firestore where sourceTweet == tweetId
+  try {
+    const tweetArray = [];
+
+    const tweetsRef = collectionGroup(db, "tweetCollection");
+
+    // get Tweets
+    let q = query(tweetsRef, where("parentTweetId", "==", tweetId));
+    let querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      tweetArray.push(doc.data());
+    });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 window.updateRetweetDataOnTargetTweet = updateRetweetDataOnTargetTweet;
 window.getFollowedTweets = getFollowedTweets;
 window.getAllOwnTweets = getAllTweets;
@@ -905,4 +933,5 @@ export {
   publishRetweet,
   getTweetDataById,
   publishReply,
+  getReplies,
 };

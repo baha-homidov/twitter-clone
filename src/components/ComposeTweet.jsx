@@ -85,6 +85,8 @@ export default function ComposeTweet(props) {
       path: "",
     };
 
+    setLoading(true);
+
     if (image) {
       // eslint-disable-next-line no-unused-vars
       imageUploadObj = await uploadTweetPhoto(
@@ -101,6 +103,10 @@ export default function ComposeTweet(props) {
     // setLoading(true);
 
     await publishReply(userInfo, tweetInfo, sourceTweetInfo);
+
+    setShowPublished(true);
+    await hidePublishedWithDelay(2);
+    navigateBack();
   }
 
   async function handleSubmit(event) {

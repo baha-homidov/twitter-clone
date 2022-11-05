@@ -39,7 +39,7 @@ function Tweet(props) {
       )}
       <div
         onClick={() => {
-          goToTweet("placeholder");
+          goToTweet(`${props.tweetInfo.tweetId}`);
         }}
         className="tweet-container"
       >
