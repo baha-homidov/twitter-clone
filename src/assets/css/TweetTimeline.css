@@ -13,11 +13,11 @@
   backdrop-filter: blur(2px);
 }
 
-.tweet-timeline-container > .timeline-header .link > .back > img {
+.tweet-timeline-container > .timeline-header  .back > img {
   height: 20px;
 }
 
-.tweet-timeline-container > .timeline-header .link > .back {
+.tweet-timeline-container > .timeline-header .back {
   background-color: transparent;
   padding: 7px;
   border-radius: 999px;
@@ -28,7 +28,7 @@
   transition: 0.3s ease;
 }
 
-.tweet-timeline-container > .timeline-header .link > .back:hover {
+.tweet-timeline-container > .timeline-header .back:hover {
   background-color: #e6e7e7;
   transition: 0.3s ease;
 }

@@ -58,11 +58,15 @@ function TweetTimeline(props) {
       <Outlet />
       {showLoading && <Loading />}
       <div className="timeline-header">
-        <Link className="link" to="/home">
-          <button className="back">
-            <img src={arrow} alt="" />
-          </button>
-        </Link>
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
+          className="back"
+        >
+          <img src={arrow} alt="" />
+        </button>
+
         <h1>Thread</h1>
       </div>
       <div className="title-tweet">
