@@ -31,6 +31,7 @@ import {
   collectionGroup,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import { async } from "@firebase/util";
 import { useFormAction } from "react-router-dom";
@@ -596,6 +597,7 @@ async function publishTweet(
       likeCount: 0,
       replyCount: 0,
       retweetedBy: [],
+      likedBy: [],
       isRetweet: isRetweet,
       isReply: false,
       tweetId: newTweetRef.id,
@@ -871,6 +873,7 @@ async function addReplyToCollection(userInfo, sourceTweetRef, tweetInfo) {
       likeCount: 0,
       replyCount: 0,
       retweetedBy: [],
+      likedBy: [],
       isRetweet: false,
       isReply: true,
       parentTweetId: sourceTweetRef.id,
@@ -907,6 +910,40 @@ async function getReplies(tweetId) {
   }
 }
 
+async function likeTweet(tweetId, userId) {
+  // get's tweetRef using tweedId
+  // increments targetTweets' likeCount
+  // adds likerUserId to targetTweet's like by
+  try {
+    const targetTweetRef = await getTweetRefById(tweetId);
+    await updateDoc(targetTweetRef, {
+      likedBy: arrayUnion(userId),
+      likeCount: increment(1),
+    });
+    console.log("liked");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async function removeLike(tweetId, userId) {
+  // get's tweetRef using tweedId
+  // increments targetTweets' likeCount
+  // adds likerUserId to targetTweet's like by
+  try {
+    const targetTweetRef = await getTweetRefById(tweetId);
+    await updateDoc(targetTweetRef, {
+      likedBy: arrayRemove(userId),
+      likeCount: increment(-1),
+    });
+    console.log("removed like");
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+window.likeTweet = likeTweet;
+window.removeLike = removeLike;
 window.updateRetweetDataOnTargetTweet = updateRetweetDataOnTargetTweet;
 window.getFollowedTweets = getFollowedTweets;
 window.getAllOwnTweets = getAllTweets;
