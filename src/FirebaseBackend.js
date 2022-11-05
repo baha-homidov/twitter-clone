@@ -895,8 +895,13 @@ async function getReplies(tweetId) {
     let q = query(tweetsRef, where("parentTweetId", "==", tweetId));
     let querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      tweetArray.push(doc.data());
+      const tweetData = doc.data();
+      tweetData.isRetweet = false;
+      tweetData.isReply = false;
+      tweetArray.push(tweetData);
     });
+    tweetArray.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds); // sort tweets
+    return tweetArray;
   } catch (e) {
     console.log(e);
   }

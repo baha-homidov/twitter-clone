@@ -19,7 +19,7 @@ import { getReplies } from "../FirebaseBackend";
 
 function TweetTimeline(props) {
   const navigate = useNavigate();
-  const tweetArray = [];
+  const [repliesTweetArray, setRepliesTweetArray] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const [tweetData, setTweetData] = useState(null);
   const [userInfo, setUserInfo] = useOutletContext();
@@ -38,7 +38,7 @@ function TweetTimeline(props) {
 
       // retrieve all the replies from firestore
       const repliesArray = await getReplies(tweet.tweetId);
-
+      setRepliesTweetArray(repliesArray);
       setShowLoading(false);
     }
 
@@ -180,9 +180,15 @@ function TweetTimeline(props) {
           )}
         </div>
       </div>
-      {/* {tweetArray.map((element, index) => {
-        return <Tweet key={index.toString()} {...element} />;
-      })} */}
+      {repliesTweetArray.map((element, index) => {
+        return (
+          <Tweet
+            key={index.toString()}
+            tweetInfo={element}
+            userInfo={userInfo}
+          />
+        );
+      })}
     </div>
   );
 }
