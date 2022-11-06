@@ -141,6 +141,10 @@
   border-radius: 12px;
 }
 
+.title-tweet .buttons  .like.liked svg {
+  color: #f41780;
+}
+
 @media (min-width: 480px) {
   .title-tweet .buttons .reply:hover {
     color: #2b9bf0;

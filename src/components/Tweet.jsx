@@ -17,7 +17,7 @@ function Tweet(props) {
   const [isLikedByUser, setIsLikedByUser] = useState(
     props.tweetInfo.likedBy.includes(props.userInfo.uid)
   );
-  const [likeCount, SetLikeCount] = useState(props.tweetInfo.likeCount);
+  const [likeCount, setLikeCount] = useState(props.tweetInfo.likeCount);
 
   const navigate = useNavigate();
 
@@ -44,11 +44,11 @@ function Tweet(props) {
     e.stopPropagation();
 
     if (isLikedByUser) {
-      SetLikeCount(likeCount - 1);
+      setLikeCount(likeCount - 1);
       removeLike(props.tweetInfo.tweetId, props.userInfo.uid);
       setIsLikedByUser(false);
     } else {
-      SetLikeCount(likeCount + 1);
+      setLikeCount(likeCount + 1);
       likeTweet(props.tweetInfo.tweetId, props.userInfo.uid);
       setIsLikedByUser(true);
     }
