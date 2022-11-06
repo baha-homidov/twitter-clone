@@ -151,6 +151,10 @@
   color: #3eba7b;
 }
 
+.action-buttons button.liked .like-icon svg {
+  color: #f41780;
+}
+
 @media (min-width: 480px) {
   .tweet-component:hover {
     background-color: #f7f7f7;

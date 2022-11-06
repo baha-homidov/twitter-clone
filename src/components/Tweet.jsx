@@ -3,17 +3,22 @@ import { Link } from "react-router-dom";
 import "../assets/css/Tweet.css";
 import { format } from "date-fns";
 
-import { publishRetweet } from "../FirebaseBackend";
+import { likeTweet, publishRetweet, removeLike } from "../FirebaseBackend";
 import { useEffect, useState } from "react";
 function Tweet(props) {
   const [isRetweet, setIsRetweet] = useState(props.tweetInfo.isRetweet);
-
   const [retweetedByInlcudes, setRetweetedByInlcudes] = useState(
     props.tweetInfo.retweetedBy.includes(props.userInfo.uid)
   );
   const [retweetCount, setRetweetCount] = useState(
     props.tweetInfo.retweetCount
   );
+
+  const [isLikedByUser, setIsLikedByUser] = useState(
+    props.tweetInfo.likedBy.includes(props.userInfo.uid)
+  );
+  const [likeCount, SetLikeCount] = useState(props.tweetInfo.likeCount);
+
   const navigate = useNavigate();
 
   function goToTweet(tweetId) {
@@ -21,9 +26,34 @@ function Tweet(props) {
     navigate(`/tweet/${tweetId}`);
   }
 
-  useEffect(() => {
-    console.log("render go brr");
-  }, []);
+  function handleRetweet(e) {
+    e.stopPropagation();
+
+    if (
+      !props.tweetInfo.retweetedBy.includes(props.userInfo.uid) &&
+      props.tweetInfo.authorId !== props.userInfo.uid
+    ) {
+      publishRetweet(props.userInfo, props.tweetInfo);
+      setIsRetweet(true);
+      setRetweetedByInlcudes(true);
+      setRetweetCount(retweetCount + 1);
+    }
+  }
+
+  function handleLike(e) {
+    e.stopPropagation();
+
+    if (isLikedByUser) {
+      SetLikeCount(likeCount - 1);
+      removeLike(props.tweetInfo.tweetId, props.userInfo.uid);
+      setIsLikedByUser(false);
+    } else {
+      SetLikeCount(likeCount + 1);
+      likeTweet(props.tweetInfo.tweetId, props.userInfo.uid);
+      setIsLikedByUser(true);
+    }
+  }
+
   return (
     <div className="tweet-component">
       {isRetweet && (
@@ -118,19 +148,7 @@ function Tweet(props) {
           </button>
           {/* </Link> */}
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-
-              if (
-                !props.tweetInfo.retweetedBy.includes(props.userInfo.uid) &&
-                props.tweetInfo.authorId !== props.userInfo.uid
-              ) {
-                publishRetweet(props.userInfo, props.tweetInfo);
-                setIsRetweet(true);
-                setRetweetedByInlcudes(true);
-                setRetweetCount(retweetCount + 1);
-              }
-            }}
+            onClick={handleRetweet}
             className={retweetedByInlcudes ? "retweet inactive" : "retweet"}
           >
             <div className="retweet-icon">
@@ -150,10 +168,8 @@ function Tweet(props) {
             <span className="retweet-num">{retweetCount}</span>
           </button>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            className="like"
+            onClick={handleLike}
+            className={isLikedByUser ? "like liked" : "like"}
           >
             <div className="like-icon">
               <svg
@@ -169,7 +185,7 @@ function Tweet(props) {
                 ></path>
               </svg>
             </div>
-            <span className="like-num">{props.tweetInfo.likeCount}</span>
+            <span className="like-num">{likeCount}</span>
           </button>
         </div>
       </div>

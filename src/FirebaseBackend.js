@@ -976,4 +976,6 @@ export {
   getTweetDataById,
   publishReply,
   getReplies,
+  removeLike,
+  likeTweet,
 };
