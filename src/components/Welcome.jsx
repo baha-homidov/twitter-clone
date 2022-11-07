@@ -2,7 +2,11 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logoIcon from "../assets/img/icons/icon.png";
 import background from "../assets/img/icons/background.png";
-import { isNewUser, sigInWithGoogle } from "../FirebaseBackend";
+import {
+  isNewUser,
+  sigInWithGoogle,
+  signInWithUsernamePassword,
+} from "../FirebaseBackend";
 import "../assets/css/Welcome.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./Loading";
@@ -23,6 +27,18 @@ export default function Welcome() {
     } else {
       navigate("/home");
     }
+  }
+
+  async function handleGuestUser() {
+    setShowLoading(true);
+    const username = "guestUser";
+    const password = "000000";
+    const signInResult = await signInWithUsernamePassword(username, password);
+    if (signInResult === true) {
+      navigate("/home");
+    } else {
+    }
+    setShowLoading(false);
   }
 
   return (
@@ -72,7 +88,9 @@ export default function Welcome() {
         <Link to="sign-up" className="link">
           <button className="sign-up">Sign up manually</button>
         </Link>
-        <button className="guest-user">Sign in as a Guest User</button>
+        <button onClick={handleGuestUser} className="guest-user">
+          Sign in as a Guest User
+        </button>
         <div className="have-account">Already have an account?</div>
         <Link className="link" to="sign-in">
           <button className="sign-in">Sign in</button>

@@ -47,23 +47,6 @@
   margin-bottom: -10%;
 }
 
-.user-profile-container .user-info .wrapper button.edit-profile {
-  align-self: flex-end;
-  margin-left: auto;
-  border-radius: 999px;
-  height: 36px;
-  padding: 0px 16px 0px 16px;
-  font-size: 1em;
-  font-weight: bold;
-  background-color: white;
-  border: 1px solid #d2dbe0;
-  color: #1b2025;
-  transition: background-color 0.2s ease;
-}
-.user-profile-container .user-info .wrapper button.edit-profile:hover {
-  background-color: #e6e7e7;
-}
-
 .user-profile-container .user-info .userphoto-container {
   width: 25%;
   position: relative;
@@ -181,7 +164,11 @@
 }
 
 .sign-out-container {
-  padding: 16px;
+  margin-left: 16px;
+}
+
+.user-profile-container .follow {
+  margin-left: 16px;
 }
 
 .sign-out-container button {

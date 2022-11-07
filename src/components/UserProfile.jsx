@@ -13,6 +13,7 @@ import { getAllTweets, getUserInfo, signOutUser } from "../FirebaseBackend";
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import { ReplyPair } from "./ReplyPair";
+import FollowButton from "./FollowButton";
 export default function UserProfile() {
   const [userInfo, setUserInfo] = useState(null);
   const [showLoading, setShowLoading] = useState(true);
@@ -87,9 +88,6 @@ export default function UserProfile() {
               className="userphoto"
             />
           </div>
-          {showProfileControl && (
-            <button className="edit-profile">Edit profile</button>
-          )}
         </div>
         <div className="name">{userInfo && userInfo.displayName}</div>
         <div className="username">{`@${userInfo && userInfo.username}`}</div>
@@ -146,7 +144,7 @@ export default function UserProfile() {
         </div>
       </div>
 
-      {showProfileControl && (
+      {showProfileControl ? (
         <div className="sign-out-container">
           <button
             onClick={() => {
@@ -157,6 +155,14 @@ export default function UserProfile() {
             Sign out
           </button>
         </div>
+      ) : (
+        currentAuthedUser &&
+        userInfo && (
+          <FollowButton
+            currentUserId={currentAuthedUser.uid}
+            targetUserId={userInfo.uid}
+          />
+        )
       )}
 
       <div className="selection">
