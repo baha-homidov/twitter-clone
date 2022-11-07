@@ -72,6 +72,7 @@ export default function Welcome() {
         <Link to="sign-up" className="link">
           <button className="sign-up">Sign up manually</button>
         </Link>
+        <button className="guest-user">Sign in as a Guest User</button>
         <div className="have-account">Already have an account?</div>
         <Link className="link" to="sign-in">
           <button className="sign-in">Sign in</button>

@@ -26,7 +26,7 @@
 }
 
 .welcome-component .or-container .line {
-  background-color: #EFF3F4;
+  background-color: #eff3f4;
   height: 2px;
   flex-grow: 1;
 }
@@ -50,8 +50,9 @@
 
 .welcome-component button.google-sign-in,
 .welcome-component button.sign-up,
-.welcome-component button.sign-in {
-  height: 38px;
+.welcome-component button.sign-in,
+.welcome-component button.guest-user {
+  min-height: 38px;
   display: flex;
   align-items: center;
   width: 300px;
@@ -59,6 +60,32 @@
   justify-content: center;
   margin-bottom: 20px;
   transition: background-color 0.2s ease;
+}
+
+.welcome-component button.guest-user {
+  background-image: linear-gradient(
+    to right top,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
+  border: none;
+  font-weight: bold;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.welcome-component button.guest-user:hover {
+  transform: scale(1.05);
 }
 
 .welcome-component .link {
@@ -114,5 +141,8 @@
   .welcome-component > .content {
     padding: 32px;
   }
-  
+
+  .welcome-component .happening-now {
+    font-size: 50px;
+  }
 }
