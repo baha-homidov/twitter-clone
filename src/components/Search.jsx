@@ -13,6 +13,7 @@ import {
 import { searchUsers } from "../FirebaseBackend";
 import Loading from "./Loading";
 import FollowButton from "./FollowButton";
+import userEvent from "@testing-library/user-event";
 
 function Search(props) {
   const navigate = useNavigate();
@@ -43,7 +44,6 @@ function Search(props) {
       return;
     }
     event.preventDefault();
-    alert(searchValue);
   }
 
   useEffect(() => {
@@ -52,6 +52,10 @@ function Search(props) {
     if (searchParam.searchId) {
       setSearchValue(searchParam.searchId);
       searchUserFromBackend(searchParam.searchId);
+    } else {
+      // search with blank value when first loaded
+      setSearchValue("");
+      searchUserFromBackend("");
     }
   }, []);
 
@@ -85,41 +89,34 @@ function Search(props) {
           onClick={() => {
             setActiveButton("people");
           }}
-          className={activeButton === "people" ? "people active" : "people"}
+          className="people active"
         >
           People <span className="blue-bar"></span>{" "}
-        </button>
-        <button
-          onClick={() => {
-            setActiveButton("posts");
-          }}
-          className={activeButton === "posts" ? "posts active" : "posts"}
-        >
-          Posts <span className="blue-bar"></span>
         </button>
       </div>
       <div className="search-results">
         {showLoading && <Loading />}
-        {activeButton === "people" && (
-          <div className="people-results">
-            {userResultArr.map((element, index) => {
-              return (
-                <Link key={index} to={`/profile/${element.uid}`}>
-                  <div className="user-wrapper">
-                    <User userInfo={element} />
-
-                    {element.uid !== currentAuthedUser.uid && (
-                      <FollowButton
-                        currentUserId={currentAuthedUser.uid}
-                        targetUserId={element.uid}
-                      />
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+        {userResultArr.length === 0 && !showLoading && (
+          <div className="no-result">No Search Results</div>
         )}
+        <div className="people-results">
+          {userResultArr.map((element, index) => {
+            return (
+              <Link key={index} to={`/profile/${element.uid}`}>
+                <div className="user-wrapper">
+                  <User userInfo={element} />
+
+                  {element.uid !== currentAuthedUser.uid && (
+                    <FollowButton
+                      currentUserId={currentAuthedUser.uid}
+                      targetUserId={element.uid}
+                    />
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

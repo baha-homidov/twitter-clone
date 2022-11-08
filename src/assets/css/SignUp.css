@@ -84,7 +84,7 @@
   width: 65px;
   height: 65px;
   border-radius: 99px;
-  
+
   object-fit: cover;
 }
 
@@ -118,6 +118,34 @@
   transition: 0.2s ease;
 }
 
+.sign-up-container form textarea.about-me {
+  width: 100%;
+  height: 150px;
+  resize: none;
+  padding: 7px;
+  font-size: 1.1em;
+  padding-top: 20px;
+  border: 1px solid #cfd9de;
+  outline: none;
+  transition: 0.2s ease;
+  border-radius: 5px;
+}
+
+.sign-up-container .about-me-container .about-me+ .label {
+  top: 20px;
+}
+
+.sign-up-container form .about-me:not(:placeholder-shown) + .label,
+.sign-up-container form .about-me:focus + .label {
+  top: 10px;
+  left: 7px;
+  font-size: 1em;
+}
+
+.sign-up-container form textarea.about-me:focus {
+  border: 1px solid #2b9bf0;
+}
+
 .sign-up-container form input:focus {
   border: 1px solid #2b9bf0;
 }
@@ -137,13 +165,13 @@
   transition: 0.2s ease;
 }
 
-.sign-up-container form input:focus + .label,
+.sign-up-container form *:focus + .label,
 .sign-up-container form.submitted .label {
   color: #2b9bf0;
 }
 
-.sign-up-container form input:not(:placeholder-shown) + .label,
-.sign-up-container form input:focus + .label {
+.sign-up-container form *:not(:placeholder-shown) + .label,
+.sign-up-container form *:focus + .label {
   top: 10px;
   left: 7px;
   font-size: 1em;

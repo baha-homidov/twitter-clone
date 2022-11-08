@@ -99,6 +99,13 @@
   height: 5px;
 }
 
+.search-container .no-result {
+  font-size: 30px;
+  margin-top: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
 @media (min-width: 480px) {
   .search-container .category-buttons button:hover {
     background-color: #e6e7e7;
@@ -109,8 +116,6 @@
   .search-container .category-buttons button:active {
     background-color: #e6e7e7;
   }
-
-  
 }
 
 .search-container .user-wrapper {

@@ -45,6 +45,11 @@
   top: 0;
   font-size: 15px;
   font-weight: bold;
+  z-index: 3;
+}
+
+.feed-container .top-bar * {
+  cursor: default;
 }
 
 .top-bar .profile-icon {

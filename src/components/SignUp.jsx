@@ -23,7 +23,6 @@ export default function SignUp() {
   const [validUsernamePattern, setValidUsernamePattern] = useState(true);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
   const confirmPasswordRef = useRef(null);
   const [formClassName, setFormClassName] = useState("");
   const [usernameLoader, setUsernameLoader] = useState(false);
@@ -31,6 +30,11 @@ export default function SignUp() {
   const [showLoadingComponent, setShowLoadingComponent] = useState(false);
   const [userPhoto, setUserPhoto] = useState(null);
   const [UserPhotoPreview, setUserPhotoPreview] = useState(null); // state to preview to-be uploaded usernam
+  const [aboutMe, setAboutMe] = useState("");
+
+  function handleAboutMe(event) {
+    setAboutMe(event.target.value);
+  }
 
   useEffect(() => {
     // listen to userPhoto changes and update userPhotoPreview
@@ -230,9 +234,21 @@ export default function SignUp() {
                   </div>
                 )}
             </div>
+
             <div className="username-pattern">
               A username can only contain alphanumeric characters (letters A-Z,
               numbers 0-9) with the exception of underscores
+            </div>
+            <div className="about-me-container">
+              <textarea
+                onChange={handleAboutMe}
+                className="about-me"
+                cols="30"
+                rows="10"
+                maxLength="160"
+                placeholder=" "
+              ></textarea>
+              <span className="label">About me</span>
             </div>
             <div className="password-container">
               <input
