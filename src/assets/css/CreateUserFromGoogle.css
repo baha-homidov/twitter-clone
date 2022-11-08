@@ -74,8 +74,40 @@
   transition: 0.2s ease;
 }
 
+
+
+
 .create-user-from-google-container form .username-container {
   position: relative; 
+}
+
+
+.create-user-from-google-container .about-me-container {
+  position: relative;
+}
+
+.create-user-from-google-container form textarea.about-me {
+  width: 300px;
+  height: 150px;
+  resize: none;
+  padding: 7px;
+  font-size: 1.1em;
+  padding-top: 20px;
+  border: 1px solid #cfd9de;
+  outline: none;
+  transition: 0.2s ease;
+  border-radius: 5px;
+  
+}
+
+.create-user-from-google-container form textarea.about-me:focus {
+  border: 1px solid #2b9bf0;
+}
+
+
+
+.create-user-from-google-container .about-me-container .label {
+  top: 20px;
 }
 
 .create-user-from-google-container form .label {
@@ -117,13 +149,13 @@ position: absolute;
   opacity: 0;
 }
 
-.create-user-from-google-container form input:focus + .label,
-.create-user-from-google-container form.submitted input + .label {
+.create-user-from-google-container *:focus + .label,
+.create-user-from-google-container form.submitted * + .label {
   color: #2b9bf0;
 }
 
-.create-user-from-google-container form input:not(:placeholder-shown) + .label,
-.create-user-from-google-container form input:focus + .label {
+.create-user-from-google-container *:not(:placeholder-shown) + .label,
+.create-user-from-google-container *:focus + .label {
   top: 10px;
   left: 7px;
   font-size: 1em;

@@ -18,7 +18,12 @@ export default function CreateUserFromGoogle() {
   const [user, setUser] = useState("");
   const [usernameTaken, setUsernameTaken] = useState(false);
   const [usernameLoader, setUsernameLoader] = useState(false);
-  
+  const [aboutMe, setAboutMe] = useState("");
+
+  function handleAboutMe(event) {
+    setAboutMe(event.target.value);
+  }
+
   useEffect(() => {
     // get userId when component is mounted
     // onAuthStateChanged retrieves userID asynchronously
@@ -26,7 +31,7 @@ export default function CreateUserFromGoogle() {
     onAuthStateChanged(getAuth(), async (user) => {
       setShowLoading(true);
       if (user) {
-        console.log("user"+user.uid);
+        console.log("user" + user.uid);
         setUser(user);
         const newUserCheck = await isNewUser(user.uid); // check if user already exists
         if (newUserCheck === false) {
@@ -151,6 +156,18 @@ export default function CreateUserFromGoogle() {
           <div className="wrong-pattern">
             A username can only contain alphanumeric characters (letters A-Z,
             numbers 0-9) with the exception of underscores
+          </div>
+
+          <div className="about-me-container">
+            <textarea
+              onChange={handleAboutMe}
+              className="about-me"
+              cols="30"
+              rows="10"
+              maxLength="160"
+              placeholder=" "
+            ></textarea>
+            <span className="label">About me</span>
           </div>
 
           <button onClick={updateForm} type="submit" className="submit">

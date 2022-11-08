@@ -10,6 +10,7 @@ export default function SignIn() {
   const [formClassName, setFormClassName] = useState("");
   const [wrongCredentials, setWrongCredentials] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
+  
   const navigate = useNavigate();
 
   function handleUsername(event) {
@@ -24,7 +25,7 @@ export default function SignIn() {
       passwordInput.current.setCustomValidity("Whitespaces are not allowed");
     }
   }
- 
+
   async function handleSubmit(event) {
     event.preventDefault();
     setShowLoading(true);
