@@ -78,7 +78,8 @@ export default function CreateUserFromGoogle() {
           user.uid,
           username,
           user.displayName,
-          user.photoURL
+          user.photoURL,
+          aboutMe
         );
       }
       navigate("/home");

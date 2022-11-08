@@ -122,7 +122,7 @@ async function isUsernameTaken(username) {
   return false;
 }
 
-async function addUserToDataBase(uid, username, name, userPhoto) {
+async function addUserToDataBase(uid, username, name, userPhoto, aboutMe) {
   // adds user to the database and set's up tweets collection
   // doesn't check for already existing usernames
   // existing usernames should checked before calling this function
@@ -157,6 +157,7 @@ async function addUserToDataBase(uid, username, name, userPhoto) {
         followerCount: 0,
         followingCount: 0,
         tweetCount: 0,
+        aboutMe: aboutMe,
       },
       { merge: true }
     );
@@ -217,6 +218,7 @@ async function uploadTweetPhoto(userphoto, username) {
 }
 
 async function isNewUser(userId) {
+
   // recieves uid
   // checks if user exists by querying firestore database
   const docRef = doc(db, "userCollection", userId);

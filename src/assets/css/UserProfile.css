@@ -90,6 +90,13 @@
   color: #536471;
 }
 
+
+.user-profile-container .user-info .about-me-container {
+
+  margin-top: 10px;
+  font-size: 1.1em;
+}
+
 .user-profile-container .joined-container {
   margin-top: 16px;
   display: flex;

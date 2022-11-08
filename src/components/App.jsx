@@ -44,21 +44,26 @@ function App() {
     }
 
     onAuthStateChanged(getAuth(), async (user) => {
-      // track auth state
-      if (user) {
-        const isNonRegisteredUser = await isNewUser(user.uid);
-        if (isNonRegisteredUser) {
-          navigate("/welcome/new-user-from-google");
+      async function check(user) {
+        if (user) {
+          const isNonRegisteredUser = await isNewUser(user.uid);
+
+          if (isNonRegisteredUser === true) {
+            console.log("in app here");
+            navigate("/welcome/new-user-from-google");
+          }
+          setShowLoading(false);
+          if (userInfo === null) {
+            const usersnap = await getUserInfo(user.uid);
+            setUserInfo(usersnap);
+            // console.log(usersnap);
+          }
+        } else {
+          navigate("/welcome");
         }
-        setShowLoading(false);
-        if (userInfo === null) {
-          const usersnap = await getUserInfo(user.uid);
-          setUserInfo (usersnap);
-          // console.log(usersnap);
-        }
-      } else {
-        navigate("/welcome");
       }
+      await check(user);
+      // track auth state
     });
   }, [location]);
 

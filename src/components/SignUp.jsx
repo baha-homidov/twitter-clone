@@ -116,20 +116,16 @@ export default function SignUp() {
         let userPhotoUrl = "";
 
         if (userPhoto) {
-          console.log(userPhoto);
           userPhotoUrl = await uploadUserPhoto(userPhoto, username);
         }
 
-        await addUserToDataBase(userId, username, name, userPhotoUrl);
+        await addUserToDataBase(userId, username, name, userPhotoUrl, aboutMe);
 
         navigate("/home");
-
         setShowLoadingComponent(false);
-        return;
       }
     }
     setShowLoadingComponent(false);
-    console.log("success signup");
   }
 
   function updateForm() {

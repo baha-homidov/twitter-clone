@@ -23,6 +23,7 @@ export default function Welcome() {
     const checkNewUser = await isNewUser(getAuth().currentUser.uid);
     setShowLoading(false);
     if (checkNewUser) {
+      console.log("here");
       navigate("new-user-from-google");
     } else {
       navigate("/home");

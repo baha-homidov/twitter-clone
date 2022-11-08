@@ -91,6 +91,8 @@ export default function UserProfile() {
         </div>
         <div className="name">{userInfo && userInfo.displayName}</div>
         <div className="username">{`@${userInfo && userInfo.username}`}</div>
+        <div className="about-me-container">{userInfo && userInfo.aboutMe}</div>
+
         <div className="joined-container">
           <svg
             className="calendar"
