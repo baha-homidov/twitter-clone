@@ -49,14 +49,12 @@ function App() {
           const isNonRegisteredUser = await isNewUser(user.uid);
 
           if (isNonRegisteredUser === true) {
-
             navigate("/welcome/new-user-from-google");
           }
           setShowLoading(false);
           if (userInfo === null) {
             const usersnap = await getUserInfo(user.uid);
             setUserInfo(usersnap);
-            console.log(usersnap)
           }
         } else {
           navigate("/welcome");
