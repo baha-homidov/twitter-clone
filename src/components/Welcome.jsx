@@ -1,6 +1,6 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import logoIcon from "../assets/img/icons/icon.png";
+import logoIcon from "../assets/img/icons/icon-small.png";
 
 import {
   isNewUser,
@@ -8,10 +8,9 @@ import {
   signInWithUsernamePassword,
 } from "../FirebaseBackend";
 import "../assets/css/Welcome.css";
-// eslint-disable-next-line no-unused-vars
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Loading from "./Loading";
 
+import { getAuth } from "firebase/auth";
+import Loading from "./Loading";
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -24,7 +23,6 @@ export default function Welcome() {
     const checkNewUser = await isNewUser(getAuth().currentUser.uid);
     setShowLoading(false);
     if (checkNewUser) {
-
       navigate("new-user-from-google");
     } else {
       navigate("/home");

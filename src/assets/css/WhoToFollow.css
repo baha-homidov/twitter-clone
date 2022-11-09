@@ -20,3 +20,7 @@
 .who-to-follow-container .user-component:hover {
   background-color: #e6e7e7;
 }
+
+.who-to-follow-container .user-component {
+  cursor: pointer;
+}

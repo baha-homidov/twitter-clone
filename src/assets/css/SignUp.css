@@ -2,7 +2,6 @@
   position: absolute;
   background-color: rgba(184, 184, 184, 0.333);
 
-  border: 1px solid blue;
   min-height: max(100vh, 1000px);
   max-height: 200vh;
   overflow: hidden;
@@ -101,6 +100,10 @@
   color: #2c9bf0;
 }
 
+input[type="file"] {
+  display: none;
+}
+
 .sign-up-container .username-pattern {
   color: #647580;
 }
@@ -131,7 +134,7 @@
   border-radius: 5px;
 }
 
-.sign-up-container .about-me-container .about-me+ .label {
+.sign-up-container .about-me-container .about-me + .label {
   top: 20px;
 }
 

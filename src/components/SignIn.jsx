@@ -103,7 +103,7 @@ export default function SignIn() {
               <div className="wrong-credentials">Wrong credentials</div>
             )}
             <button onClick={updateForm} type="submit" className="submit">
-              Sign up
+              Sign in
             </button>
             <div className="no-account-container">
               Don't have an account?{" "}

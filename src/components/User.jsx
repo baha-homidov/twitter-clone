@@ -1,13 +1,10 @@
-import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
 import "../assets/css/User.css";
 export default function User(props) {
   return (
     <div className="user-component">
       <img
         referrerPolicy="no-referrer"
-        src={
-          props.userInfo ? props.userInfo.userPhotoUrl : userPhotoPlaceholder
-        }
+        src={props.userInfo ? props.userInfo.userPhotoUrl : ""}
         alt=""
         className="user-icon"
       />

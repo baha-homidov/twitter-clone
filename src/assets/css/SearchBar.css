@@ -69,3 +69,8 @@
   background-color: transparent;
   border: none;
 }
+
+.searchbar-container button.submit svg {
+  width: 24px;
+  height: 24px;
+}
