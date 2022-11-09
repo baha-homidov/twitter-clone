@@ -21,7 +21,7 @@ function Tweet(props) {
   const navigate = useNavigate();
 
   function goToTweet(tweetId) {
-    console.log("tweetClick");
+
     navigate(`/tweet/${tweetId}`);
   }
 

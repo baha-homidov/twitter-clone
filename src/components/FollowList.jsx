@@ -30,7 +30,7 @@ export default function FollowList(props) {
     // initialyze data from firebase
     // use Promise.all to fire two async function at the same time and wait for them to finish
     await Promise.all([initUserInfo(), getFollowListFromBackend()]);
-    console.log("finish init data");
+
   }
 
   async function getFollowListFromBackend() {

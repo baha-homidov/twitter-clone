@@ -3,8 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App";
 import Search from "./components/Search";
-import Messages from "./components/Messages";
-import StartChat from "./components/StartChat";
+
 import UserProfile from "./components/UserProfile";
 import ComposeTweet from "./components/ComposeTweet";
 import NotFound from "./components/NotFound";
@@ -16,7 +15,7 @@ import SignIn from "./components/SignIn";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Feed from "./components/Feed";
 import TweetTimeline from "./components/TweetTimeline";
-import Conversation from "./components/Conversation";
+
 import CreateUserFromGoogle from "./components/CreateUserFromGoogle";
 import FollowList from "./components/FollowList";
 
@@ -42,7 +41,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      
+
       {
         path: "profile/:profileId/followlist",
         element: <FollowList />,
@@ -77,21 +76,7 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: "messages",
-        element: <Messages />,
-        children: [
-          {
-            path: "startchat",
-            element: <StartChat />,
-          },
-        ],
-      },
 
-      {
-        path: "conversation/:conversationId",
-        element: <Conversation />,
-      },
       {
         path: "profile/:profileId",
         element: <UserProfile />,
@@ -125,7 +110,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-console.log("henlp");
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

@@ -32,7 +32,7 @@ export default function CreateUserFromGoogle() {
     onAuthStateChanged(getAuth(), async (user) => {
       setShowLoading(true);
       if (user) {
-        console.log("user" + user.uid);
+
         setUser(user);
         const newUserCheck = await isNewUser(user.uid); // check if user already exists
         if (newUserCheck === false) {
@@ -46,9 +46,7 @@ export default function CreateUserFromGoogle() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("two");
-  }, []);
+
 
   function validateUserName(username) {
     const regExp = /^@?(\w){1,15}$/;

@@ -8,9 +8,10 @@ import {
   signInWithUsernamePassword,
 } from "../FirebaseBackend";
 import "../assets/css/Welcome.css";
+// eslint-disable-next-line no-unused-vars
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Loading from "./Loading";
-import { async } from "@firebase/util";
+
 
 export default function Welcome() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Welcome() {
     const checkNewUser = await isNewUser(getAuth().currentUser.uid);
     setShowLoading(false);
     if (checkNewUser) {
-      console.log("here");
+
       navigate("new-user-from-google");
     } else {
       navigate("/home");

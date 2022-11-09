@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 // required libraries for firebase Auth
 import {
   getAuth,
-  onAuthStateChanged,
+
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
@@ -26,16 +26,14 @@ import {
   deleteDoc,
   where,
   increment,
-  DocumentSnapshot,
-  orderBy,
+
+
   collectionGroup,
   updateDoc,
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
-import { async } from "@firebase/util";
-import { useFormAction } from "react-router-dom";
-import { getDate, getDecade, getTime, startOfSecond } from "date-fns";
+
 
 // My web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -61,6 +59,7 @@ async function sigInWithGoogle() {
   await signInWithPopup(getAuth(), provider);
   const auth = getAuth();
   const user = auth.currentUser;
+  // eslint-disable-next-line no-unused-vars
   const userId = user.uid;
 }
 
@@ -82,6 +81,7 @@ async function singUpWithLoginPassword(login, password, username, name) {
 
 async function signInWithUsernamePassword(login, password) {
   try {
+    // eslint-disable-next-line no-unused-vars
     const userCredential = await signInWithEmailAndPassword(
       getAuth(),
       login + "@twitter-clone.com",
@@ -104,7 +104,7 @@ function getUserAuth() {
 }
 
 function signOutUser() {
-  console.log("signout");
+
   signOut(getAuth());
 }
 
@@ -127,6 +127,7 @@ async function addUserToDataBase(uid, username, name, userPhoto, aboutMe) {
   // doesn't check for already existing usernames
   // existing usernames should checked before calling this function
   try {
+    // eslint-disable-next-line no-unused-vars
     const Doc = await addDoc(
       collection(db, "userCollection", uid, "tweetCollection"),
       {
@@ -162,7 +163,7 @@ async function addUserToDataBase(uid, username, name, userPhoto, aboutMe) {
       { merge: true }
     );
 
-    console.log("Document written with ID: ", Doc.id);
+
   } catch (error) {
     console.log("Error adding a user: " + error);
   }
@@ -315,7 +316,7 @@ async function addFollower(targetUser, newFollower) {
       uid: newFollower,
     }
   );
-  console.log(`Follower added with id ${newFollower}`);
+
 }
 
 async function removeFollower(currentUserId, targetUserId) {
@@ -360,7 +361,7 @@ async function addFollowing(targetUserId, userToFollowId) {
         uid: userToFollowId,
       }
     );
-    console.log(`Followed user added with id ${userToFollowId}`);
+
     return true;
   } catch (e) {
     console.log(e);
@@ -378,7 +379,7 @@ async function removeFollowing(currentUserId, targetUserId) {
     await deleteDoc(
       doc(db, "userCollection", currentUserId, "followCollection", targetUserId)
     );
-    console.log("Followed user removed");
+
   } catch (e) {
     console.log("error removing a follower" + e);
   }
@@ -443,7 +444,7 @@ async function followUser(currentUser, userToBeFollowed) {
     if (addFollowingResult === false || addFollowerResult === false) {
       return false;
     }
-    console.log("Sucess adding a follower");
+
     await incrementFollowerCount(userToBeFollowed);
     await incrementFollowingCount(currentUser);
     return true;
@@ -825,7 +826,7 @@ async function publishRetweet(userInfo, tweetInfo) {
       addRetweetToCollection(userInfo, tweetInfo),
       incrementTweetCount(userInfo.uid),
     ]);
-    console.log("success");
+
   } catch (e) {
     console.log(e);
   }
@@ -840,7 +841,7 @@ async function incrementReplyCount(tweetId) {
       replyCount: increment(1),
     });
   } catch (e) {
-    console.log(e);
+
   }
 }
 
@@ -883,7 +884,7 @@ async function addReplyToCollection(userInfo, sourceTweetRef, tweetInfo) {
     };
     const docRef = doc(sourceTweetRef, "tweetCollection", newTweetRef.id);
     await setDoc(docRef, tweet);
-    console.log("replied");
+
   } catch (e) {
     console.log(e);
   }
@@ -922,7 +923,7 @@ async function likeTweet(tweetId, userId) {
       likedBy: arrayUnion(userId),
       likeCount: increment(1),
     });
-    console.log("liked");
+
   } catch (e) {
     console.log(e);
   }
@@ -938,7 +939,7 @@ async function removeLike(tweetId, userId) {
       likedBy: arrayRemove(userId),
       likeCount: increment(-1),
     });
-    console.log("removed like");
+
   } catch (e) {
     console.log(e);
   }

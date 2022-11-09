@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
   Outlet,
@@ -60,7 +61,7 @@ function TweetTimeline(props) {
 
       // set the like state variables
       setLikeCount(tweetData.likeCount);
-      console.log(tweetData.likedBy.includes(userInfo.uid));
+
       setIsLikedByUser(tweetData.likedBy.includes(userInfo.uid));
     }
   }, [userInfo, tweetData]);
