@@ -1,7 +1,7 @@
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logoIcon from "../assets/img/icons/icon.png";
-import background from "../assets/img/icons/background.png";
+
 import {
   isNewUser,
   sigInWithGoogle,

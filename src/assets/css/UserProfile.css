@@ -90,9 +90,7 @@
   color: #536471;
 }
 
-
 .user-profile-container .user-info .about-me-container {
-
   margin-top: 10px;
   font-size: 1.1em;
 }
@@ -164,7 +162,6 @@
 }
 
 .user-profile-container .tweets-container .loading-container {
-  border: 1px solid red;
   min-height: 0 !important;
   height: auto !important;
   z-index: 1;

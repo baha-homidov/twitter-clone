@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "../assets/css/FollowButton.css";
 import { useEffect, useState } from "react";
 import { unfollowUser, followUser, isFollowing } from "../FirebaseBackend";
@@ -9,10 +10,8 @@ export default function FollowButton(props) {
     setShowLoader(true);
     // follows or unfollows the targetUser depending on currentFollowingTarget state
     if (currentFollowingTarget === true) {
-      console.log("unfollow action");
       await unfollowUser(props.currentUserId, props.targetUserId);
     } else {
-      console.log("follow action");
       await followUser(props.currentUserId, props.targetUserId);
     }
     setShowLoader(false);
@@ -24,7 +23,7 @@ export default function FollowButton(props) {
       setShowLoader(true);
       const result = await isFollowing(props.currentUserId, props.targetUserId);
       setShowLoader(false);
-      console.log(result);
+
       setCurrentFollowingTarget(result);
     };
 

@@ -6,16 +6,10 @@ import {
   isUsernameTaken,
   addUserToDataBase,
   uploadUserPhoto,
-  storage,
 } from "../FirebaseBackend";
 import Loading from "./Loading";
 import userPhotoPlaceholder from "../assets/img/icons/placeholder-userphoto.png";
-import {
-  getDownloadURL,
-  ref,
-  uploadBytes,
-  uploadBytesResumable,
-} from "firebase/storage";
+
 
 export default function SignUp() {
   const [name, setName] = useState("");

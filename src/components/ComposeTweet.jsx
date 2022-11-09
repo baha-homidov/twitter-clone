@@ -1,12 +1,7 @@
 import "../assets/css/ComposeTweet.css";
-import {
-  Link,
-  useNavigate,
-  useOutletContext,
-  useLocation,
-} from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import userPhoto from "../assets/img/icons/placeholder-userphoto.png";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 import {
   publishReply,
   publishTweet,

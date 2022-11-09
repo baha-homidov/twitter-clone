@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-  Link,
   Outlet,
   useNavigate,
   useOutletContext,
@@ -25,6 +24,7 @@ function TweetTimeline(props) {
   const [repliesTweetArray, setRepliesTweetArray] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const [tweetData, setTweetData] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [userInfo, setUserInfo] = useOutletContext();
 
   // retweet state variables

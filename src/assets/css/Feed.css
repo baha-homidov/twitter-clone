@@ -56,6 +56,13 @@
   display: none;
 }
 
+.feed-container .loading-container {
+  position: block;
+  min-height: calc(100vh - 200px);
+  top: 50px;
+  z-index: 99;
+}
+
 @media (max-width: 480px) {
   .top-bar .profile-icon {
     display: block;

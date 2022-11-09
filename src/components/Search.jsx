@@ -13,18 +13,17 @@ import {
 import { searchUsers } from "../FirebaseBackend";
 import Loading from "./Loading";
 import FollowButton from "./FollowButton";
-import userEvent from "@testing-library/user-event";
 
 function Search(props) {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [activeButton, setActiveButton] = useState("people"); //"people"||"posts"    state for controlling active buttons
   const [userResultArr, setUserResultArr] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext(); // get authInfo passed by App.jsx
   const searchParam = useParams(); // access params from URL
-
-  console.log(currentAuthedUser);
 
   async function searchUserFromBackend(searchValue) {
     setShowLoading(true);

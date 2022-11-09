@@ -1,6 +1,6 @@
 import "../assets/css/Loading.css";
 
-export default function Loading(props) {
+export default function Loading() {
 
   return (
     <div

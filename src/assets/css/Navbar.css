@@ -11,6 +11,10 @@
   z-index: 5;
 }
 
+svg {
+  pointer-events: none;
+}
+
 .link > button > img,
 span.button-text {
   pointer-events: none;
@@ -98,10 +102,15 @@ span.button-text {
   border-radius: 9999px;
 }
 
+.main-buttons button svg {
+  width: 30px;
+  height: 30px;
+}
+
 .navbar-container .profile.bottom {
   position: relative;
 }
- 
+
 .navbar-container .profile.bottom .pop-up-container {
   position: absolute;
   top: -80px;
@@ -188,7 +197,7 @@ span.button-text {
   display: none;
 }
 
-.tweet > img {
+.tweet > svg {
   display: none;
 }
 
@@ -222,7 +231,10 @@ span.button-text {
     width: auto;
   }
 
-  .tweet > img {
+  .tweet > svg {
+    width: 24px;
+    height: 24px;
+    color: white;
     display: block;
   }
 
@@ -256,7 +268,7 @@ span.button-text {
     flex: 1;
     padding-left: 16px;
     padding-right: 16px;
-    z-index: 2;
+    z-index: 999;
     background-color: white;
   }
 
@@ -274,6 +286,11 @@ span.button-text {
     border: none;
     flex-grow: 1;
     transition: background-color 0.3s ease;
+  }
+
+  .horizontal-navbar button svg {
+    width: 34px;
+    height: 34px;
   }
 
   .horizontal-navbar > .link > button.active > .active-bar {

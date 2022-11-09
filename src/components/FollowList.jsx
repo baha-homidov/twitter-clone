@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
   useNavigate,
@@ -6,12 +7,7 @@ import {
   Link,
   useOutletContext,
 } from "react-router-dom";
-import {
-  getUserInfo,
-  getFollowers,
-  getFollowing,
-  getFollowListUserInfo,
-} from "../FirebaseBackend";
+import { getUserInfo, getFollowListUserInfo } from "../FirebaseBackend";
 import "../assets/css/FollowList.css";
 import Loading from "./Loading";
 import User from "./User";
@@ -27,6 +23,7 @@ export default function FollowList(props) {
   const [showFollowListLoading, setShowFollowListLoading] = useState(true);
   const [followerList, setFollowerList] = useState(null);
   const [followingList, setFollowingList] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [currentAuthedUser, setCurrentAuthedUser] = useOutletContext(); // get authInfo passed by App.jsx
 
   async function initData() {

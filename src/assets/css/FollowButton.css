@@ -41,7 +41,7 @@ button.follow.following:hover span.unhovered {
 
   button.follow.following:hover {
     background-color: #f7e1e3;
-    border: 1px solid red;
+
   }
 }
 
@@ -52,7 +52,7 @@ button.follow.following:hover span.unhovered {
 
   button.follow.following:active {
     background-color: #f7e1e3;
-    border: 1px solid red;
+
   }
 }
 

@@ -169,9 +169,7 @@ position: absolute;
   color: red;
 }
 
-.create-user-from-google-container form.submitted input:invalid {
-  border: 1px solid red;
-}
+
 
 .create-user-from-google-container form button {
   font-size: 1.1em;

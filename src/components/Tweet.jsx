@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import "../assets/css/Tweet.css";
 import { format } from "date-fns";
 
 import { likeTweet, publishRetweet, removeLike } from "../FirebaseBackend";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 function Tweet(props) {
   const [isRetweet, setIsRetweet] = useState(props.tweetInfo.isRetweet);
   const [retweetedByInlcudes, setRetweetedByInlcudes] = useState(
