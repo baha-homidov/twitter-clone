@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Barker (Twitter Clone)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack application based on Twitter
 
-## Available Scripts
+### Access
 
-In the project directory, you can run:
+- The project is hosted on Firebase and can be accessed by visiting this link [Barker (Twitter Clone)](twitter-clone-a252d.firebaseapp.com/)
+- Users can create a new permanent account using login and password, sign in with Google or sign in with a temporary guest account.
 
-### `npm start`
+### Motivation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This project contains many newly learned technologies and implementations. Some of them are:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React
+- React Router
+- Authentication with Firestore Auth
+- Firestore NoSQL database
+- Responsive design
 
-### `npm test`
+This project has a good use case of those technologies I've ventured into, and it would be an excellent platform to put them into practice.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Features
 
-### `npm run build`
+#### This application features a welcome page where users can:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Sign up or sign in using login-password pair
+- Sign in wih Google
+- Sign into a guest account
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### Home
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Navbar, which is visible throughout the whole website and lets users navigate through different routes
+- Feed where posts and replies of the users followed by the host are displayed
+- Secondary navbar where users can use search functionality and see recommended users
 
-### `npm run eject`
+#### Posts
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Users are able to like, retweet, or comment on a post. They will be able to see how long ago the post was created.
+- Users are able to navigate to the post's author's profile page, or a single post page featuring that particular post.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### When a user clicks on a post, they will be navigated to:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- A single post page, where the post's replies will be shown.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+#### Profile page
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Users can see general information about the account and its posts, including post replies.
