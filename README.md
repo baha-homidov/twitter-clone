@@ -2,6 +2,9 @@
 
 A full-stack application based on Twitter
 
+
+![barker](https://user-images.githubusercontent.com/96972109/205436161-c47f0ba4-8569-407c-8d6d-ea71a7c9203e.png)
+
 ### Access
 
 - The project is hosted on Firebase and can be accessed by visiting this link [Barker (Twitter Clone)](twitter-clone-a252d.firebaseapp.com/)
