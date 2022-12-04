@@ -4,7 +4,7 @@ A full-stack application based on Twitter
 
 ### Access
 
-- The project is hosted on Firebase and can be accessed by visiting this link [Barker (Twitter Clone)](twitter-clone-a252d.firebaseapp.com/)
+- The project is hosted on Firebase and can be accessed by visiting this link [Barker (Twitter Clone)](https://twitter-clone-a252d.firebaseapp.com/)
 - Users can create a new permanent account using login and password, sign in with Google or sign in with a temporary guest account.
 
 ### Motivation
@@ -41,7 +41,6 @@ This project has a good use case of those technologies I've ventured into, and i
 #### When a user clicks on a post, they will be navigated to:
 
 - A single post page, where the post's replies will be shown.
-
 
 #### Profile page
 
